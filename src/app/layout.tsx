@@ -1,4 +1,5 @@
 import ReactQueryClientProvider from '@/shared/lib/reactQuery/ReactQueryClientProvider';
+import StyledComponentsRegistry from '@/shared/lib/styledComponents/StyledComponentsRegistry';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export default function RootLayout({
@@ -10,8 +11,7 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         <ReactQueryClientProvider>
-          {children}
-          <ReactQueryDevtools initialIsOpen={false} />
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry> <ReactQueryDevtools initialIsOpen={false} />
         </ReactQueryClientProvider>
       </body>
     </html>
