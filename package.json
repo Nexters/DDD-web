@@ -15,7 +15,8 @@
     "next": "14.2.23",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "styled-reset": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20",
