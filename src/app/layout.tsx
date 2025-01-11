@@ -12,8 +12,11 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         <ReactQueryClientProvider>
-          <StyledReset />
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry> <ReactQueryDevtools initialIsOpen={false} />
+          <StyledComponentsRegistry>
+            <StyledReset />
+            {children}
+          </StyledComponentsRegistry>
+          <ReactQueryDevtools initialIsOpen={false} />
         </ReactQueryClientProvider>
       </body>
     </html>
