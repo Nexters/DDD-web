@@ -1,7 +1,9 @@
+import SUIT from '@/shared/assets/font/font';
 import ReactQueryClientProvider from '@/shared/lib/reactQuery/ReactQueryClientProvider';
 import StyledComponentsRegistry from '@/shared/lib/styledComponents/StyledComponentsRegistry';
 import StyledReset from '@/shared/lib/styledComponents/StyledReset';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import './global.css';
 
 export default function RootLayout({
   children,
@@ -9,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={SUIT.className}>
       <body>
         <ReactQueryClientProvider>
           <StyledComponentsRegistry>
