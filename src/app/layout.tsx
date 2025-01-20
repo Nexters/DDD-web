@@ -1,9 +1,12 @@
-import SUIT from '@/shared/assets/font/font';
-import ReactQueryClientProvider from '@/shared/lib/reactQuery/ReactQueryClientProvider';
-import StyledComponentsRegistry from '@/shared/lib/styledComponents/StyledComponentsRegistry';
-import StyledReset from '@/shared/lib/styledComponents/StyledReset';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import './global.css';
+"use client";
+import SUIT from "@/shared/assets/font/font";
+import ReactQueryClientProvider from "@/shared/lib/reactQuery/ReactQueryClientProvider";
+import StyledComponentsRegistry from "@/shared/lib/styledComponents/StyledComponentsRegistry";
+import StyledReset from "@/shared/lib/styledComponents/StyledReset";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "./global.css";
+import { ThemeProvider } from "styled-components";
+import { theme } from "../shared/lib/styledComponents/theme";
 
 export default function RootLayout({
   children,
@@ -15,8 +18,10 @@ export default function RootLayout({
       <body>
         <ReactQueryClientProvider>
           <StyledComponentsRegistry>
-            <StyledReset />
-            {children}
+            <ThemeProvider theme={theme}>
+              <StyledReset />
+              {children}
+            </ThemeProvider>
           </StyledComponentsRegistry>
           <ReactQueryDevtools initialIsOpen={false} />
         </ReactQueryClientProvider>
