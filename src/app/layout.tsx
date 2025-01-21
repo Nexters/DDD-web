@@ -1,3 +1,4 @@
+import ResponsiveRootLayout from '@/shared/components/ResponsiveRootLayout';
 import ReactQueryClientProvider from '@/shared/lib/reactQuery/ReactQueryClientProvider';
 import StyledComponentsRegistry from '@/shared/lib/styledComponents/StyledComponentsRegistry';
 import StyledReset from '@/shared/lib/styledComponents/StyledReset';
@@ -14,7 +15,7 @@ export default function RootLayout({
         <ReactQueryClientProvider>
           <StyledComponentsRegistry>
             <StyledReset />
-            {children}
+            <ResponsiveRootLayout>{children}</ResponsiveRootLayout>
           </StyledComponentsRegistry>
           <ReactQueryDevtools initialIsOpen={false} />
         </ReactQueryClientProvider>
