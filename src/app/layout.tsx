@@ -1,3 +1,4 @@
+import '@/app/global.css';
 import ResponsiveRootLayout from '@/shared/components/ResponsiveRootLayout';
 import ReactQueryClientProvider from '@/shared/lib/reactQuery/ReactQueryClientProvider';
 import StyledComponentsRegistry from '@/shared/lib/styledComponents/StyledComponentsRegistry';
