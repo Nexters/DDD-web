@@ -17,18 +17,24 @@ interface HeaderContentProps {
    * true일 경우 헤더가 스티키 포지션으로 고정됩니다. (top: 0)
    */
   sticky?: boolean;
+  /**
+   * 헤더 구분선 표시 여부
+   */
+  divider?: boolean;
 }
 
-export default function HeaderContent({ children, startAction, endAction, sticky }: HeaderContentProps) {
+export default function HeaderContent({ children, startAction, endAction, sticky, divider }: HeaderContentProps) {
   return (
     <header
       css={css`
         position: relative;
+        padding: 14px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
         ${sticky && `position: sticky; top: 0;`}
+        ${divider && `border-bottom: 1px solid ${({ theme }) => theme.colors.gray10};`}
       `}
     >
       {startAction ? startAction : <span role="presentation" />}
