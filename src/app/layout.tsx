@@ -1,13 +1,10 @@
-"use client";
 import SUIT from "@/shared/assets/font/font";
 import ReactQueryClientProvider from "@/shared/lib/reactQuery/ReactQueryClientProvider";
 import StyledComponentsRegistry from "@/shared/lib/styledComponents/StyledComponentsRegistry";
 import StyledReset from "@/shared/lib/styledComponents/StyledReset";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./global.css";
-import { ThemeProvider } from "styled-components";
-import { theme } from "../shared/lib/styledComponents/theme";
-
+import StyledComponentsTheme from "@/shared/lib/styledComponents/StyledComponentsTheme";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,10 +15,10 @@ export default function RootLayout({
       <body>
         <ReactQueryClientProvider>
           <StyledComponentsRegistry>
-            <ThemeProvider theme={theme}>
+            <StyledComponentsTheme>
               <StyledReset />
               {children}
-            </ThemeProvider>
+            </StyledComponentsTheme>
           </StyledComponentsRegistry>
           <ReactQueryDevtools initialIsOpen={false} />
         </ReactQueryClientProvider>
