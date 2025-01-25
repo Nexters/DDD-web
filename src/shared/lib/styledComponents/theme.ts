@@ -2,12 +2,6 @@ import { css } from "styled-components";
 
 export const theme = {
   fonts: {
-    headline3: css`
-      font-size: 28px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: 40px;
-    `,
     headline2: css`
       font-size: 24px;
       font-style: normal;
@@ -26,14 +20,12 @@ export const theme = {
       font-weight: 700;
       line-height: 26px;
     `,
-    // 다지안 확인 대기
     subHead3: css`
       font-size: 16px;
       font-style: normal;
       font-weight: 700;
       line-height: 24px;
     `,
-    // 다지안 확인 대기
     subHead2: css`
       font-size: 15px;
       font-style: normal;
@@ -92,7 +84,7 @@ export const theme = {
     grey80: "#32383F",
     grey90: "#24292F",
 
-    //변동 가능성 있음
+    primary00: "#F6F5FF",
     primary01: "#DEDBFF",
     primary02: "#B4ACFF",
     primary03: "#7A6DF0",
