@@ -11,6 +11,8 @@ const overlaySlow = keyframes`
 	}
 `;
 
+const ModalTrigger = Dialog.Trigger;
+
 interface ModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
@@ -25,9 +27,7 @@ const Modal = ({ isOpen, onOpenChange, children }: ModalProps) => {
   );
 };
 
-export default Modal;
-
-export const StyledDialogContent = styled(Dialog.Content)`
+const StyledDialogContent = styled(Dialog.Content)`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -39,7 +39,7 @@ export const StyledDialogContent = styled(Dialog.Content)`
   border-radius: 8px;
 `;
 
-export const StyledDialogOverlay = styled(Dialog.Overlay)`
+const StyledDialogOverlay = styled(Dialog.Overlay)`
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -49,20 +49,23 @@ export const StyledDialogOverlay = styled(Dialog.Overlay)`
   animation: ${overlaySlow} 200ms;
 `;
 
-export const StyledDialogTitle = styled(Dialog.Title)`
+const StyledDialogTitle = styled(Dialog.Title)`
   text-align: center;
   ${({ theme }) => theme.fonts.body3};
   ${({ theme }) => theme.colors.grey90};
 `;
 
-export const StyledDialogDescription = styled(Dialog.Description)`
+const StyledDialogDescription = styled(Dialog.Description)`
   text-align: center;
   ${({ theme }) => theme.fonts.body3};
   ${({ theme }) => theme.colors.grey90};
 `;
 
-Modal.Button = Dialog.Trigger;
-Modal.Overlay = StyledDialogOverlay;
-Modal.Content = StyledDialogContent;
-Modal.Title = StyledDialogTitle;
-Modal.Description = StyledDialogDescription;
+export {
+  Modal,
+  ModalTrigger,
+  StyledDialogOverlay,
+  StyledDialogContent,
+  StyledDialogTitle,
+  StyledDialogDescription,
+};

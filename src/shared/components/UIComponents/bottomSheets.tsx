@@ -36,7 +36,6 @@ const BottomSheetContent = React.forwardRef<
   SheetContentProps
 >(({ className, children, ...props }, ref) => (
   <Sheet.Portal>
-    <BottomSheetOverlay />
     <StyledBottomSheetContent ref={ref} className={className} {...props}>
       {children}
     </StyledBottomSheetContent>
