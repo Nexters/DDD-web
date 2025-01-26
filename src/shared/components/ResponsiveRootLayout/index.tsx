@@ -13,8 +13,6 @@ export default function ResponsiveRootLayout({ children }: { children: ReactNode
         flex-direction: column;
         @media screen and (min-width: 450px) {
           max-width: 600px;
-          background-color: rgb(255, 255, 255);
-          box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 8px;
         }
       `}
     >
