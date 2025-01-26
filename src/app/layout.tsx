@@ -1,4 +1,5 @@
 import SUIT from '@/shared/assets/font/font';
+import Hotjar from '@/shared/components/Hotjar';
 import ReactQueryClientProvider from '@/shared/lib/reactQuery/ReactQueryClientProvider';
 import StyledComponentsRegistry from '@/shared/lib/styledComponents/StyledComponentsRegistry';
 import StyledReset from '@/shared/lib/styledComponents/StyledReset';
@@ -22,7 +23,7 @@ export default function RootLayout({
           <ReactQueryDevtools initialIsOpen={false} />
         </ReactQueryClientProvider>
       </body>
-
+      <Hotjar />
       <GoogleAnalytics gaId="G-P0MWP9K8K8" />
       <GoogleTagManager gtmId="GTM-5VR9NG96" />
     </html>
