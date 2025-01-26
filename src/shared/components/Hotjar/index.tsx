@@ -6,14 +6,7 @@ export default function Hotjar() {
   if (process.env.NODE_ENV !== 'production') return null;
 
   return (
-    <Script
-      id="hotjar-script"
-      strategy="afterInteractive"
-      onLoad={() => {
-        console.log('hotjar loaded');
-        console.log(process.env.NODE_ENV);
-      }}
-    >
+    <Script id="hotjar-script" strategy="afterInteractive">
       {`
       (function(h,o,t,j,a,r){
         h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
