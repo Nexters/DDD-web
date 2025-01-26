@@ -2,6 +2,7 @@ import SUIT from '@/shared/assets/font/font';
 import ReactQueryClientProvider from '@/shared/lib/reactQuery/ReactQueryClientProvider';
 import StyledComponentsRegistry from '@/shared/lib/styledComponents/StyledComponentsRegistry';
 import StyledReset from '@/shared/lib/styledComponents/StyledReset';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './global.css';
 
@@ -21,6 +22,9 @@ export default function RootLayout({
           <ReactQueryDevtools initialIsOpen={false} />
         </ReactQueryClientProvider>
       </body>
+
+      <GoogleAnalytics gaId="G-P0MWP9K8K8" />
+      <GoogleTagManager gtmId="GTM-5VR9NG96" />
     </html>
   );
 }
