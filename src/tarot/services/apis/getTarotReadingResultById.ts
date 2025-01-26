@@ -1,5 +1,29 @@
 import apiClient from '@/shared/lib/axios/apiClient';
 
+export type TarotReadingResultResponse = {
+  tarot: TarotCardType;
+  type: string;
+  cardValue: {
+    summary: string;
+    description: string;
+  };
+  answer: {
+    summary: string;
+    description: string;
+    question: string;
+  };
+  advice: {
+    summary: string;
+    description: string;
+  };
+};
+
+export const getTarotReadingResultById = (resultId: number) => {
+  return apiClient.get<TarotReadingResultResponse>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/result/${resultId}`
+  );
+};
+
 type TarotCardType =
   | 'M_00'
   | 'M_01'
@@ -65,27 +89,3 @@ type TarotCardType =
   | 'P_Q'
   | 'P_N'
   | 'P_P';
-
-export type TarotReadingResultResponse = {
-  tarot: TarotCardType;
-  type: string;
-  cardValue: {
-    summary: string;
-    description: string;
-  };
-  answer: {
-    summary: string;
-    description: string;
-    question: string;
-  };
-  advice: {
-    summary: string;
-    description: string;
-  };
-};
-
-export const getTarotReadingResultById = (resultId: number) => {
-  return apiClient.get<TarotReadingResultResponse>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/result/${resultId}`
-  );
-};
