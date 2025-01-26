@@ -1,8 +1,8 @@
-import { SendChatMessageResponse } from '@/chat/apis/sendChatMessage';
+import { SendChatMessageRequest, SendChatMessageResponse } from '@/chat/apis/sendChatMessage';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  const body: SendChatMessageRequest = await request.json();
 
   console.log(body);
 
@@ -34,15 +34,25 @@ export async function POST(request: NextRequest) {
     answers: ['너의 고민에 집중하면서', '카드를 한 장 뽑아봐!'],
   };
 
-  const mockDataArray = [
-    normalReplyMockData,
-    invalidQuestionReplyMockData,
-    questionReplyMockData,
-    questionAcceptanceReplyMockData,
-  ];
+  if (body.intent === 'NORMAL') {
+    return NextResponse.json({ data: normalReplyMockData });
+  }
 
-  const randomIndex = Math.floor(Math.random() * mockDataArray.length);
-  const randomMockData = mockDataArray[randomIndex];
+  if (body.intent === 'TAROT_ACCEPT') {
+    if (Math.random() < 0.2) {
+      return NextResponse.json({ data: invalidQuestionReplyMockData });
+    }
 
-  return NextResponse.json({ data: randomMockData });
+    return NextResponse.json({ data: questionAcceptanceReplyMockData });
+  }
+
+  if (body.intent === 'TAROT_DECLINE') {
+    return NextResponse.json({ data: normalReplyMockData });
+  }
+
+  if (body.intent === 'RECOMMEND_QUESTION') {
+    return NextResponse.json({ data: questionReplyMockData });
+  }
+
+  return NextResponse.json({ error: 'Invalid intent' }, { status: 400 });
 }

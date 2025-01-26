@@ -1,7 +1,7 @@
 import apiClient from '@/shared/lib/axios/apiClient';
 import { z } from 'zod';
 
-type SendChatMessageRequest = {
+export type SendChatMessageRequest = {
   roomId: number;
   message: string;
   intent: 'NORMAL' | 'TAROT_ACCEPT' | 'TAROT_DECLINE' | 'RECOMMEND_QUESTION';
