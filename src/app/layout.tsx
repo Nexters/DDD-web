@@ -1,10 +1,11 @@
-import SUIT from "@/shared/assets/font/font";
-import ReactQueryClientProvider from "@/shared/lib/reactQuery/ReactQueryClientProvider";
-import StyledComponentsRegistry from "@/shared/lib/styledComponents/StyledComponentsRegistry";
-import StyledReset from "@/shared/lib/styledComponents/StyledReset";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import "./global.css";
-import StyledComponentsTheme from "@/shared/lib/styledComponents/StyledComponentsTheme";
+import SUIT from '@/shared/assets/font/font';
+import ResponsiveRootLayout from '@/shared/components/ResponsiveRootLayout';
+import ReactQueryClientProvider from '@/shared/lib/reactQuery/ReactQueryClientProvider';
+import GlobalStyle from '@/shared/lib/styledComponents/GlobalStyle';
+import StyledComponentsRegistry from '@/shared/lib/styledComponents/StyledComponentsRegistry';
+import StyledComponentsTheme from '@/shared/lib/styledComponents/StyledComponentsTheme';
+import StyledReset from '@/shared/lib/styledComponents/StyledReset';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,9 +16,10 @@ export default function RootLayout({
       <body>
         <ReactQueryClientProvider>
           <StyledComponentsRegistry>
+            <StyledReset />
+            <GlobalStyle />
             <StyledComponentsTheme>
-              <StyledReset />
-              {children}
+              <ResponsiveRootLayout>{children}</ResponsiveRootLayout>
             </StyledComponentsTheme>
           </StyledComponentsRegistry>
           <ReactQueryDevtools initialIsOpen={false} />

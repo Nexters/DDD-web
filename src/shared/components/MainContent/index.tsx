@@ -1,0 +1,17 @@
+'use client';
+
+import { ReactNode } from 'react';
+import { css } from 'styled-components';
+
+export default function MainContent({ children }: { children: ReactNode }) {
+  return (
+    <main
+      css={css`
+        position: relative;
+        flex: 1;
+      `}
+    >
+      {children}
+    </main>
+  );
+}
