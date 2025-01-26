@@ -44,5 +44,5 @@ export async function POST(request: NextRequest) {
   const randomIndex = Math.floor(Math.random() * mockDataArray.length);
   const randomMockData = mockDataArray[randomIndex];
 
-  return NextResponse.json(randomMockData);
+  return NextResponse.json({ data: randomMockData });
 }

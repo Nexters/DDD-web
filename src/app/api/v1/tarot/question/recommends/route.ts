@@ -22,5 +22,5 @@ export async function GET() {
     ],
   };
 
-  return NextResponse.json(mockData);
+  return NextResponse.json({ data: mockData });
 }

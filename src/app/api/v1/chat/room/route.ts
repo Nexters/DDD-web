@@ -12,5 +12,5 @@ export async function POST() {
     },
   };
 
-  return NextResponse.json(mockData);
+  return NextResponse.json({ data: mockData });
 }

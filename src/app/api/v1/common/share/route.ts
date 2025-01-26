@@ -5,7 +5,5 @@ export async function POST(request: NextRequest) {
   const body: LogShareEventRequest = await request.json();
   console.log(body);
 
-  return NextResponse.json({
-    message: '성공',
-  });
+  return NextResponse.json({ data: { message: '성공' } });
 }
