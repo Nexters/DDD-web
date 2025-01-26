@@ -6,7 +6,7 @@ export async function POST() {
     roomId: 1,
     message: {
       messageId: 1,
-      type: 'SYSTEM_HELLO',
+      type: 'SYSTEM_NORMAL',
       sender: 'SYSTEM',
       answer: ['안녕이다냥?'],
     },
