@@ -1,5 +1,7 @@
 import apiClient from '@/shared/lib/axios/apiClient';
 import { z } from 'zod';
+import { MessageCategorySchema } from '../models/messageCategory';
+import { MessageSenderTypeSchema } from '../models/messageSender';
 
 export type SendChatMessageRequest = {
   roomId: number;
@@ -18,13 +20,13 @@ export type SendChatMessageResponse = {
 const schema = z.object({
   messageId: z.number(),
   type: z.enum([
-    'SYSTEM_NORMAL_REPLY',
-    'SYSTEM_INVALID_QUESTION_REPLY',
-    'SYSTEM_TAROT_QUESTION_REPLY',
-    'SYSTEM_TAROT_QUESTION_ACCEPTANCE_REPLY',
-    'SYSTEM_TAROT_RESULT',
+    MessageCategorySchema.Enum.SYSTEM_NORMAL_REPLY,
+    MessageCategorySchema.Enum.SYSTEM_INVALID_QUESTION_REPLY,
+    MessageCategorySchema.Enum.SYSTEM_TAROT_QUESTION_REPLY,
+    MessageCategorySchema.Enum.SYSTEM_TAROT_QUESTION_ACCEPTANCE_REPLY,
+    MessageCategorySchema.Enum.SYSTEM_TAROT_RESULT,
   ]),
-  sender: z.literal('SYSTEM'),
+  sender: z.literal(MessageSenderTypeSchema.Enum.SYSTEM),
   answers: z.array(z.string()),
 });
 

@@ -1,3 +1,5 @@
+import { MessageCategorySchema } from '@/chat/models/messageCategory';
+import { MessageSenderTypeSchema } from '@/chat/models/messageSender';
 import apiClient from '@/shared/lib/axios/apiClient';
 import { z } from 'zod';
 import { TarotCardType } from '../models/tarotCard';
@@ -19,8 +21,8 @@ export type SelectTarotCardResponse = {
 
 const schema = z.object({
   messageId: z.number(),
-  type: z.literal('SYSTEM_TAROT_RESULT'),
-  sender: z.literal('SYSTEM'),
+  type: z.literal(MessageCategorySchema.Enum.SYSTEM_TAROT_RESULT),
+  sender: z.literal(MessageSenderTypeSchema.Enum.SYSTEM),
   answer: z.array(z.string()),
   tarotName: TarotCardIdSchema,
   tarotResultId: z.number(),
