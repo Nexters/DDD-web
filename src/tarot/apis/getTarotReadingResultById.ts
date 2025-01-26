@@ -40,7 +40,7 @@ const schema = z.object({
 
 type TarotReadingResultData = z.infer<typeof schema>;
 
-const adapt = (data: TarotReadingResultResponse): TarotReadingResultData => {
+const validate = (data: TarotReadingResultResponse): TarotReadingResultData => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
@@ -48,7 +48,7 @@ const adapt = (data: TarotReadingResultResponse): TarotReadingResultData => {
 export const getTarotReadingResultById = async (resultId: number) => {
   return apiClient
     .get<TarotReadingResultResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/result/${resultId}`)
-    .then((res) => adapt(res.data))
+    .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
       return undefined;

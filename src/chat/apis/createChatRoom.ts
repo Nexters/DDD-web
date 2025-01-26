@@ -23,7 +23,7 @@ const schema = z.object({
 
 type CreateChatRoomData = z.infer<typeof schema>;
 
-const adapt = (data: CreateChatRoomResponse): CreateChatRoomData => {
+const validate = (data: CreateChatRoomResponse): CreateChatRoomData => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
@@ -31,7 +31,7 @@ const adapt = (data: CreateChatRoomResponse): CreateChatRoomData => {
 export const createChatRoom = () => {
   return apiClient
     .post<CreateChatRoomResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room`)
-    .then((res) => adapt(res.data))
+    .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
       return undefined;

@@ -28,7 +28,7 @@ const schema = z.object({
 
 type SelectTarotCardData = z.infer<typeof schema>;
 
-const adapt = (data: SelectTarotCardResponse): SelectTarotCardData => {
+const validate = (data: SelectTarotCardResponse): SelectTarotCardData => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
@@ -36,7 +36,7 @@ const adapt = (data: SelectTarotCardResponse): SelectTarotCardData => {
 export const selectTarotCard = async (request: SelectTarotCardRequest) => {
   return apiClient
     .post<SelectTarotCardResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`, request)
-    .then((res) => adapt(res.data))
+    .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
       return undefined;

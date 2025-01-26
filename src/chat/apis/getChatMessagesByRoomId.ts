@@ -30,7 +30,7 @@ const schema = z.object({
 
 type ChatMessagesByRoomIdData = z.infer<typeof schema>;
 
-const adapt = (data: ChatMessagesByRoomIdResponse): ChatMessagesByRoomIdData => {
+const validate = (data: ChatMessagesByRoomIdResponse): ChatMessagesByRoomIdData => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
@@ -42,7 +42,7 @@ export const getChatMessagesByRoomId = (roomId: number) => {
         roomId,
       },
     })
-    .then((res) => adapt(res.data))
+    .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
       return undefined;

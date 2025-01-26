@@ -30,7 +30,7 @@ const schema = z.object({
 
 type SendChatMessageData = z.infer<typeof schema>;
 
-const adapt = (data: SendChatMessageResponse): SendChatMessageData => {
+const validate = (data: SendChatMessageResponse): SendChatMessageData => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
@@ -38,7 +38,7 @@ const adapt = (data: SendChatMessageResponse): SendChatMessageData => {
 export const sendChatMessage = (request: SendChatMessageRequest) => {
   return apiClient
     .post<SendChatMessageResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`, request)
-    .then((res) => adapt(res.data))
+    .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
       return undefined;
