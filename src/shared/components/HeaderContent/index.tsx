@@ -25,21 +25,34 @@ interface HeaderContentProps {
 
 export default function HeaderContent({ children, startAction, endAction, sticky, divider }: HeaderContentProps) {
   return (
-    <header
-      css={css`
-        position: relative;
-        padding: 14px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        ${sticky && `position: sticky; top: 0;`}
-        ${divider && `border-bottom: 1px solid ${({ theme }) => theme.colors.gray10};`}
-      `}
-    >
-      {startAction ? startAction : <span role="presentation" />}
-      {children}
-      {endAction ? endAction : <span role="presentation" />}
-    </header>
+    <>
+      <header
+        css={css`
+          position: relative;
+          padding: 14px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          ${sticky && `position: sticky; top: 0;`}
+        `}
+      >
+        {startAction ? startAction : <span role="presentation" />}
+        {children}
+        {endAction ? endAction : <span role="presentation" />}
+      </header>
+      {divider && (
+        <hr
+          css={css`
+            margin: 0;
+            block-size: 1px;
+            border: none;
+            width: 100%;
+            background-color: ${(props) => props.theme.colors.grey10};
+            box-shadow: 0 0 0 100vmax ${(props) => props.theme.colors.grey10};
+            clip-path: inset(0px -100vmax);
+          `}
+        />
+      )}
+    </>
   );
 }
