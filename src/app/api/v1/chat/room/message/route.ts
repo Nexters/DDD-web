@@ -1,4 +1,4 @@
-import { SendChatMessageResponse } from '@/chat/services/apis/sendChatMessage';
+import { SendChatMessageResponse } from '@/chat/apis/sendChatMessage';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {

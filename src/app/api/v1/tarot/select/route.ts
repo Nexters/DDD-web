@@ -1,4 +1,4 @@
-import { SelectTarotCardRequest, SelectTarotCardResponse } from '@/tarot/services/apis/selectTarotCard';
+import { SelectTarotCardRequest, SelectTarotCardResponse } from '@/tarot/apis/selectTarotCard';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {

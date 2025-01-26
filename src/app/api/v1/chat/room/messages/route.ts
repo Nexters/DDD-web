@@ -1,4 +1,4 @@
-import { ChatMessagesByRoomIdResponse } from '@/chat/services/apis/getChatMessagesByRoomId';
+import { ChatMessagesByRoomIdResponse } from '@/chat/apis/getChatMessagesByRoomId';
 import { NextRequest } from 'next/server';
 
 import { NextResponse } from 'next/server';

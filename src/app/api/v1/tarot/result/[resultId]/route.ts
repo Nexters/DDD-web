@@ -1,4 +1,4 @@
-import { TarotReadingResultResponse } from '@/tarot/services/apis/getTarotReadingResultById';
+import { TarotReadingResultResponse } from '@/tarot/apis/getTarotReadingResultById';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {

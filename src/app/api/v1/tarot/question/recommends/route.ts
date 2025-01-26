@@ -1,4 +1,4 @@
-import { TarotQuestionRecommendListResponse } from '@/tarot/services/apis/getTarotQuestionRecommends';
+import { TarotQuestionRecommendListResponse } from '@/tarot/apis/getTarotQuestionRecommends';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
