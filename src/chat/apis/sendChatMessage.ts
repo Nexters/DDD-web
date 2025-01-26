@@ -1,33 +1,46 @@
 import apiClient from '@/shared/lib/axios/apiClient';
+import { z } from 'zod';
 
 type SendChatMessageRequest = {
   roomId: number;
   message: string;
-  intent: IntentType;
+  intent: 'NORMAL' | 'TAROT_ACCEPT' | 'TAROT_DECLINE' | 'RECOMMEND_QUESTION';
   referenceQuestionId?: number;
 };
 
 export type SendChatMessageResponse = {
   messageId: number;
-  type: MessageType;
-  sender: MessageSenderType;
+  type: string;
+  sender: string;
   answers: string[];
 };
 
-export const sendChatMessage = (request: SendChatMessageRequest) => {
-  return apiClient.post<SendChatMessageResponse>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`,
-    request
-  );
+const schema = z.object({
+  messageId: z.number(),
+  type: z.enum([
+    'SYSTEM_NORMAL_REPLY',
+    'SYSTEM_INVALID_QUESTION_REPLY',
+    'SYSTEM_TAROT_QUESTION_REPLY',
+    'SYSTEM_TAROT_QUESTION_ACCEPTANCE_REPLY',
+    'SYSTEM_TAROT_RESULT',
+  ]),
+  sender: z.literal('SYSTEM'),
+  answers: z.array(z.string()),
+});
+
+type SendChatMessageData = z.infer<typeof schema>;
+
+const adapt = (data: SendChatMessageResponse): SendChatMessageData => {
+  const validatedData = schema.parse(data);
+  return validatedData;
 };
 
-type MessageSenderType = 'SYSTEM' | 'USER';
-
-type MessageType =
-  | 'SYSTEM_NORMAL_REPLY'
-  | 'SYSTEM_INVALID_QUESTION_REPLY'
-  | 'SYSTEM_TAROT_QUESTION_REPLY'
-  | 'SYSTEM_TAROT_QUESTION_ACCEPTANCE_REPLY'
-  | 'SYSTEM_TAROT_RESULT';
-
-type IntentType = 'NORMAL' | 'TAROT_ACCEPT' | 'TAROT_DECLINE' | 'RECOMMEND_QUESTION';
+export const sendChatMessage = (request: SendChatMessageRequest) => {
+  return apiClient
+    .post<SendChatMessageResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`, request)
+    .then((res) => adapt(res.data))
+    .catch((error) => {
+      console.error(error);
+      return undefined;
+    });
+};
