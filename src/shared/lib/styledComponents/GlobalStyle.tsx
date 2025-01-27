@@ -28,8 +28,11 @@ button{
   cursor: pointer;
 }
 
-a,a:link,a:visited{text-decoration: none;}
-a:active, a:hover{text-decoration:none;}
+a,a:link,a:visited{
+  text-decoration: none; 
+  color:inherit
+}
+a:active, a:hover{text-decoration:none; }
 `;
 
 export default GlobalStyle;
