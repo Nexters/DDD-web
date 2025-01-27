@@ -2,7 +2,11 @@ import axios from 'axios';
 
 const apiClient = axios.create({
   adapter: 'fetch',
-  baseURL: process.env.API_BASE_URL,
+  withCredentials: true,
+});
+
+apiClient.interceptors.response.use((response) => {
+  return response.data;
 });
 
 export default apiClient;
