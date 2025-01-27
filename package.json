@@ -13,6 +13,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-toast": "^1.2.5",
     "@radix-ui/react-visually-hidden": "^1.1.1",
+    "@next/third-parties": "^15.1.6",
     "@tanstack/react-query": "^5.63.0",
     "@tanstack/react-query-devtools": "^5.63.0",
     "axios": "^1.7.9",
@@ -20,7 +21,8 @@
     "react": "^18",
     "react-dom": "^18",
     "styled-components": "^6.1.14",
-    "styled-reset": "^4.5.2"
+    "styled-reset": "^4.5.2",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

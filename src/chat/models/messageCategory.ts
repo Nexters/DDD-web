@@ -1,0 +1,17 @@
+import { z } from 'zod';
+
+export const MessageCategorySchema = z.enum([
+  'USER_NORMAL',
+  'USER_INVALID_QUESTION',
+  'USER_TAROT_QUESTION',
+  'USER_TAROT_QUESTION_ACCEPTANCE',
+  'USER_TAROT_QUESTION_DECLINE',
+  'USER_FOLLOW_QUESTION',
+  'SYSTEM_HELLO',
+  'SYSTEM_NORMAL_REPLY',
+  'SYSTEM_INVALID_QUESTION_REPLY',
+  'SYSTEM_TAROT_QUESTION_REPLY',
+  'SYSTEM_TAROT_QUESTION_ACCEPTANCE_REPLY',
+  'SYSTEM_TAROT_RESULT',
+]);
+export type MessageCategory = z.infer<typeof MessageCategorySchema>;
