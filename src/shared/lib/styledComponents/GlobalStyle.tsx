@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 *,
@@ -19,6 +19,17 @@ select,
 textarea {
   font-family: inherit;
 }
+
+button{
+  padding: 0;
+  border:none;
+  background:none;
+
+  cursor: pointer;
+}
+
+a,a:link,a:visited{text-decoration: none;}
+a:active, a:hover{text-decoration:none;}
 `;
 
 export default GlobalStyle;
