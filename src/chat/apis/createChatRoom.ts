@@ -1,28 +1,12 @@
 import apiClient from '@/shared/lib/axios/apiClient';
 import { z } from 'zod';
-import { MessageCategorySchema } from '../models/messageCategory';
-import { MessageSenderTypeSchema } from '../models/messageSender';
 
 export type CreateChatRoomResponse = {
   roomId: number;
-  message?: {
-    messageId: number;
-    type: string;
-    sender: string;
-    answer: string[];
-  };
 };
 
 const schema = z.object({
   roomId: z.number(),
-  message: z
-    .object({
-      messageId: z.number(),
-      type: z.literal(MessageCategorySchema.Enum.SYSTEM_NORMAL_REPLY),
-      sender: z.literal(MessageSenderTypeSchema.Enum.SYSTEM),
-      answer: z.array(z.string()),
-    })
-    .optional(),
 });
 
 type CreateChatRoomData = z.infer<typeof schema>;
