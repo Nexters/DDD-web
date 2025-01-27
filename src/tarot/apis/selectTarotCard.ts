@@ -41,6 +41,6 @@ export const selectTarotCard = async (request: SelectTarotCardRequest) => {
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
-      return undefined;
+      throw error;
     });
 };
