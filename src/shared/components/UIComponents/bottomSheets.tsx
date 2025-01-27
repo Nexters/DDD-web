@@ -13,25 +13,25 @@ const overlaySlow = keyframes`
   }
 `;
 
-const Root = Sheet.Root;
+const BottomSheet = Sheet.Root;
 
-const Trigger = Sheet.Trigger;
+const BottomSheetTrigger = Sheet.Trigger;
 
-const Close = Sheet.Close;
+const BottomSheetClose = Sheet.Close;
 
-const Portal = Sheet.Portal;
+const BottomSheetPortal = Sheet.Portal;
 
-const Overlay = React.forwardRef<
+const BottomSheetOverlay = React.forwardRef<
   React.ElementRef<typeof Sheet.Overlay>,
   React.ComponentPropsWithoutRef<typeof Sheet.Overlay>
 >(({ className, ...props }, ref) => (
   <StyledBottomSheetOverlay className={className} {...props} ref={ref} />
 ));
-Overlay.displayName = Sheet.Overlay.displayName;
+BottomSheetOverlay.displayName = Sheet.Overlay.displayName;
 
 type SheetContentProps = React.ComponentPropsWithoutRef<typeof Sheet.Content>;
 
-const Content = React.forwardRef<
+const BottomSheetContent = React.forwardRef<
   React.ElementRef<typeof Sheet.Content>,
   SheetContentProps
 >(({ className, children, ...props }, ref) => (
@@ -41,7 +41,7 @@ const Content = React.forwardRef<
     </StyledBottomSheetContent>
   </Sheet.Portal>
 ));
-Content.displayName = Sheet.Content.displayName;
+BottomSheetContent.displayName = Sheet.Content.displayName;
 
 const StyledBottomSheetOverlay = styled(Sheet.Overlay)`
   position: fixed;
@@ -65,11 +65,11 @@ const StyledBottomSheetContent = styled(Sheet.Content)`
   max-width: 600px;
 `;
 
-export default {
-  Root,
-  Trigger,
-  Close,
-  Portal,
-  Content,
-  Overlay,
+export {
+  BottomSheet,
+  BottomSheetTrigger,
+  BottomSheetClose,
+  BottomSheetPortal,
+  BottomSheetContent,
+  BottomSheetOverlay,
 };
