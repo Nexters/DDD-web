@@ -5,7 +5,7 @@ import { MessageSenderTypeSchema } from '../models/messageSender';
 
 export type CreateChatRoomResponse = {
   roomId: number;
-  message: {
+  message?: {
     messageId: number;
     type: string;
     sender: string;
@@ -15,12 +15,14 @@ export type CreateChatRoomResponse = {
 
 const schema = z.object({
   roomId: z.number(),
-  message: z.object({
-    messageId: z.number(),
-    type: z.literal(MessageCategorySchema.Enum.SYSTEM_NORMAL_REPLY),
-    sender: z.literal(MessageSenderTypeSchema.Enum.SYSTEM),
-    answer: z.array(z.string()),
-  }),
+  message: z
+    .object({
+      messageId: z.number(),
+      type: z.literal(MessageCategorySchema.Enum.SYSTEM_NORMAL_REPLY),
+      sender: z.literal(MessageSenderTypeSchema.Enum.SYSTEM),
+      answer: z.array(z.string()),
+    })
+    .optional(),
 });
 
 type CreateChatRoomData = z.infer<typeof schema>;
@@ -36,6 +38,6 @@ export const createChatRoom = () => {
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
-      return undefined;
+      throw error;
     });
 };
