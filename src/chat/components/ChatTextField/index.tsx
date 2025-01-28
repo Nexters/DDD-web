@@ -1,10 +1,10 @@
 "use client";
-import { createUserKeyCookie } from "@/auth/utils/createUserKeyCookie";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { css } from "styled-components";
@@ -16,6 +16,8 @@ export default function ChatTextField() {
   const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
   const router = useRouter();
   const textareaMinHeight = 52;
+  const queryClient = useQueryClient();
+  const { chatId } = useParams<{ chatId: string }>();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -27,7 +29,23 @@ export default function ChatTextField() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
-    await createUserKeyCookie();
+
+    if (chatId) {
+      sendChatMessage(
+        {
+          roomId: Number(chatId),
+          message: message,
+          intent: "NORMAL",
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["chatMessages", Number(chatId)] });
+          },
+        }
+      );
+      return;
+    }
+
     createChatRoom(undefined, {
       onSuccess: (data) => {
         sendChatMessage(
