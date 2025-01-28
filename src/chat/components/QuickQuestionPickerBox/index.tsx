@@ -1,12 +1,12 @@
-import { createUserKeyCookie } from '@/auth/utils/createUserKeyCookie';
-import { useCreateChatRoom } from '@/chat/hooks/useCreateChatRoom';
-import { useSendChatMessage } from '@/chat/hooks/useSendChatMesasge';
-import { TarotQuestionRecommendListData } from '@/tarot/apis/getTarotQuestionRecommends';
-import { useTarotQuestionRecommends } from '@/tarot/hooks/useTarotQuestionRecommends';
-import { useRouter } from 'next/navigation';
-import { css } from 'styled-components';
-import QuickQuestionPicker from '../QuickQuestionPicker';
-import RefreshQuickQuestionButton from '../RefreshQuickQuestionButton';
+import { createUserKeyCookie } from "@/auth/utils/createUserKeyCookie";
+import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
+import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
+import { TarotQuestionRecommendListData } from "@/tarot/apis/getTarotQuestionRecommends";
+import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
+import { useRouter } from "next/navigation";
+import { css } from "styled-components";
+import QuickQuestionPicker from "../QuickQuestionPicker";
+import RefreshQuickQuestionButton from "../RefreshQuickQuestionButton";
 
 export default function QuickQuestionPickerBox() {
   const { data } = useTarotQuestionRecommends();
@@ -17,7 +17,7 @@ export default function QuickQuestionPickerBox() {
   if (!data) return null;
 
   const adaptQuestionRecommends = (data: TarotQuestionRecommendListData) => {
-    const colors = ['primary03', 'grey10', 'primary01', 'grey60'] as const;
+    const colors = ["primary03", "grey10", "primary01", "grey60"] as const;
     return data.questions.map((question, i) => ({
       ...question,
       color: colors[i],
@@ -29,7 +29,7 @@ export default function QuickQuestionPickerBox() {
               {
                 roomId: data.roomId,
                 message: question.question,
-                intent: 'RECOMMEND_QUESTION',
+                intent: "RECOMMEND_QUESTION",
                 referenceQuestionId: question.recommendQuestionId,
               },
               {
