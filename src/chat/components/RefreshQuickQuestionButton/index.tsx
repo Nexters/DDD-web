@@ -1,11 +1,11 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { css } from 'styled-components';
-
+import RotateIcon from "@/shared/assets/icons/rotate.svg";
+import { useQueryClient } from "@tanstack/react-query";
+import { css } from "styled-components";
 export default function RefreshQuickQuestionButton() {
   const queryClient = useQueryClient();
 
   const handleClick = () => {
-    queryClient.invalidateQueries({ queryKey: ['tarotQuestionRecommends'] });
+    queryClient.invalidateQueries({ queryKey: ["tarotQuestionRecommends"] });
   };
 
   return (
@@ -17,6 +17,9 @@ export default function RefreshQuickQuestionButton() {
         border: none;
         background-color: transparent;
         color: ${(props) => props.theme.colors.grey60};
+        display: flex;
+        align-items: center;
+        gap: 6px;
         cursor: pointer;
       `}
     >
@@ -27,7 +30,7 @@ export default function RefreshQuickQuestionButton() {
       >
         추천 질문 변경
       </span>
-      {/* TODO: 아이콘 추가 */}
+      <RotateIcon />
     </button>
   );
 }
