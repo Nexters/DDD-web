@@ -5,9 +5,11 @@ import ChatBubble from "../ChatBubble";
 
 type Props = {
   message: MessageType;
+  isJustSent: boolean;
 };
 
 export default function ChatBubbleGroup({ message }: Props) {
+  // TODO: 응답을 새로 받은 경우에만 메세지를 순차적으로 렌더링
   const renderMessage = (message: MessageType) => {
     if (message.tarotName) {
       return <ChatBubble key={message.messageId} sender={"SYSTEM"} card={message.tarotName} />;
@@ -17,7 +19,12 @@ export default function ChatBubbleGroup({ message }: Props) {
       return <ChatBubble key={message.messageId} sender={"SYSTEM"} loading />;
     }
 
-    return message.answers.map((answer) => <ChatBubble key={message.messageId} sender={"SYSTEM"} message={answer} />);
+    const addIdToMessages = (messages: string[]) => {
+      return messages.map((answer) => ({ messageId: Math.random(), sender: "SYSTEM", message: answer }));
+    };
+    return addIdToMessages(message.answers).map((answer) => (
+      <ChatBubble key={answer.messageId} sender={"SYSTEM"} message={answer.message} />
+    ));
   };
 
   return (
