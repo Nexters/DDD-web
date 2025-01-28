@@ -7,7 +7,12 @@ import cardBack from "@/shared/assets/images/cardBack.jpg";
 import cardFront from "@/shared/assets/images/Card1.jpg";
 import styled from "styled-components";
 import { easeInOut } from "motion";
-import { useState } from "react";
+import { SetStateAction, useState, Dispatch } from "react";
+
+type PropTypes = {
+  setTarotInteractation: Dispatch<SetStateAction<boolean>>;
+};
+
 const putCardtransition = {
   duration: 0.6,
   ease: easeInOut,
@@ -17,7 +22,6 @@ const handTransition = {
   duration: 0.6,
   delay: 0.6,
   ease: easeInOut,
-  // onAnimationComplete={latest => console.log(latest.r)}
 };
 
 const cardRotateTransition = {
@@ -25,8 +29,14 @@ const cardRotateTransition = {
   duration: 0.6,
 };
 
-const TarotInteraction = () => {
+const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
   const [isVisible, setIsVisible] = useState(true);
+
+  const routingTarotResult = () => {
+    setTimeout(() => {
+      setTarotInteractation(false);
+    }, 1000);
+  };
   return (
     <TarotWaitingWrapper>
       <Center>
@@ -43,6 +53,7 @@ const TarotInteraction = () => {
             <CardInner
               animate={{ rotateY: -180 }}
               transition={cardRotateTransition}
+              onAnimationComplete={routingTarotResult}
             >
               <CardFront alt="cardFront" src={cardFront}></CardFront>
               <CardBack alt="card" src={cardBack}></CardBack>
@@ -91,8 +102,6 @@ const CardInner = styled(motion.div)`
   height: 337px;
   perspective: 1000px;
   transform-style: preserve-3d;
-
-  /* transition: transform 0.6s; */
 `;
 const Title = styled.h1`
   margin-bottom: 43px;

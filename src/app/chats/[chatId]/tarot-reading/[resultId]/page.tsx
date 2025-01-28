@@ -1,12 +1,21 @@
+"use client";
+
 import HeaderContent from "@/shared/components/HeaderContent";
 import MainContent from "@/shared/components/MainContent";
-import TaroWaiting from "./components/taroWaiting";
+import TarotInteraction from "./components/TarotInteraction";
+import TarotResult from "./components/TarotResult";
+import { useState } from "react";
 export default function TarotReadingResultPage() {
+  const [tarotInteractation, setTarotInteractation] = useState(true);
   return (
     <>
       <HeaderContent>{null}</HeaderContent>
       <MainContent>
-        <TaroWaiting></TaroWaiting>
+        {tarotInteractation ? (
+          <TarotInteraction setTarotInteractation={setTarotInteractation} />
+        ) : (
+          <TarotResult />
+        )}
       </MainContent>
     </>
   );
