@@ -68,6 +68,7 @@ export default function ChatTextField() {
           resize: none;
           padding: 10px 56px 10px 12px;
           width: 100%;
+          height: ${isSingleLineTextarea ? `${textareaMinHeight}px` : "auto"};
           min-height: ${textareaMinHeight}px;
           border-radius: 8px;
           ${({ theme }) => theme.fonts.body3}
