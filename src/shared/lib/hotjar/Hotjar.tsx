@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Script from 'next/script';
+import Script from "next/script";
 
 export default function Hotjar() {
-  if (process.env.NODE_ENV !== 'production') return null;
+  if (process.env.NODE_ENV !== "production") return null;
 
   return (
     <Script id="hotjar-script" strategy="afterInteractive">

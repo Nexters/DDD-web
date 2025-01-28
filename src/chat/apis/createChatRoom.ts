@@ -1,5 +1,5 @@
-import apiClient from '@/shared/lib/axios/apiClient';
-import { z } from 'zod';
+import apiClient from "@/shared/lib/axios/apiClient";
+import { z } from "zod";
 
 export type CreateChatRoomResponse = {
   roomId: number;

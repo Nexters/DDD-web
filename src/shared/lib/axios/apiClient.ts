@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const apiClient = axios.create({
-  adapter: 'fetch',
+  adapter: "fetch",
   withCredentials: true,
 });
 

@@ -1,6 +1,6 @@
-import apiClient from '@/shared/lib/axios/apiClient';
-import { z } from 'zod';
-import { TarotCardIdSchema } from '../models/tarotCardId';
+import apiClient from "@/shared/lib/axios/apiClient";
+import { z } from "zod";
+import { TarotCardIdSchema } from "../models/tarotCardId";
 
 export type TarotReadingResultResponse = {
   tarot: string;
@@ -47,7 +47,9 @@ const validate = (data: TarotReadingResultResponse): TarotReadingResultData => {
 
 export const getTarotReadingResultById = async (resultId: number) => {
   return apiClient
-    .get<TarotReadingResultResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/result/${resultId}`)
+    .get<TarotReadingResultResponse>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/result/${resultId}`,
+    )
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
