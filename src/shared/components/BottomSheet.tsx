@@ -21,6 +21,8 @@ const Close = Sheet.Close;
 
 const Portal = Sheet.Portal;
 
+const Title = Sheet.Title;
+const Description = Sheet.Description;
 const Overlay = React.forwardRef<
   React.ElementRef<typeof Sheet.Overlay>,
   React.ComponentPropsWithoutRef<typeof Sheet.Overlay>
@@ -69,6 +71,8 @@ const BottomSheet = {
   Portal,
   Content,
   Overlay,
+  Title,
+  Description,
 };
 
 export default BottomSheet;
