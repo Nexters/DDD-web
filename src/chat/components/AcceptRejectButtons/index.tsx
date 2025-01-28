@@ -89,7 +89,6 @@ export default function AcceptRejectButtons({ open }: Props) {
       {
         onSuccess: (data) => {
           deleteMessage(loadingMessageId);
-          console.log(data);
 
           addMessage({
             messageId: data.messageId,
