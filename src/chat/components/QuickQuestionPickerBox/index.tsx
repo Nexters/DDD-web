@@ -11,7 +11,7 @@ import RefreshQuickQuestionButton from "../RefreshQuickQuestionButton";
 export default function QuickQuestionPickerBox() {
   const { data } = useTarotQuestionRecommends();
   const { mutate: createChatRoom } = useCreateChatRoom();
-  const { mutateAsync: sendChatMessage } = useSendChatMessage();
+  const { mutate: sendChatMessage } = useSendChatMessage();
   const router = useRouter();
 
   if (!data) return null;
