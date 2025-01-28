@@ -1,7 +1,8 @@
 "use client";
+import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
 import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
-import { useQueryClient } from "@tanstack/react-query";
+import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
@@ -10,8 +11,8 @@ import TextareaAutoSize from "../TextareaAutoSize";
 export default function TextFieldInChat() {
   const [message, setMessage] = useState("");
   const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
-  const queryClient = useQueryClient();
   const { chatId } = useParams<{ chatId: string }>();
+  const { addMessage, deleteMessage } = useChatMessagesContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -24,6 +25,25 @@ export default function TextFieldInChat() {
     e.preventDefault();
     setMessage("");
 
+    addMessage({
+      messageId: Math.random(),
+      type: "USER_NORMAL",
+      sender: "USER",
+      answers: [message],
+    });
+
+    await delay(500);
+
+    const loadingMessageId = Math.random();
+
+    addMessage({
+      messageId: loadingMessageId,
+      type: "SYSTEM_NORMAL_REPLY",
+      sender: "SYSTEM",
+      loading: true,
+      answers: [],
+    });
+
     sendChatMessage(
       {
         roomId: Number(chatId),
@@ -31,8 +51,15 @@ export default function TextFieldInChat() {
         intent: "NORMAL",
       },
       {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["chatMessages", Number(chatId)] });
+        onSuccess: (data) => {
+          deleteMessage(loadingMessageId);
+
+          addMessage({
+            messageId: data.messageId,
+            type: data.type,
+            sender: data.sender,
+            answers: data.answers,
+          });
         },
       }
     );
