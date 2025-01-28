@@ -2,7 +2,6 @@
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
-import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
@@ -13,7 +12,6 @@ export default function TextFieldInChatOverview() {
   const { mutate: createChatRoom, isPending: isCreatingChatRoom } = useCreateChatRoom();
   const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
