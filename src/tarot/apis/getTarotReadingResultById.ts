@@ -51,6 +51,6 @@ export const getTarotReadingResultById = async (resultId: number) => {
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
-      return undefined;
+      throw error;
     });
 };

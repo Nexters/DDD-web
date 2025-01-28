@@ -45,6 +45,6 @@ export const getChatMessagesByRoomId = (roomId: number) => {
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
-      return undefined;
+      throw error;
     });
 };
