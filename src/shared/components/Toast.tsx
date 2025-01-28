@@ -1,19 +1,19 @@
-import * as Toast from "@radix-ui/react-toast";
+import * as RadixToast from "@radix-ui/react-toast";
 import styled from "styled-components";
 
-const ToastProvider = Toast.Provider;
+const ToastProvider = RadixToast.Provider;
 
-const StyledToastRoot = styled(Toast.Root)`
+const StyledToastRoot = styled(RadixToast.Root)`
   background-color: ${({ theme }) => theme.colors.grey70};
   padding: 8px 16px;
   border-radius: 40px;
   opacity: 0.9;
 `;
 
-const ToastTitle = Toast.Title;
-const ToastDescription = Toast.Description;
-const ToastAction = Toast.Action;
-const ToastViewport = styled(Toast.Viewport)`
+const ToastTitle = RadixToast.Title;
+const ToastDescription = RadixToast.Description;
+const ToastAction = RadixToast.Action;
+const ToastViewport = styled(RadixToast.Viewport)`
   position: fixed;
   top: 3px;
   left: 50%;
@@ -27,7 +27,7 @@ const ToastViewport = styled(Toast.Viewport)`
   ${({ theme }) => theme.fonts.body2};
 `;
 
-export default {
+const Toast = {
   Provider: ToastProvider,
   Root: StyledToastRoot,
   Title: ToastTitle,
@@ -35,3 +35,5 @@ export default {
   Action: ToastAction,
   Viewport: ToastViewport,
 };
+
+export default Toast;

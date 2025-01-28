@@ -17,7 +17,7 @@ interface ModalProps {
   children: ReactNode;
 }
 
-const Modal = ({ isOpen, onOpenChange, children }: ModalProps) => {
+const Root = ({ isOpen, onOpenChange, children }: ModalProps) => {
   return (
     <Dialog.Root open={isOpen} onOpenChange={onOpenChange}>
       {children}
@@ -61,4 +61,13 @@ const Description = styled(Dialog.Description)`
   ${({ theme }) => theme.colors.grey90};
 `;
 
-export default { Modal, Trigger, Overlay, Content, Title, Description };
+const Modal = {
+  Root,
+  Trigger,
+  Overlay,
+  Content,
+  Title,
+  Description,
+};
+
+export default Modal;
