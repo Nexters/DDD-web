@@ -28,7 +28,7 @@ const schema = z.object({
   ),
 });
 
-type ChatMessagesByRoomIdData = z.infer<typeof schema>;
+export type ChatMessagesByRoomIdData = z.infer<typeof schema>;
 
 const validate = (data: ChatMessagesByRoomIdResponse): ChatMessagesByRoomIdData => {
   const validatedData = schema.parse(data);
