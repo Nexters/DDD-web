@@ -3,20 +3,14 @@
 import { cookies } from "next/headers";
 
 export const createUserKeyCookie = () => {
-  const userKey = crypto.randomUUID();
-  if (cookies().get("userKey")) {
-    return cookies().get("userKey")?.value;
+  const uuid = crypto.randomUUID();
+  if (cookies().get("guestId")) {
+    return cookies().get("guestId")?.value;
   }
-  cookies().set("userKey", userKey, {
+  cookies().set("guestId", uuid, {
     path: "/",
-    httpOnly: true,
-    secure: true,
     maxAge: 60 * 60 * 24 * 365,
-    /**
-     * TODO: 백엔드 서버와 도메인을 통합한 후 설정값 변경
-     */
-    sameSite: "none",
   });
 
-  return userKey;
+  return uuid;
 };
