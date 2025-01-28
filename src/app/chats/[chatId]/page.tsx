@@ -1,11 +1,5 @@
-import HeaderContent from "@/shared/components/HeaderContent";
-import MainContent from "@/shared/components/MainContent";
+import Chat from "@/chat/components/Chat";
 
 export default function ChatPage() {
-  return (
-    <>
-      <HeaderContent>{null}</HeaderContent>
-      <MainContent>{null}</MainContent>
-    </>
-  );
+  return <Chat />;
 }
