@@ -1,4 +1,3 @@
-import { createUserKeyCookie } from "@/auth/utils/createUserKeyCookie";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
 import { TarotQuestionRecommendListData } from "@/tarot/apis/getTarotQuestionRecommends";
@@ -22,7 +21,6 @@ export default function QuickQuestionPickerBox() {
       ...question,
       color: colors[i],
       onClick: async () => {
-        await createUserKeyCookie();
         createChatRoom(undefined, {
           onSuccess: (data) => {
             sendChatMessage(
