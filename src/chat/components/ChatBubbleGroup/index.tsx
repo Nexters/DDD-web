@@ -16,7 +16,7 @@ export default function ChatBubbleGroup({ message }: Props) {
     if (message.loading) {
       return <ChatBubble key={message.messageId} sender={"SYSTEM"} loading />;
     }
-    console.log(message);
+
     return message.answers.map((answer) => <ChatBubble key={message.messageId} sender={"SYSTEM"} message={answer} />);
   };
 
