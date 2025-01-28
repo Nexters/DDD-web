@@ -1,7 +1,7 @@
-import apiClient from '@/shared/lib/axios/apiClient';
-import { z } from 'zod';
-import { MessageCategorySchema } from '../models/messageCategory';
-import { MessageSenderTypeSchema } from '../models/messageSender';
+import apiClient from "@/shared/lib/axios/apiClient";
+import { z } from "zod";
+import { MessageCategorySchema } from "../models/messageCategory";
+import { MessageSenderTypeSchema } from "../models/messageSender";
 
 export type CreateChatRoomResponse = {
   roomId: number;
@@ -32,7 +32,9 @@ const validate = (data: CreateChatRoomResponse): CreateChatRoomData => {
 
 export const createChatRoom = () => {
   return apiClient
-    .post<CreateChatRoomResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room`)
+    .post<CreateChatRoomResponse>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room`,
+    )
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

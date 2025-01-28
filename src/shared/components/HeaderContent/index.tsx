@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
-import { css } from 'styled-components';
+import { ReactNode } from "react";
+import { css } from "styled-components";
 
 interface HeaderContentProps {
   children: ReactNode;
@@ -23,7 +23,13 @@ interface HeaderContentProps {
   divider?: boolean;
 }
 
-export default function HeaderContent({ children, startAction, endAction, sticky, divider }: HeaderContentProps) {
+export default function HeaderContent({
+  children,
+  startAction,
+  endAction,
+  sticky,
+  divider,
+}: HeaderContentProps) {
   return (
     <>
       <header

@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
-import { css } from 'styled-components';
+import { ReactNode } from "react";
+import { css } from "styled-components";
 
-export default function ResponsiveRootLayout({ children }: { children: ReactNode }) {
+export default function ResponsiveRootLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <div
       css={css`

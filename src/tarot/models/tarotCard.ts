@@ -1,5 +1,5 @@
-import { StaticImageData } from 'next/image';
-import { TarotCardIdType } from './tarotCardId';
+import { StaticImageData } from "next/image";
+import { TarotCardIdType } from "./tarotCardId";
 
 export type TarotCardType = {
   name: string;

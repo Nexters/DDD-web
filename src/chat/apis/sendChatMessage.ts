@@ -1,12 +1,12 @@
-import apiClient from '@/shared/lib/axios/apiClient';
-import { z } from 'zod';
-import { MessageCategorySchema } from '../models/messageCategory';
-import { MessageSenderTypeSchema } from '../models/messageSender';
+import apiClient from "@/shared/lib/axios/apiClient";
+import { z } from "zod";
+import { MessageCategorySchema } from "../models/messageCategory";
+import { MessageSenderTypeSchema } from "../models/messageSender";
 
 export type SendChatMessageRequest = {
   roomId: number;
   message: string;
-  intent: 'NORMAL' | 'TAROT_ACCEPT' | 'TAROT_DECLINE' | 'RECOMMEND_QUESTION';
+  intent: "NORMAL" | "TAROT_ACCEPT" | "TAROT_DECLINE" | "RECOMMEND_QUESTION";
   referenceQuestionId?: number;
 };
 
@@ -39,7 +39,10 @@ const validate = (data: SendChatMessageResponse): SendChatMessageData => {
 
 export const sendChatMessage = (request: SendChatMessageRequest) => {
   return apiClient
-    .post<SendChatMessageResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`, request)
+    .post<SendChatMessageResponse>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`,
+      request,
+    )
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

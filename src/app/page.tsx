@@ -1,5 +1,5 @@
-import HeaderContent from '@/shared/components/HeaderContent';
-import MainContent from '@/shared/components/MainContent';
+import HeaderContent from "@/shared/components/HeaderContent";
+import MainContent from "@/shared/components/MainContent";
 
 export default function HomePage() {
   return (

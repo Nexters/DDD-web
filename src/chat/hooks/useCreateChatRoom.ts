@@ -1,6 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 
-import { createChatRoom } from '../apis/createChatRoom';
+import { createChatRoom } from "../apis/createChatRoom";
 
 export const useCreateChatRoom = () => {
   return useMutation({
