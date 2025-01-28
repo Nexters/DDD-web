@@ -27,11 +27,11 @@ const ToastViewport = styled(Toast.Viewport)`
   ${({ theme }) => theme.fonts.body2};
 `;
 
-export {
-  ToastProvider,
-  StyledToastRoot,
-  ToastTitle,
-  ToastDescription,
-  ToastAction,
-  ToastViewport,
+export default {
+  Provider: ToastProvider,
+  Root: StyledToastRoot,
+  Title: ToastTitle,
+  Description: ToastDescription,
+  Action: ToastAction,
+  Viewport: ToastViewport,
 };
