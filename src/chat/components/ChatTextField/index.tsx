@@ -3,6 +3,7 @@ import { createUserKeyCookie } from "@/auth/utils/createUserKeyCookie";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
@@ -17,7 +18,10 @@ export default function ChatTextField() {
   const textareaMinHeight = 52;
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.target.value);
+    const value = e.target.value;
+    if (value.length <= maxMessageLength) {
+      setMessage(value);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +45,7 @@ export default function ChatTextField() {
       },
     });
   };
-
+  const maxMessageLength = 300;
   const disabled = isCreatingChatRoom || isSendingChatMessage;
 
   return (
@@ -52,42 +56,71 @@ export default function ChatTextField() {
         border-radius: 8px;
       `}
     >
-      <TextareaAutosize
-        disabled={disabled}
-        value={message}
-        onChange={handleChange}
-        placeholder="오늘의 운세는 어떨까?"
-        minRows={1}
-        maxRows={8}
-        onHeightChange={(height) => {
-          const isSingleLine = height <= textareaMinHeight;
-          setIsSingleLineTextarea(isSingleLine);
-        }}
-        css={css`
-          border: none;
-          resize: none;
-          padding: 10px 56px 10px 12px;
-          width: 100%;
-          height: ${isSingleLineTextarea ? `${textareaMinHeight}px` : "auto"};
-          min-height: ${textareaMinHeight}px;
-          border-radius: 8px;
-          ${({ theme }) => theme.fonts.body3}
-          line-height: ${isSingleLineTextarea ? "32px" : "24px"};
-          background-color: ${({ theme }) => theme.colors.grey00};
-          color: ${({ theme }) => theme.colors.grey90};
-          caret-color: ${({ theme }) => theme.colors.grey90};
-          &::placeholder {
-            color: ${({ theme }) => theme.colors.grey30};
-          }
-          &:focus-visible {
-            outline: none;
-          }
-          &:disabled {
-            color: ${({ theme }) => theme.colors.grey40};
-            background-color: ${({ theme }) => theme.colors.grey10};
-          }
-        `}
-      />
+      <Tooltip.Provider>
+        <Tooltip.Root open={message.length === maxMessageLength}>
+          <Tooltip.Trigger asChild>
+            <TextareaAutosize
+              value={message}
+              onChange={handleChange}
+              placeholder="오늘의 운세는 어떨까?"
+              minRows={1}
+              maxRows={8}
+              onHeightChange={(height) => {
+                const isSingleLine = height <= textareaMinHeight;
+                setIsSingleLineTextarea(isSingleLine);
+              }}
+              css={css`
+                border: none;
+                resize: none;
+                padding: 10px 56px 10px 12px;
+                width: 100%;
+                height: ${isSingleLineTextarea ? `${textareaMinHeight}px` : "auto"};
+                min-height: ${textareaMinHeight}px;
+                border-radius: 8px;
+                ${({ theme }) => theme.fonts.body3}
+                line-height: ${isSingleLineTextarea ? "32px" : "24px"};
+                background-color: ${({ theme }) => theme.colors.grey00};
+                color: ${({ theme }) => theme.colors.grey90};
+                caret-color: ${({ theme }) => theme.colors.grey90};
+                &::placeholder {
+                  color: ${({ theme }) => theme.colors.grey30};
+                }
+                &:focus-visible {
+                  outline: none;
+                }
+                ${disabled &&
+                css`
+                  color: ${({ theme }) => theme.colors.grey40};
+                  background-color: ${({ theme }) => theme.colors.grey10};
+                `}
+              `}
+            />
+          </Tooltip.Trigger>
+          <Tooltip.Portal>
+            <Tooltip.Content
+              css={css`
+                background-color: ${({ theme }) => theme.colors.grey90};
+                color: ${({ theme }) => theme.colors.white};
+                padding: 6px 8px;
+                border-radius: 8px;
+                ${({ theme }) => theme.fonts.body1}
+                text-align: center;
+              `}
+            >
+              <Tooltip.Arrow
+                width={16}
+                height={10}
+                css={css`
+                  fill: ${({ theme }) => theme.colors.grey90};
+                `}
+              />
+              미안하지만 고양이가 알아들을 수 있는
+              <br />
+              글자 수는 300자까지야 냥
+            </Tooltip.Content>
+          </Tooltip.Portal>
+        </Tooltip.Root>
+      </Tooltip.Provider>
       <button
         type="submit"
         disabled={disabled}
