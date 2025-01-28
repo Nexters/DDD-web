@@ -35,6 +35,7 @@ export default function ChatBubble({ sender, message, card, loading }: Props) {
           border-radius: 8px;
           max-width: 260px;
           margin-left: auto;
+          white-space: pre-wrap;
         `}
       >
         {message}
@@ -86,6 +87,7 @@ export default function ChatBubble({ sender, message, card, loading }: Props) {
         border-radius: 8px;
         max-width: 260px;
         color: ${({ theme }) => theme.colors.grey90};
+        white-space: pre-wrap;
       `}
     >
       {message}
