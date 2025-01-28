@@ -21,6 +21,7 @@ export default function TextFieldInChat() {
     }
   };
 
+  // TODO: 채팅을 전송한 경우 최하단으로 스크롤
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
