@@ -9,6 +9,8 @@ export default function MainContent({ children }: { children: ReactNode }) {
       css={css`
         position: relative;
         flex: 1;
+        display: flex;
+        flex-direction: column;
       `}
     >
       {children}
