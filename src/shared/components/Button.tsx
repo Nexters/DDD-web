@@ -1,29 +1,18 @@
-import { ColorsTypes } from "../lib/styledComponents/theme";
 import React, { ReactNode } from "react";
+import { ColorsTypes } from "../lib/styledComponents/theme";
 
 import styled, { css } from "styled-components";
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  asChild?: boolean;
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color: keyof Pick<ColorsTypes, "grey70" | "grey10">;
   children: ReactNode;
   disabled?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    { className, asChild = false, color, children, disabled, ...props },
-    ref
-  ) => {
+  ({ className, color, children, disabled, ...props }, ref) => {
     return (
-      <BaseButton
-        color={color}
-        className={className}
-        ref={ref}
-        disabled={!!disabled}
-        {...props}
-      >
+      <BaseButton color={color} className={className} ref={ref} disabled={!!disabled} {...props}>
         {children}
       </BaseButton>
     );
