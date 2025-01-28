@@ -1,11 +1,18 @@
-import HeaderContent from '@/shared/components/HeaderContent';
-import MainContent from '@/shared/components/MainContent';
+import ChatOverview from '@/chat/components/ChatOverview';
+import { getTarotQuestionRecommends } from '@/tarot/apis/getTarotQuestionRecommends';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['tarotQuestionRecommends'],
+    queryFn: getTarotQuestionRecommends,
+  });
+
   return (
-    <>
-      <HeaderContent>{null}</HeaderContent>
-      <MainContent>{null}</MainContent>
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ChatOverview />
+    </HydrationBoundary>
   );
 }
