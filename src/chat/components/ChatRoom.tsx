@@ -40,6 +40,9 @@ export default function ChatRoom() {
           display: flex;
           flex-direction: column;
           overflow-y: auto;
+          /**
+          FIXME: 데스크탑에서 스크롤바 영역이 좁게 설정된 (600px) 모습이 전체 화면을 채우는 디바이더와 어색한 조화를 이루어 스크롤바 영역 임시 제거.
+           */
           -ms-overflow-style: none;
           scrollbar-width: none;
           &::-webkit-scrollbar {
@@ -48,8 +51,6 @@ export default function ChatRoom() {
         `}
       >
         <ChatHeader />
-        {/* TODO: 오버플로우 컨테이너 */}
-
         <div
           ref={contentRef}
           css={css`
