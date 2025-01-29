@@ -44,6 +44,9 @@ const TarotResult = () => {
 
   const { data: recommendQuestions } = useTarotQuestionRecommends();
 
+  /**
+   * Mock data 추후 Tanstack query로 변경
+   */
   useEffect(() => {
     async function fetchData() {
       try {
@@ -63,12 +66,8 @@ const TarotResult = () => {
   if (loading) return <p>Loading...</p>;
   if (!data) return <p>No data available</p>;
 
-  // const { data } = useTarotReadingResult();
-
-  // console.log(resultId);
-
   // const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
-  // console.log(data);
+
   console.log(recommendQuestions);
 
   return (
