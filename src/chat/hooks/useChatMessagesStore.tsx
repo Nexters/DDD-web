@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useCallback, useContext, useReducer } from "react";
 import { ChatMessagesByRoomIdData } from "../apis/getChatMessagesByRoomId";
 import { MessageType } from "../models/message";
 
@@ -58,17 +58,17 @@ export const useChatMessagesContext = () => {
 export const ChatMessagesProvider = ({ children }: { children: React.ReactNode }) => {
   const [state, dispatch] = useReducer(chatMessagesReducer, []);
 
-  const addMessage = (message: MessageType) => {
+  const addMessage = useCallback((message: MessageType) => {
     dispatch({ type: actionTypes.ADD_MESSAGE, payload: message });
-  };
+  }, []);
 
-  const copyServerState = (messages: ChatMessagesByRoomIdData["messages"]) => {
+  const copyServerState = useCallback((messages: ChatMessagesByRoomIdData["messages"]) => {
     dispatch({ type: actionTypes.COPY_SERVER_STATE, payload: messages });
-  };
+  }, []);
 
-  const deleteMessage = (messageId: MessageType["messageId"]) => {
+  const deleteMessage = useCallback((messageId: MessageType["messageId"]) => {
     dispatch({ type: actionTypes.DELETE_MESSAGE, payload: messageId });
-  };
+  }, []);
 
   return (
     <ChatMessagesContext.Provider value={{ state, addMessage, copyServerState, deleteMessage }}>
