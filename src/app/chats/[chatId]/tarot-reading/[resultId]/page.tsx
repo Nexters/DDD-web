@@ -1,6 +1,5 @@
 "use client";
 
-import HeaderContent from "@/shared/components/HeaderContent";
 import MainContent from "@/shared/components/MainContent";
 import TarotInteraction from "./components/TarotInteraction";
 import TarotResult from "./components/TarotResult";
