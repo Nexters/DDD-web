@@ -4,7 +4,7 @@ import QuickQuestionPickerBox from "@/chat/components/QuickQuestionPickerBox";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
 import MainContent from "@/shared/components/MainContent";
 import { css } from "styled-components";
-import ChatTextField from "../ChatTextField";
+import TextFieldInChatOverview from "./TextFieldInChatOverview";
 
 export default function ChatOverview() {
   return (
@@ -39,7 +39,7 @@ export default function ChatOverview() {
             padding: 16px 20px;
           `}
         >
-          <ChatTextField />
+          <TextFieldInChatOverview />
         </div>
       </div>
     </MainContent>
