@@ -57,6 +57,7 @@ export default function ChatRoom() {
             display: flex;
             flex-direction: column;
             gap: 16px;
+            margin-top: 16px;
           `}
         >
           {messages.map((message, index, array) => {
