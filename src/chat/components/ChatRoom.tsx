@@ -11,12 +11,14 @@ import MainContent from "@/shared/components/MainContent";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { css } from "styled-components";
-import ChatCardSelect from "./ChatCardSelect";
+import { useStickToBottom } from "use-stick-to-bottom";
+import ChatHeader from "./ChatHeader";
+
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const { data } = useChatMessages(Number(chatId));
+  const { scrollRef, contentRef } = useStickToBottom();
   const { copyServerState, state: messages } = useChatMessagesContext();
-
   useEffect(() => {
     if (data) {
       copyServerState(data.messages);
@@ -33,9 +35,10 @@ export default function ChatRoom() {
   return (
     <MainContent>
       <div
+        ref={scrollRef}
         css={css`
           flex: 1;
-          padding: 16px 20px;
+          padding: 0px 20px 16px;
           display: flex;
           flex-direction: column;
         `}
@@ -75,6 +78,37 @@ export default function ChatRoom() {
           </div>
           <AcceptRejectButtons open={showAcceptRejectButtons} />
         </div>
+          overflow-y: auto;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        `}
+      >
+        <ChatHeader />
+        {/* TODO: 오버플로우 컨테이너 */}
+
+        <div
+          ref={contentRef}
+          css={css`
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+          `}
+        >
+          {messages.map((message, index, array) => {
+            if (message.sender === "SYSTEM") {
+              return (
+                <ChatBubbleGroup key={message.messageId} message={message} isJustSent={index === array.length - 1} />
+              );
+            }
+            return <ChatBubble key={message.messageId} sender={message.sender} message={message.answers[0]} />;
+          })}
+        </div>
+
+        <AcceptRejectButtons open={showAcceptRejectButtons} />
       </div>
 
       <div style={{ overflowY: "hidden" }}>

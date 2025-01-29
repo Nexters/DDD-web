@@ -9,6 +9,7 @@ export default function ResponsiveRootLayout({ children }: { children: ReactNode
       css={css`
         margin-inline: auto;
         min-height: 100dvh;
+        height: 100%;
         display: flex;
         flex-direction: column;
         @media screen and (min-width: 450px) {
