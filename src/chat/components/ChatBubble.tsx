@@ -58,9 +58,9 @@ export default function ChatBubble({ sender, message, card, loading }: Props) {
           width: fit-content;
         `}
       >
-        <Dot delay={0} color={theme.colors.primary01} />
-        <Dot delay={0.3} color={theme.colors.primary02} />
-        <Dot delay={0.6} color={theme.colors.primary03} />
+        <Dot $delay={0} $color={theme.colors.primary01} />
+        <Dot $delay={0.3} $color={theme.colors.primary02} />
+        <Dot $delay={0.6} $color={theme.colors.primary03} />
       </div>
     );
   }
@@ -95,11 +95,11 @@ export default function ChatBubble({ sender, message, card, loading }: Props) {
   );
 }
 
-const Dot = styled.span<{ delay: number; color: string }>`
+const Dot = styled.span<{ $delay: number; $color: string }>`
   width: 6px;
   height: 6px;
-  background-color: ${({ color }) => color};
+  background-color: ${({ $color }) => $color};
   border-radius: 50%;
   animation: ${fadeInOut} 1.5s infinite ease-in-out;
-  animation-delay: ${({ delay }) => delay}s;
+  animation-delay: ${({ $delay }) => $delay}s;
 `;
