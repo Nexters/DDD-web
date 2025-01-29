@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { css } from "styled-components";
-import FullscreenOverflowDivider from "../FullscreenOverflowDivider";
+import FullscreenOverflowDivider from "./FullscreenOverflowDivider";
 
 interface HeaderContentProps {
   children: ReactNode;

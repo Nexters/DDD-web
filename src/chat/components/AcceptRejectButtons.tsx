@@ -3,7 +3,7 @@ import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
 import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { css } from "styled-components";
-import ChipButton from "../ChipButton";
+import ChipButton from "./ChipButton";
 
 type Props = {
   open: boolean;

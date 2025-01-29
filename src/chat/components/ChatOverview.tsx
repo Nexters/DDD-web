@@ -4,7 +4,7 @@ import QuickQuestionPickerBox from "@/chat/components/QuickQuestionPickerBox";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
 import MainContent from "@/shared/components/MainContent";
 import { css } from "styled-components";
-import TextFieldInChatOverview from "../TextFieldInChatOverview";
+import TextFieldInChatOverview from "./TextFieldInChatOverview";
 
 export default function ChatOverview() {
   return (

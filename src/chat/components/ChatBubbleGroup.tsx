@@ -1,7 +1,7 @@
 import { MessageType } from "@/chat/models/message";
 import { css, styled } from "styled-components";
-import ChatAvatar from "../ChatAvatar";
-import ChatBubble from "../ChatBubble";
+import ChatAvatar from "./ChatAvatar";
+import ChatBubble from "./ChatBubble";
 
 type Props = {
   message: MessageType;

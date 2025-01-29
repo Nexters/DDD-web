@@ -1,18 +1,17 @@
 "use client";
-import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
+import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
-import { delay } from "@/shared/utils/delay";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
-import TextareaAutoSize from "../TextareaAutoSize";
+import TextareaAutoSize from "./TextareaAutoSize";
 
-export default function TextFieldInChat() {
+export default function TextFieldInChatOverview() {
   const [message, setMessage] = useState("");
+  const { mutate: createChatRoom, isPending: isCreatingChatRoom } = useCreateChatRoom();
   const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
-  const { chatId } = useParams<{ chatId: string }>();
-  const { addMessage, deleteMessage } = useChatMessagesContext();
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -21,52 +20,29 @@ export default function TextFieldInChat() {
     }
   };
 
-  // TODO: 채팅을 전송한 경우 최하단으로 스크롤
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
 
-    addMessage({
-      messageId: Math.random(),
-      type: "USER_NORMAL",
-      sender: "USER",
-      answers: [message],
-    });
-
-    await delay(500);
-
-    const loadingMessageId = Math.random();
-
-    addMessage({
-      messageId: loadingMessageId,
-      type: "SYSTEM_NORMAL_REPLY",
-      sender: "SYSTEM",
-      loading: true,
-      answers: [],
-    });
-
-    sendChatMessage(
-      {
-        roomId: Number(chatId),
-        message: message,
-        intent: "NORMAL",
+    createChatRoom(undefined, {
+      onSuccess: (data) => {
+        sendChatMessage(
+          {
+            roomId: data.roomId,
+            message: message,
+            intent: "NORMAL",
+          },
+          {
+            onSuccess: () => {
+              router.push(`/chats/${data.roomId}`);
+            },
+          }
+        );
       },
-      {
-        onSuccess: (data) => {
-          deleteMessage(loadingMessageId);
-
-          addMessage({
-            messageId: data.messageId,
-            type: data.type,
-            sender: data.sender,
-            answers: data.answers,
-          });
-        },
-      }
-    );
+    });
   };
   const maxMessageLength = 300;
-  const disabled = isSendingChatMessage;
+  const disabled = isCreatingChatRoom || isSendingChatMessage;
 
   return (
     <form

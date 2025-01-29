@@ -1,10 +1,10 @@
-import { ColorsTypes } from '@/shared/lib/styledComponents/theme';
-import { css, useTheme } from 'styled-components';
+import { ColorsTypes } from "@/shared/lib/styledComponents/theme";
+import { css, useTheme } from "styled-components";
 type Props = {
   question: string;
   onClick: () => void;
   selectedCount: number;
-  color: keyof Pick<ColorsTypes, 'primary03' | 'primary01' | 'grey10' | 'grey60'>;
+  color: keyof Pick<ColorsTypes, "primary03" | "primary01" | "grey10" | "grey60">;
 };
 
 export default function QuickQuestionPicker({ question, onClick, selectedCount, color }: Props) {
@@ -13,15 +13,15 @@ export default function QuickQuestionPicker({ question, onClick, selectedCount, 
 
   const componentTheme = (() => {
     switch (color) {
-      case 'primary03':
-      case 'grey60':
+      case "primary03":
+      case "grey60":
         return {
           backgroundColor: theme.colors[color],
           titleColor: theme.colors.white,
           captionColor: theme.colors.grey10,
         };
-      case 'primary01':
-      case 'grey10':
+      case "primary01":
+      case "grey10":
         return {
           backgroundColor: theme.colors[color],
           titleColor: theme.colors.grey70,

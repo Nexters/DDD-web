@@ -4,8 +4,8 @@ import { TarotQuestionRecommendListData } from "@/tarot/apis/getTarotQuestionRec
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 import { useRouter } from "next/navigation";
 import { css } from "styled-components";
-import QuickQuestionPicker from "../QuickQuestionPicker";
-import RefreshQuickQuestionButton from "../RefreshQuickQuestionButton";
+import QuickQuestionPicker from "./QuickQuestionPicker";
+import RefreshQuickQuestionButton from "./RefreshQuickQuestionButton";
 
 export default function QuickQuestionPickerBox() {
   const { data } = useTarotQuestionRecommends();
