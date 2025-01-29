@@ -22,7 +22,10 @@ export default function ChatHeader() {
 
   return (
     <HeaderContent
-      divider
+      /**
+       * FIXME: 구분선이 추가되어야 하나 쌓임 맥락에 의해 전체 화면 오버플로우 되지 않는 문제
+       * 레이아웃 구조 개선 후 divider prop 적용 필요
+       *  */
       sticky
       endAction={
         <BottomSheet.Root>
