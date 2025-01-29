@@ -2,7 +2,7 @@
 
 import AcceptRejectButtons from "@/chat/components/AcceptRejectButtons";
 import ChatBubble from "@/chat/components/ChatBubble";
-import ChatBubbleStack from "@/chat/components/ChatBubbleGroup";
+import ChatBubbleGroup from "@/chat/components/ChatBubbleGroup";
 import TextFieldInChat from "@/chat/components/TextFieldInChat";
 import { useChatMessages } from "@/chat/hooks/useChatMessages";
 import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
@@ -55,7 +55,7 @@ export default function ChatRoom() {
             {messages.map((message, index, array) => {
               if (message.sender === "SYSTEM") {
                 return (
-                  <ChatBubbleStack key={message.messageId} message={message} isJustSent={index === array.length - 1} />
+                  <ChatBubbleGroup key={message.messageId} message={message} isJustSent={index === array.length - 1} />
                 );
               }
               return <ChatBubble key={message.messageId} sender={message.sender} message={message.answers[0]} />;
