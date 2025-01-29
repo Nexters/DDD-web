@@ -21,7 +21,7 @@ export default function ChatRoom() {
     if (data) {
       copyServerState(data.messages);
     }
-  }, [data, copyServerState]);
+  }, [data]);
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
   if (!data) return null;
