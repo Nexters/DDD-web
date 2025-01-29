@@ -4,9 +4,22 @@ import KebobMenuIcon from "@/shared/assets/icons/kebab-menu.svg";
 import BottomSheet from "@/shared/components/BottomSheet";
 import HeaderContent from "@/shared/components/HeaderContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useRouter } from "next/navigation";
 import { css } from "styled-components";
+import { useCreateChatRoom } from "../hooks/useCreateChatRoom";
 
 export default function ChatHeader() {
+  const { mutate: createChatRoom } = useCreateChatRoom();
+  const router = useRouter();
+
+  const handleResetChatClick = () => {
+    createChatRoom(undefined, {
+      onSuccess: (data) => {
+        router.push(`/chats/${data.roomId}`);
+      },
+    });
+  };
+
   return (
     <HeaderContent
       divider
@@ -47,8 +60,9 @@ export default function ChatHeader() {
                   <button type="button">친구에게 타로냥 알리기</button>
                 </li>
                 <li>
-                  {/* TODO: 메뉴 버튼 액션 추가 */}
-                  <button type="button">새 대화 시작하기</button>
+                  <button type="button" onClick={handleResetChatClick}>
+                    새 대화 시작하기
+                  </button>
                 </li>
               </ul>
             </BottomSheet.Content>
