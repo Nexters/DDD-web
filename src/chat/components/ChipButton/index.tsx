@@ -1,13 +1,13 @@
 import { ColorsTypes } from "@/shared/lib/styledComponents/theme";
-import { ComponentProps } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { css, useTheme } from "styled-components";
 
 type Props = {
-  label: string;
+  children: ReactNode;
   color: keyof Pick<ColorsTypes, "primary02" | "grey30">;
 } & ComponentProps<"button">;
 
-export default function ChipButton({ label, color, ...restProps }: Props) {
+export default function ChipButton({ color, children, ...restProps }: Props) {
   const theme = useTheme();
 
   const componentTheme = (() => {
@@ -41,7 +41,7 @@ export default function ChipButton({ label, color, ...restProps }: Props) {
       `}
       {...restProps}
     >
-      {label}
+      {children}
     </button>
   );
 }

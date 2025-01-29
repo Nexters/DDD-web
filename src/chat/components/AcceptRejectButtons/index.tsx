@@ -111,20 +111,12 @@ export default function AcceptRejectButtons({ open }: Props) {
         margin-top: 76px;
       `}
     >
-      <ChipButton
-        type="button"
-        disabled={isSendingChatMessage}
-        label={acceptMessage}
-        color="primary02"
-        onClick={handleAcceptClick}
-      />
-      <ChipButton
-        type="button"
-        disabled={isSendingChatMessage}
-        label={rejectMessage}
-        color="grey30"
-        onClick={handleRejectClick}
-      />
+      <ChipButton type="button" disabled={isSendingChatMessage} color="primary02" onClick={handleAcceptClick}>
+        {acceptMessage}
+      </ChipButton>
+      <ChipButton type="button" disabled={isSendingChatMessage} color="grey30" onClick={handleRejectClick}>
+        {rejectMessage}
+      </ChipButton>
     </div>
   );
 }
