@@ -134,7 +134,7 @@ const TarotResult = () => {
         <RecommendContainer>
           {recommendQuestions?.questions.map((item, idx) => (
             <RecommendQuestion key={idx}>
-              <QuestionCount> {item.referenceCount}</QuestionCount>
+              <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
               <QuestionTitle>{item.question} </QuestionTitle>
             </RecommendQuestion>
           ))}
@@ -162,6 +162,7 @@ const QuestionCount = styled.p`
 const RecommendQuestion = styled.button`
   display: flex;
   flex-direction: column;
+
   gap: 8px;
   width: 100%;
   height: 120px;
@@ -171,6 +172,11 @@ const RecommendQuestion = styled.button`
   border-radius: 12px;
 
   padding: 24px 20px;
+
+  @media screen and (max-width: 600px) {
+    height: 79px;
+    padding: 15px 20px;
+  }
 `;
 
 const SubText = styled.h3`
@@ -180,16 +186,20 @@ const SubText = styled.h3`
 
 const MainText = styled.h3`
   color: ${({ theme }) => theme.colors.grey90};
+  ${({ theme }) => theme.fonts.subHead1};
 `;
 const RecommendContainer = styled.div`
   width: 100%;
-  height: 252px;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-row: auto auto;
   grid-column-gap: 12px;
   grid-row-gap: 12px;
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
 `;
 const RecommendBox = styled.div`
   display: flex;
