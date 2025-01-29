@@ -3,6 +3,7 @@
 import * as Sheet from "@radix-ui/react-dialog";
 import React from "react";
 import styled, { keyframes } from "styled-components";
+import zIndex from "../constants/zIndex";
 
 const overlaySlow = keyframes`
   from {
@@ -50,6 +51,7 @@ const StyledBottomSheetOverlay = styled(Sheet.Overlay)`
   background-color: ${({ theme }) => theme.colors.black};
   opacity: 0.4;
   animation: ${overlaySlow} 200ms;
+  z-index: ${zIndex.overlay};
 `;
 
 const StyledBottomSheetContent = styled(Sheet.Content)`
@@ -62,6 +64,7 @@ const StyledBottomSheetContent = styled(Sheet.Content)`
   background-color: ${({ theme }) => theme.colors.white};
   width: 100%;
   max-width: 600px;
+  z-index: ${zIndex.bottomSheet};
 `;
 
 const BottomSheet = {

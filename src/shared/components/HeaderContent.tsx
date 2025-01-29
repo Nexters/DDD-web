@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 import { css } from "styled-components";
+import zIndex from "../constants/zIndex";
 import FullscreenOverflowDivider from "./FullscreenOverflowDivider";
 
 interface HeaderContentProps {
@@ -34,7 +35,7 @@ export default function HeaderContent({ children, startAction, endAction, sticky
           display: flex;
           align-items: center;
           justify-content: space-between;
-          ${sticky && `position: sticky; top: 0; z-index: 10; background-color: white;`}
+          ${sticky && `position: sticky; top: 0; z-index: ${zIndex.header}; background-color: white;`}
         `}
       >
         {startAction ? startAction : <span role="presentation" />}
