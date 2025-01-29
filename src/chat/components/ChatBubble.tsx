@@ -20,7 +20,7 @@ type Props = {
   card?: TarotCardIdType;
   loading?: boolean;
 };
-
+// TODO: 말풍선 컴포넌트 리팩터
 export default function ChatBubble({ sender, message, card, loading }: Props) {
   const theme = useTheme();
 
