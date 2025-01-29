@@ -1,5 +1,5 @@
 "use client";
-import styled from "styled-components";
+import styled, { useTheme, keyframes } from "styled-components";
 import Image from "next/image";
 import TarotImage from "@/shared/assets/images/Card1.jpg";
 // import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
@@ -16,6 +16,7 @@ import DownLoadIcon from "@/shared/assets/icons/download.svg";
 
 import Button from "@/shared/components/Button";
 
+//추후 제거
 interface TarotReadingResultResponse {
   tarot: string;
   type: string;
@@ -34,6 +35,18 @@ interface TarotReadingResultResponse {
   };
 }
 
+const fadeInOut = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
 const TarotResult = () => {
   const [data, setData] = useState<TarotReadingResultResponse | null>(null);
   const [tarrotCard, setTarotCard] = useState<TarotCardType | undefined>(
@@ -44,6 +57,7 @@ const TarotResult = () => {
 
   const { data: recommendQuestions } = useTarotQuestionRecommends();
 
+  const theme = useTheme();
   /**
    * Mock data 추후 Tanstack query로 변경
    */
@@ -67,8 +81,6 @@ const TarotResult = () => {
   if (!data) return <p>No data available</p>;
 
   // const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
-
-  console.log(recommendQuestions);
 
   return (
     <TarotResultWrapper>
@@ -99,7 +111,11 @@ const TarotResult = () => {
               <ProfileIcon />
               <div>
                 <p>타로냥</p>
-                <SystemMessgeDelay></SystemMessgeDelay>
+                <SystemMessgeDelay>
+                  <Dot $delay={0} $color={theme.colors.primary01} />
+                  <Dot $delay={0.3} $color={theme.colors.primary02} />
+                  <Dot $delay={0.6} $color={theme.colors.primary03} />
+                </SystemMessgeDelay>
               </div>
             </SystemMassegeBubble>
           </ChatImageFrame>
@@ -112,6 +128,7 @@ const TarotResult = () => {
       </TarotCardResult>
 
       <IconBtnWrapper>
+        {/* To Do 기능 추가 */}
         <IconBtn>
           결과 저장하기 <DownLoadIcon />
         </IconBtn>
@@ -149,6 +166,15 @@ const TarotResult = () => {
 
 export default TarotResult;
 
+const Dot = styled.span<{ $delay: number; $color: string }>`
+  width: 6px;
+  height: 6px;
+  background-color: ${({ $color }) => $color};
+  border-radius: 50%;
+  animation: ${fadeInOut} 1.5s infinite ease-in-out;
+  animation-delay: ${({ $delay }) => $delay}s;
+`;
+
 const QuestionTitle = styled.div`
   ${({ theme }) => theme.fonts.subHead2};
   color: ${({ theme }) => theme.colors.grey80};
@@ -161,13 +187,12 @@ const QuestionCount = styled.p`
 const RecommendQuestion = styled.button`
   display: flex;
   flex-direction: column;
-
   gap: 8px;
+
   width: 100%;
   height: 120px;
 
   background-color: ${({ theme }) => theme.colors.primary00};
-  /* background-color: scpt */
   border-radius: 12px;
 
   padding: 24px 20px;
@@ -253,6 +278,7 @@ const SystemMessgeDelay = styled.div`
   align-items: center;
 
   border-radius: 8px;
+  gap: 4px;
   background-color: ${({ theme }) => theme.colors.grey00};
   & > div {
     display: flex;
@@ -294,7 +320,7 @@ const UserMessageBubble = styled.div`
     padding: 6px 9px;
   }
 
-  /* font 추가 필요 */
+  ${({ theme }) => theme.fonts.body1};
 `;
 
 const ChatImageFrame = styled.div`
