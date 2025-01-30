@@ -85,7 +85,7 @@ const TarotResult = () => {
   return (
     <TarotResultWrapper>
       <TarotCard>
-        <CardImg src={TarotImage} alt="TarotCard"></CardImg>
+        <CardImg src={TarotImage} alt="타로카드 이미지" />
         <Title>
           {tarrotCard?.nameKR} <br /> {tarrotCard?.name}
         </Title>

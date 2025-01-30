@@ -55,8 +55,8 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
               transition={cardRotateTransition}
               onAnimationComplete={routingTarotResult}
             >
-              <CardFront alt="cardFront" src={cardFront}></CardFront>
-              <CardBack alt="card" src={cardBack}></CardBack>
+              <CardFront alt="카드 앞면" src={cardFront} />
+              <CardBack alt="카드 뒷면" src={cardBack} />
             </CardInner>
 
             {isVisible && (
@@ -67,11 +67,11 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
                 onAnimationComplete={() => setIsVisible(false)}
               >
                 <CatHand
-                  alt="cat_hand"
+                  alt="고양이손 이미지"
                   src={catHand}
                   width={158}
                   height={278}
-                ></CatHand>
+                />
               </motion.div>
             )}
           </TaroAnimationWrapper>
