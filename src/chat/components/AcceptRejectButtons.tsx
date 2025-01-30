@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function AcceptRejectButtons({ open }: Props) {
-  const { addMessage, deleteMessage } = useChatMessagesContext();
+  const { addMessage, deleteMessage, editMessage } = useChatMessagesContext();
   const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
   const { chatId } = useParams<{ chatId: string }>();
 
@@ -46,15 +46,25 @@ export default function AcceptRejectButtons({ open }: Props) {
         intent: "TAROT_ACCEPT",
       },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           deleteMessage(loadingMessageId);
 
           addMessage({
             messageId: data.messageId,
             type: data.type,
             sender: data.sender,
-            answers: data.answers,
+            answers: [data.answers[0]],
           });
+
+          for (let index = 1; index < data.answers.length; index++) {
+            await delay(1000);
+            editMessage({
+              messageId: data.messageId,
+              type: data.type,
+              sender: data.sender,
+              answers: data.answers.slice(0, index + 1),
+            });
+          }
         },
       }
     );
@@ -87,15 +97,25 @@ export default function AcceptRejectButtons({ open }: Props) {
         intent: "TAROT_DECLINE",
       },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           deleteMessage(loadingMessageId);
 
           addMessage({
             messageId: data.messageId,
             type: data.type,
             sender: data.sender,
-            answers: data.answers,
+            answers: [data.answers[0]],
           });
+
+          for (let index = 1; index < data.answers.length; index++) {
+            await delay(1000);
+            editMessage({
+              messageId: data.messageId,
+              type: data.type,
+              sender: data.sender,
+              answers: data.answers.slice(0, index + 1),
+            });
+          }
         },
       }
     );

@@ -102,9 +102,7 @@ export default function ChatRoom() {
         >
           {messages.map((message, index, array) => {
             if (message.sender === "SYSTEM") {
-              return (
-                <ChatBubbleGroup key={message.messageId} message={message} isJustSent={index === array.length - 1} />
-              );
+              return <ChatBubbleGroup key={message.messageId} message={message} />;
             }
             return <ChatBubble key={message.messageId} sender={message.sender} message={message.answers[0]} />;
           })}
