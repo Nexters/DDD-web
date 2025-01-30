@@ -5,6 +5,7 @@ import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import TextareaAutoSize from "./TextareaAutoSize";
 
 export default function TextFieldInChatOverview() {
@@ -26,18 +27,13 @@ export default function TextFieldInChatOverview() {
 
     createChatRoom(undefined, {
       onSuccess: (data) => {
-        sendChatMessage(
-          {
-            roomId: data.roomId,
-            message: message,
-            intent: "NORMAL",
-          },
-          {
-            onSuccess: () => {
-              router.push(`/chats/${data.roomId}`);
-            },
-          }
-        );
+        const messageRequest: SendChatMessageRequest = {
+          roomId: data.roomId,
+          message: message,
+          intent: "NORMAL",
+        };
+
+        router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
       },
     });
   };
