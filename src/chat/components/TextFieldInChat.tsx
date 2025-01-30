@@ -1,6 +1,6 @@
 "use client";
 import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
-import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
+import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
 import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";

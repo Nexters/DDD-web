@@ -1,5 +1,5 @@
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
-import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
+import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import { TarotQuestionRecommendListData } from "@/tarot/apis/getTarotQuestionRecommends";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 import { useRouter } from "next/navigation";
