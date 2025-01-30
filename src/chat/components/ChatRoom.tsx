@@ -81,6 +81,12 @@ export default function ChatRoom() {
             answers: data.answers.slice(0, index + 1),
           });
         }
+
+        if (data.type === "SYSTEM_TAROT_QUESTION_REPLY") {
+          disableTextField();
+          return;
+        }
+
         enableTextField();
         await delay(1);
         focusTextField();
