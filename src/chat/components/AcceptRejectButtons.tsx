@@ -2,12 +2,14 @@ import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
 import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import { css } from "styled-components";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChipButton from "./ChipButton";
 export default function AcceptRejectButtons() {
   const { addMessage, deleteMessage, editMessage, state: messages } = useChatMessagesContext();
-  const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
+  const { mutate: sendChatMessage } = useSendChatMessage();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const {
     enable: enableTextField,
     disable: disableTextField,
@@ -24,6 +26,7 @@ export default function AcceptRejectButtons() {
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   const handleAcceptClick = async () => {
+    setIsButtonDisabled(true);
     hideTextField();
     addMessage({
       messageId: Math.random(),
@@ -73,9 +76,11 @@ export default function AcceptRejectButtons() {
         },
       }
     );
+    setIsButtonDisabled(false);
   };
 
   const handleRejectClick = async () => {
+    setIsButtonDisabled(true);
     disableTextField();
     addMessage({
       messageId: Math.random(),
@@ -128,6 +133,7 @@ export default function AcceptRejectButtons() {
         },
       }
     );
+    setIsButtonDisabled(false);
   };
 
   if (!isSystemRepliedQuestion) return null;
@@ -140,10 +146,10 @@ export default function AcceptRejectButtons() {
         margin-top: 76px;
       `}
     >
-      <ChipButton type="button" disabled={isSendingChatMessage} color="primary02" onClick={handleAcceptClick}>
+      <ChipButton type="button" disabled={isButtonDisabled} color="primary02" onClick={handleAcceptClick}>
         {acceptMessage}
       </ChipButton>
-      <ChipButton type="button" disabled={isSendingChatMessage} color="grey30" onClick={handleRejectClick}>
+      <ChipButton type="button" disabled={isButtonDisabled} color="grey30" onClick={handleRejectClick}>
         {rejectMessage}
       </ChipButton>
     </div>
