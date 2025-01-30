@@ -3,14 +3,15 @@
 import Image from "next/image";
 import styled from "styled-components";
 import CardBack from "@/shared/assets/images/cardBack.webp";
-import { cubicBezier } from "motion";
+import { cubicBezier, easeOut } from "motion";
 import { div } from "motion/react-client";
 import { useState } from "react";
-import { useRef, useEffect } from "react";
+import { Dispatch, SetStateAction, useRef, useEffect } from "react";
 
 interface PropTypes {
   idx: number;
-  animationTrigger: any;
+  cardDeckAnimation: boolean;
+  setCardDeckAnimation: Dispatch<SetStateAction<boolean>>;
 }
 
 const moveCardDeck = {
@@ -18,22 +19,35 @@ const moveCardDeck = {
   delay: 1.5,
 };
 
-const Card = ({ idx, animationTrigger }: PropTypes) => {
+const Card = ({ idx, cardDeckAnimation, setCardDeckAnimation }: PropTypes) => {
   const [isCardShadow, setIsCardShadow] = useState(false);
   const [moveDistance, setMoveDistance] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const CardSpread = {
-    x: [0, idx * 50],
-    transition: {
-      duration: 0.7,
-      delay: 0.7,
-      cubicBezier: cubicBezier(0.44, 0, 0.56, 1),
+  const cardVariants = {
+    initial: { x: 0 },
+    spread: {
+      x: [0, idx * 50, idx * 50 + moveDistance],
+      transition: {
+        duration: 1.2,
+        delay: 0.7,
+        time: [0, 0.7, 1.2],
+        ease: [cubicBezier(0.44, 0, 0.56, 1), "easeInOut"],
+      },
+    },
+
+    temp: {
+      x: [0, idx * 50, idx * 50 + moveDistance],
+      transition: {
+        duration: 0.01,
+        ease: easeOut,
+      },
     },
   };
 
   const onAnimationEnd = () => {
     setIsCardShadow(true);
+    setCardDeckAnimation(false);
   };
 
   useEffect(() => {
@@ -42,41 +56,32 @@ const Card = ({ idx, animationTrigger }: PropTypes) => {
       setMoveDistance(-cardPos); // 부모 기준 왼쪽으로 붙이기
     }
   }, []);
+
+  console.log(moveDistance);
+
   return (
     <CardAnimationWrapper
       ref={cardRef}
-      animate={CardSpread}
+      variants={cardVariants}
+      animate={cardDeckAnimation ? "spread" : "temp"}
       onAnimationComplete={onAnimationEnd}
     >
-      <CardMoveLeft
-        animate={{ translateX: moveDistance }}
-        transition={moveCardDeck}
-        onClick={() => alert(idx)}
-      >
-        <CardWrapper
-          src={CardBack}
-          alt="카드 뒷면이미지"
-          isCardShadow={isCardShadow}
-        />
-      </CardMoveLeft>
+      <CardWrapper
+        src={CardBack}
+        alt="카드 뒷면이미지"
+        isCardShadow={isCardShadow}
+      />
     </CardAnimationWrapper>
   );
 };
 
 export default Card;
-const CardMoveLeft = styled(div)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100%;
-  height: 100%;
-`;
 
 const CardAnimationWrapper = styled(div)`
   width: 100px;
   height: 160px;
   position: absolute;
+
   cursor: pointer;
 `;
 
@@ -86,6 +91,6 @@ const CardWrapper = styled(Image)<{ isCardShadow: boolean }>`
   box-shadow: ${({ isCardShadow }) =>
     isCardShadow ? "-8px 0px 12px 0px rgba(0, 0, 0, 0.15)" : ""};
 
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 160px;
 `;

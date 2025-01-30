@@ -2,9 +2,7 @@ import styled from "styled-components";
 import * as motion from "motion/react-client";
 import { easeInOut } from "motion";
 import Card from "./Card";
-import { useState } from "react";
-
-import { useMotionValue } from "motion/react";
+import { useState, useEffect, useRef } from "react";
 interface PropTypes {
   onClick: () => void;
 }
@@ -16,37 +14,73 @@ const riseUpCardDeck = {
   ease: easeInOut,
 };
 
-// const MoveCardDeck = {
-
-//   left:[100%, 0],
-//   delay: 1.5,
-// };
-
 const ChatCardSelect = ({ onClick }: PropTypes) => {
   const [cardState, setCardState] = useState<CardState>("Deck");
-  const [cardDeckAnimation, setCardDeckAnimation] = useState<
-    "Rise" | "LeftMove"
-  >("Rise");
+  const [cardDeckAnimation, setCardDeckAnimation] = useState(true);
 
-  const x = useMotionValue("Rise");
+  const ITEMS_PER_LOAD = 15;
+  const [items, setItems] = useState<number[]>(
+    Array.from({ length: ITEMS_PER_LOAD }, (_, i) => i)
+  );
+
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setItems((prev) => [
+              ...prev,
+              ...Array.from({ length: ITEMS_PER_LOAD }, (_, i) => i),
+            ]);
+          }
+        });
+      },
+      { root: null, threshold: 0.0 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) observer.unobserve(observerRef.current);
+    };
+  }, []);
+
   return (
     <CardDeckWrapper
       initial={{ opacity: 0, y: 200 }}
-      //추후 0으로 변경 하고 parents에서 위치 조절
-
       animate={{ opacity: 1, y: 0 }}
       transition={riseUpCardDeck}
       onAnimationComplete={() => setCardState("Spread")}
     >
-      {Array.from({ length: 15 }).map((_, idx) => (
-        <Card key={idx} idx={idx} animationTrigger={x} />
+      {items.map((_, idx) => (
+        <Card
+          key={idx}
+          idx={idx}
+          cardDeckAnimation={cardDeckAnimation}
+          setCardDeckAnimation={setCardDeckAnimation}
+        />
       ))}
+
+      <Temp ref={observerRef} pos={items.length} />
     </CardDeckWrapper>
   );
 };
 
 export default ChatCardSelect;
 
+const Temp = styled.div<{ pos: number }>`
+  width: 100px;
+  height: 160px;
+
+  background-color: transparent;
+
+  position: absolute;
+  left: ${({ pos }) => pos * 50}px;
+`;
 const CardDeckWrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
