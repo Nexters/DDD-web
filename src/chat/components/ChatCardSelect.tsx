@@ -38,7 +38,7 @@ const ChatCardSelect = ({ onClick }: PropTypes) => {
       transition={riseUpCardDeck}
       onAnimationComplete={() => setCardState("Spread")}
     >
-      {Array.from({ length: 12 }).map((_, idx) => (
+      {Array.from({ length: 15 }).map((_, idx) => (
         <Card key={idx} idx={idx} animationTrigger={x} />
       ))}
     </CardDeckWrapper>
@@ -55,5 +55,14 @@ const CardDeckWrapper = styled(motion.div)`
   width: 100%;
   height: 400px;
   position: relative;
-  overflow: hidden;
+  overflow-x: scroll;
+
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  & > .no-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 `;
