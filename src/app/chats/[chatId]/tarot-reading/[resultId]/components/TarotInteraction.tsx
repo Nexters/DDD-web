@@ -66,12 +66,7 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
                 transition={handTransition}
                 onAnimationComplete={() => setIsVisible(false)}
               >
-                <CatHand
-                  alt="고양이손 이미지"
-                  src={catHand}
-                  width={158}
-                  height={278}
-                />
+                <CatHand alt="고양이손 이미지" src={catHand} />
               </motion.div>
             )}
           </TaroAnimationWrapper>
@@ -131,6 +126,9 @@ const TaroAnimationWrapper = styled(motion.div)`
 const CatHand = styled(Image)`
   position: relative;
   top: 296px;
+
+  width: 158px;
+  height: 278px;
 `;
 
 const Center = styled.div`

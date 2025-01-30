@@ -149,10 +149,10 @@ const TarotResult = () => {
         <MainText>나도 물어보면 좋을 질문</MainText>
         <RecommendContainer>
           {recommendQuestions?.questions.map((item, idx) => (
-            <RecommendQuestion key={idx}>
+            <RecommendQuestionBtn key={idx}>
               <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
               <QuestionTitle>{item.question} </QuestionTitle>
-            </RecommendQuestion>
+            </RecommendQuestionBtn>
           ))}
         </RecommendContainer>
       </RecommendBox>
@@ -184,7 +184,7 @@ const QuestionCount = styled.p`
   color: ${({ theme }) => theme.colors.grey80};
 `;
 
-const RecommendQuestion = styled.button`
+const RecommendQuestionBtn = styled.button`
   display: flex;
   flex-direction: column;
   gap: 8px;

@@ -7,10 +7,8 @@ import { useState } from "react";
 import ChatHeader from "@/chat/components/ChatHeader";
 export default function TarotReadingResultPage() {
   const [tarotInteractation, setTarotInteractation] = useState(true);
-  //test
   return (
     <>
-      {/* <HeaderContent>{null}</HeaderContent> */}
       <ChatHeader />
       <MainContent>
         {tarotInteractation ? (
