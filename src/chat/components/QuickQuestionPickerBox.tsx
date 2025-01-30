@@ -1,8 +1,8 @@
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
-import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import { TarotQuestionRecommendListData } from "@/tarot/apis/getTarotQuestionRecommends";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { css } from "styled-components";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import QuickQuestionPicker from "./QuickQuestionPicker";
@@ -11,8 +11,8 @@ import RefreshQuickQuestionButton from "./RefreshQuickQuestionButton";
 export default function QuickQuestionPickerBox() {
   const { data } = useTarotQuestionRecommends();
   const { mutate: createChatRoom } = useCreateChatRoom();
-  const { mutate: sendChatMessage } = useSendChatMessage();
   const router = useRouter();
+  const [isQuestionPicked, setIsQuestionPicked] = useState(false);
 
   if (!data) return null;
 
@@ -22,8 +22,10 @@ export default function QuickQuestionPickerBox() {
       ...question,
       color: colors[i],
       onClick: async () => {
+        if (isQuestionPicked) return;
         createChatRoom(undefined, {
           onSuccess: (data) => {
+            setIsQuestionPicked(true);
             const messageRequest: SendChatMessageRequest = {
               roomId: data.roomId,
               message: question.question,
