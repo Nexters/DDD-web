@@ -1,5 +1,5 @@
 import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
-import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
+import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { css } from "styled-components";

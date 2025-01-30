@@ -1,6 +1,6 @@
 "use client";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
-import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
+import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
