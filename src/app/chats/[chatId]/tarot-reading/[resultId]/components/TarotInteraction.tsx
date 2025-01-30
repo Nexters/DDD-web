@@ -3,7 +3,7 @@
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import catHand from "@/shared/assets/images/catHand.png";
-import cardBack from "@/shared/assets/images/cardBack.jpg";
+import cardBack from "@/shared/assets/images/cardBack.webp";
 import cardFront from "@/shared/assets/images/Card1.jpg";
 import styled from "styled-components";
 import { easeInOut } from "motion";
