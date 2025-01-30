@@ -12,6 +12,7 @@ import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { css } from "styled-components";
 import { useStickToBottom } from "use-stick-to-bottom";
+import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatHeader from "./ChatHeader";
 
 export default function ChatRoom() {
@@ -19,6 +20,7 @@ export default function ChatRoom() {
   const { data } = useChatMessages(Number(chatId));
   const { scrollRef, contentRef } = useStickToBottom();
   const { copyServerState, state: messages } = useChatMessagesContext();
+  const { isVisible: isTextFieldVisible } = useTextFieldInChatDisplayContext();
   useEffect(() => {
     if (data) {
       copyServerState(data.messages);
@@ -27,8 +29,6 @@ export default function ChatRoom() {
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
   if (!data) return null;
-
-  const showAcceptRejectButtons = messages[messages.length - 1]?.type === "SYSTEM_TAROT_QUESTION_REPLY";
 
   return (
     <MainContent>
@@ -61,7 +61,7 @@ export default function ChatRoom() {
             margin-top: 16px;
           `}
         >
-          {messages.map((message, index, array) => {
+          {messages.map((message) => {
             if (message.sender === "SYSTEM") {
               return <ChatBubbleGroup key={message.messageId} message={message} />;
             }
@@ -69,19 +69,21 @@ export default function ChatRoom() {
           })}
         </div>
 
-        <AcceptRejectButtons open={showAcceptRejectButtons} />
+        <AcceptRejectButtons />
       </div>
 
-      <div>
-        <FullscreenOverflowDivider />
-        <div
-          css={css`
-            padding: 16px 20px;
-          `}
-        >
-          <TextFieldInChat />
+      {isTextFieldVisible && (
+        <div>
+          <FullscreenOverflowDivider />
+          <div
+            css={css`
+              padding: 16px 20px;
+            `}
+          >
+            <TextFieldInChat />
+          </div>
         </div>
-      </div>
+      )}
     </MainContent>
   );
 }
