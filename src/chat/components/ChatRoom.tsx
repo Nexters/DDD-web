@@ -11,11 +11,13 @@ import MainContent from "@/shared/components/MainContent";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { css } from "styled-components";
-
+import { useState } from "react";
+import ChatCardSelect from "./ChatCardSelect";
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const { data } = useChatMessages(Number(chatId));
   const { copyServerState, state: messages } = useChatMessagesContext();
+  const [cardApper, setCardApper] = useState(true);
 
   useEffect(() => {
     if (data) {
@@ -23,10 +25,12 @@ export default function ChatRoom() {
     }
   }, [data, copyServerState]);
 
-  if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
+  if (!chatId)
+    throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
   if (!data) return null;
 
-  const showAcceptRejectButtons = messages[messages.length - 1]?.type === "SYSTEM_TAROT_QUESTION_REPLY";
+  const showAcceptRejectButtons =
+    messages[messages.length - 1]?.type === "SYSTEM_TAROT_QUESTION_REPLY";
 
   return (
     <MainContent>
@@ -55,17 +59,28 @@ export default function ChatRoom() {
             {messages.map((message, index, array) => {
               if (message.sender === "SYSTEM") {
                 return (
-                  <ChatBubbleGroup key={message.messageId} message={message} isJustSent={index === array.length - 1} />
+                  <ChatBubbleGroup
+                    key={message.messageId}
+                    message={message}
+                    isJustSent={index === array.length - 1}
+                  />
                 );
               }
-              return <ChatBubble key={message.messageId} sender={message.sender} message={message.answers[0]} />;
+              return (
+                <ChatBubble
+                  key={message.messageId}
+                  sender={message.sender}
+                  message={message.answers[0]}
+                />
+              );
             })}
           </div>
           <AcceptRejectButtons open={showAcceptRejectButtons} />
         </div>
       </div>
 
-      <div>
+      <div style={{ overflowY: "hidden" }}>
+        <ChatCardSelect onClick={() => setCardApper(false)}></ChatCardSelect>
         <FullscreenOverflowDivider />
         <div
           css={css`
