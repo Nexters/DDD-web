@@ -6,13 +6,19 @@ import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import TextareaAutoSize from "./TextareaAutoSize";
 
 export default function TextFieldInChat() {
   const [message, setMessage] = useState("");
-  const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
+  const { mutate: sendChatMessage } = useSendChatMessage();
   const { chatId } = useParams<{ chatId: string }>();
   const { addMessage, deleteMessage, editMessage } = useChatMessagesContext();
+  const {
+    isDisabled: isTextFieldDisabled,
+    enable: enableTextField,
+    disable: disableTextField,
+  } = useTextFieldInChatDisplayContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -24,6 +30,7 @@ export default function TextFieldInChat() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
+    disableTextField();
 
     addMessage({
       messageId: Math.random(),
@@ -70,12 +77,12 @@ export default function TextFieldInChat() {
               answers: data.answers.slice(0, index + 1),
             });
           }
+          enableTextField();
         },
       }
     );
   };
   const maxMessageLength = 300;
-  const disabled = isSendingChatMessage;
 
   return (
     <form
@@ -88,7 +95,7 @@ export default function TextFieldInChat() {
       <TextareaAutoSize
         value={message}
         onChange={handleChange}
-        disabled={disabled}
+        disabled={isTextFieldDisabled}
         placeholder="오늘의 운세는 어떨까?"
         minRows={1}
         maxRows={8}
@@ -96,7 +103,7 @@ export default function TextFieldInChat() {
       />
       <button
         type="submit"
-        disabled={disabled}
+        disabled={isTextFieldDisabled}
         css={css`
           position: absolute;
           right: 12px;
