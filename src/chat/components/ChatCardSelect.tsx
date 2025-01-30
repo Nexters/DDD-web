@@ -9,6 +9,7 @@ interface PropTypes {
 }
 
 type CardState = "Deck" | "Spread" | "Pick";
+
 const RiseUpCardDeck = {
   duration: 0.6,
   ease: easeInOut,
@@ -19,12 +20,13 @@ const ChatCardSelect = ({ onClick }: PropTypes) => {
   return (
     <CardDeckWrapper
       initial={{ opacity: 0, y: 200 }}
-      animate={{ opacity: 1, y: 0 }}
+      //추후 0으로 변경 하고 parents에서 위치 조절
+      animate={{ opacity: 1, y: -20 }}
       transition={RiseUpCardDeck}
       onAnimationComplete={() => setCardState("Spread")}
     >
       {Array.from({ length: 12 }).map((_, idx) => (
-        <Card key={idx} />
+        <Card key={idx} idx={idx} />
       ))}
     </CardDeckWrapper>
   );
@@ -38,7 +40,8 @@ const CardDeckWrapper = styled(motion.div)`
   align-items: center;
 
   width: 100%;
-  height: 300px;
+  height: 400px;
 
   position: relative;
+  overflow: hidden;
 `;
