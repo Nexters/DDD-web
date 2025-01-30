@@ -4,6 +4,7 @@ import { TarotQuestionRecommendListData } from "@/tarot/apis/getTarotQuestionRec
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 import { useRouter } from "next/navigation";
 import { css } from "styled-components";
+import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import QuickQuestionPicker from "./QuickQuestionPicker";
 import RefreshQuickQuestionButton from "./RefreshQuickQuestionButton";
 
@@ -23,19 +24,14 @@ export default function QuickQuestionPickerBox() {
       onClick: async () => {
         createChatRoom(undefined, {
           onSuccess: (data) => {
-            sendChatMessage(
-              {
-                roomId: data.roomId,
-                message: question.question,
-                intent: "RECOMMEND_QUESTION",
-                referenceQuestionId: question.recommendQuestionId,
-              },
-              {
-                onSuccess: () => {
-                  router.push(`/chats/${data.roomId}`);
-                },
-              }
-            );
+            const messageRequest: SendChatMessageRequest = {
+              roomId: data.roomId,
+              message: question.question,
+              intent: "RECOMMEND_QUESTION",
+              referenceQuestionId: question.recommendQuestionId,
+            };
+
+            router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
           },
         });
       },
