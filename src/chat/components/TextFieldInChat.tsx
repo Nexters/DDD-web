@@ -12,7 +12,7 @@ export default function TextFieldInChat() {
   const [message, setMessage] = useState("");
   const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
   const { chatId } = useParams<{ chatId: string }>();
-  const { addMessage, deleteMessage } = useChatMessagesContext();
+  const { addMessage, deleteMessage, editMessage } = useChatMessagesContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -21,7 +21,6 @@ export default function TextFieldInChat() {
     }
   };
 
-  // TODO: 채팅을 전송한 경우 최하단으로 스크롤
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
@@ -52,15 +51,25 @@ export default function TextFieldInChat() {
         intent: "NORMAL",
       },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           deleteMessage(loadingMessageId);
 
           addMessage({
             messageId: data.messageId,
             type: data.type,
             sender: data.sender,
-            answers: data.answers,
+            answers: [data.answers[0]],
           });
+
+          for (let index = 1; index < data.answers.length; index++) {
+            await delay(1000);
+            editMessage({
+              messageId: data.messageId,
+              type: data.type,
+              sender: data.sender,
+              answers: data.answers.slice(0, index + 1),
+            });
+          }
         },
       }
     );
