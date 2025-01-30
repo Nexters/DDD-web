@@ -56,6 +56,7 @@ export default function TextFieldInChatOverview() {
         minRows={1}
         maxRows={8}
         maxLength={maxMessageLength}
+        autoFocus
       />
       <button
         type="submit"

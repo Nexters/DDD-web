@@ -29,6 +29,7 @@ export default function ChatRoom() {
     isVisible: isTextFieldVisible,
     enable: enableTextField,
     disable: disableTextField,
+    focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
   const { mutate: sendChatMessage } = useSendChatMessage();
   const pathname = usePathname();
@@ -81,6 +82,8 @@ export default function ChatRoom() {
           });
         }
         enableTextField();
+        await delay(1);
+        focusTextField();
       },
     });
   }, [data]);

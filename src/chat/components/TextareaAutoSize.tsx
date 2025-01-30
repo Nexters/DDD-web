@@ -1,7 +1,7 @@
 "use client";
 
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { useState } from "react";
+import { RefObject, useState } from "react";
 import TextareaAutosize, { TextareaAutosizeProps } from "react-textarea-autosize";
 import { css } from "styled-components";
 
@@ -9,9 +9,18 @@ type Props = {
   disabled?: boolean;
   maxLength: number;
   value: string;
+  textareaRef?: RefObject<HTMLTextAreaElement>;
 } & TextareaAutosizeProps;
 
-export default function TextareaAutoSize({ value, onChange, disabled, placeholder, maxLength }: Props) {
+export default function TextareaAutoSize({
+  value,
+  onChange,
+  disabled,
+  placeholder,
+  maxLength,
+  autoFocus,
+  textareaRef,
+}: Props) {
   const textareaMinHeight = 52;
   const [isSingleLineTextarea, setIsSingleLineTextarea] = useState(true);
 
@@ -26,6 +35,8 @@ export default function TextareaAutoSize({ value, onChange, disabled, placeholde
             placeholder={placeholder}
             minRows={1}
             maxRows={8}
+            autoFocus={autoFocus}
+            ref={textareaRef}
             onHeightChange={(height) => {
               const isSingleLine = height <= textareaMinHeight;
               setIsSingleLineTextarea(isSingleLine);
