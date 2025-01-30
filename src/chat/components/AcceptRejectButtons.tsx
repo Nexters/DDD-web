@@ -12,6 +12,7 @@ export default function AcceptRejectButtons() {
     enable: enableTextField,
     disable: disableTextField,
     hide: hideTextField,
+    focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
   const { chatId } = useParams<{ chatId: string }>();
 
@@ -122,6 +123,8 @@ export default function AcceptRejectButtons() {
             });
           }
           enableTextField();
+          await delay(1);
+          focusTextField();
         },
       }
     );

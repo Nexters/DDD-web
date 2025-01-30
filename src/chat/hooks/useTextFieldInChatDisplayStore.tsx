@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useRef, useState } from "react";
 
 type TextFieldInChatDisplayContextType = {
   isVisible: boolean;
@@ -7,6 +7,8 @@ type TextFieldInChatDisplayContextType = {
   hide: () => void;
   disable: () => void;
   enable: () => void;
+  focus: () => void;
+  textareaRef: React.RefObject<HTMLTextAreaElement>;
 };
 
 const TextFieldInChatDisplayContext = createContext<TextFieldInChatDisplayContextType | null>(null);
@@ -22,14 +24,20 @@ export const useTextFieldInChatDisplayContext = () => {
 export const TextFieldInChatDisplayProvider = ({ children }: { children: ReactNode }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isDisabled, setIsDisabled] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const show = () => setIsVisible(true);
   const hide = () => setIsVisible(false);
   const enable = () => setIsDisabled(false);
   const disable = () => setIsDisabled(true);
+  const focus = () => {
+    textareaRef.current?.focus();
+  };
 
   return (
-    <TextFieldInChatDisplayContext.Provider value={{ isVisible, isDisabled, show, hide, enable, disable }}>
+    <TextFieldInChatDisplayContext.Provider
+      value={{ isVisible, isDisabled, show, hide, enable, disable, focus, textareaRef }}
+    >
       {children}
     </TextFieldInChatDisplayContext.Provider>
   );

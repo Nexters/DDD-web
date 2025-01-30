@@ -18,6 +18,8 @@ export default function TextFieldInChat() {
     isDisabled: isTextFieldDisabled,
     enable: enableTextField,
     disable: disableTextField,
+    textareaRef,
+    focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -78,6 +80,8 @@ export default function TextFieldInChat() {
             });
           }
           enableTextField();
+          await delay(1);
+          focusTextField();
         },
       }
     );
@@ -100,6 +104,7 @@ export default function TextFieldInChat() {
         minRows={1}
         maxRows={8}
         maxLength={maxMessageLength}
+        textareaRef={textareaRef}
       />
       <button
         type="submit"
