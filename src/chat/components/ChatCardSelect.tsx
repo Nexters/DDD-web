@@ -1,40 +1,55 @@
-import styled from "styled-components";
-import * as motion from "motion/react-client";
+import tarotDeckData from "@/tarot/constants/tarotCardDeck";
+import { useSelectTarotCard } from "@/tarot/hooks/useSelectTarotCard";
 import { easeInOut } from "motion";
-import Card from "./Card";
-import { useState, useEffect, useRef } from "react";
-import { DeckState } from "../models/DeckState";
+import * as motion from "motion/react-client";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 import { CardPickState } from "../models/CardPickState";
-interface PropTypes {
-  /** 타입 변경 필요 */
-  onClick: () => void;
-}
+import { DeckState } from "../models/DeckState";
+import Card from "./Card";
 
 const riseUpCardDeck = {
   duration: 0.6,
   ease: easeInOut,
 };
 
-const ChatCardSelect = ({ onClick }: PropTypes) => {
+const ChatCardSelect = () => {
   const [deckState, setDeckState] = useState<DeckState>("Stack");
+  const { chatId } = useParams<{ chatId: string }>();
+  const { mutate: selectTarotCard } = useSelectTarotCard();
   const ITEMS_PER_LOAD = 15;
-  const [items, setItems] = useState<CardPickState[]>(
-    Array.from({ length: ITEMS_PER_LOAD }, () => "Default")
-  );
+  const [items, setItems] = useState<CardPickState[]>(Array.from({ length: ITEMS_PER_LOAD }, () => "Default"));
+  const router = useRouter();
+  const [isCardPicked, setIsCardPicked] = useState(false);
+
+  if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickCard = (index: number) => {
+    if (isCardPicked) return;
+
     /** 첫번째 선택시 Card Pick animation을 위한 상태변경 */
     if (deckState === "Spread") {
-      setItems((prevItems) =>
-        prevItems.map((_, i) => (i === index ? "Pick" : "Down"))
-      );
+      setItems((prevItems) => prevItems.map((_, i) => (i === index ? "Pick" : "Down")));
     }
     /** Pick된 카드 최종 선택시 타로 선택 API 호출 */
     if (items[index] === "Pick") {
-      alert("Card Select!");
-      onClick();
+      const picked = items[index];
+      setIsCardPicked(true);
+      selectTarotCard(
+        {
+          tarotName: tarotDeckData[Math.floor(Math.random() * tarotDeckData.length)].id,
+          roomId: Number(chatId),
+        },
+        {
+          onSuccess: (data) => {
+            const { tarotResultId } = data;
+            router.push(`/chats/${chatId}/tarot-reading/${tarotResultId}`);
+          },
+        }
+      );
     }
   };
 
@@ -44,13 +59,7 @@ const ChatCardSelect = ({ onClick }: PropTypes) => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setItems((prev) => [
-              ...prev,
-              ...Array.from(
-                { length: ITEMS_PER_LOAD },
-                () => "Default" as CardPickState
-              ),
-            ]);
+            setItems((prev) => [...prev, ...Array.from({ length: ITEMS_PER_LOAD }, () => "Default" as CardPickState)]);
           }
         });
       },
@@ -67,11 +76,7 @@ const ChatCardSelect = ({ onClick }: PropTypes) => {
   }, []);
 
   return (
-    <CardDeckWrapper
-      initial={{ opacity: 0, y: 200 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={riseUpCardDeck}
-    >
+    <CardDeckWrapper initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={riseUpCardDeck}>
       {items.map((_, idx) => (
         <Card
           key={idx}

@@ -2,6 +2,7 @@
 
 import { ChatMessagesProvider } from "@/chat/hooks/useChatMessagesStore";
 import { TextFieldInChatDisplayProvider } from "@/chat/hooks/useTextFieldInChatDisplayStore";
+import { TarotCardDeckDisplayDisplayProvider } from "../hooks/useTarotCardDeckDisplayStore";
 import ChatRoom from "./ChatRoom";
 
 export default function Chat() {
@@ -9,7 +10,9 @@ export default function Chat() {
   return (
     <ChatMessagesProvider>
       <TextFieldInChatDisplayProvider>
-        <ChatRoom />
+        <TarotCardDeckDisplayDisplayProvider>
+          <ChatRoom />
+        </TarotCardDeckDisplayDisplayProvider>
       </TextFieldInChatDisplayProvider>
     </ChatMessagesProvider>
   );
