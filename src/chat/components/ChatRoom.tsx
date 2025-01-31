@@ -89,7 +89,17 @@ export default function ChatRoom() {
           disableTextField();
           return;
         }
-
+      },
+      onError: () => {
+        deleteMessage(loadingMessageId);
+        addMessage({
+          messageId: Math.random(),
+          type: "SYSTEM_NORMAL_REPLY",
+          sender: "USER",
+          answers: ["문제가 생겼다냥! 다시 시도해봐냥."],
+        });
+      },
+      onSettled: async () => {
         enableTextField();
         await delay(1);
         focusTextField();

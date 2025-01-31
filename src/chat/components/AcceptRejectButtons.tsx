@@ -76,6 +76,15 @@ export default function AcceptRejectButtons() {
             });
           }
         },
+        onError: () => {
+          deleteMessage(loadingMessageId);
+          addMessage({
+            messageId: Math.random(),
+            type: "SYSTEM_NORMAL_REPLY",
+            sender: "USER",
+            answers: ["문제가 생겼다냥! 다시 시도해봐냥."],
+          });
+        },
       }
     );
     setIsButtonDisabled(false);
