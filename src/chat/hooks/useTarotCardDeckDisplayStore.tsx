@@ -17,7 +17,7 @@ export const useTarotCardDeckDisplayContext = () => {
 };
 
 export const TarotCardDeckDisplayDisplayProvider = ({ children }: { children: ReactNode }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const show = () => setIsVisible(true);
   const hide = () => setIsVisible(false);

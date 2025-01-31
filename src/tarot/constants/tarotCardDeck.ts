@@ -1,5 +1,5 @@
-import { TarotCardType } from "../models/tarotCard";
 import Card from "@/shared/assets/images/Card1.jpg";
+import { TarotCardType } from "../models/tarotCard";
 const majorArcanaObjects: Record<string, TarotCardType> = {
   Fool: {
     name: "Fool",
@@ -460,51 +460,38 @@ const pentacleObjects: Record<string, TarotCardType> = {
   },
 };
 
-const majorArcanaArray = Object.values(majorArcanaObjects).map(
-  ({ name, nameKR, id, imgSrc, alt }) => ({
-    name,
-    nameKR,
-    id,
-    imgSrc,
-    alt,
-  })
-);
+const majorArcanaArray = Object.values(majorArcanaObjects).map(({ name, nameKR, id, imgSrc, alt }) => ({
+  name,
+  nameKR,
+  id,
+  imgSrc,
+  alt,
+}));
 
-const swordArray = Object.values(swordObjects).map(
-  ({ name, nameKR, id, imgSrc, alt }) => ({
-    name,
-    nameKR,
-    id,
-    imgSrc,
-    alt,
-  })
-);
+const swordArray = Object.values(swordObjects).map(({ name, nameKR, id, imgSrc, alt }) => ({
+  name,
+  nameKR,
+  id,
+  imgSrc,
+  alt,
+}));
 
-const cupArray = Object.values(cupObjects).map(
-  ({ name, nameKR, id, imgSrc, alt }) => ({
-    name,
-    nameKR,
-    id,
-    imgSrc,
-    alt,
-  })
-);
+const cupArray = Object.values(cupObjects).map(({ name, nameKR, id, imgSrc, alt }) => ({
+  name,
+  nameKR,
+  id,
+  imgSrc,
+  alt,
+}));
 
-const pentacleArray = Object.values(pentacleObjects).map(
-  ({ name, nameKR, id, imgSrc, alt }) => ({
-    name,
-    nameKR,
-    id,
-    imgSrc,
-    alt,
-  })
-);
+const pentacleArray = Object.values(pentacleObjects).map(({ name, nameKR, id, imgSrc, alt }) => ({
+  name,
+  nameKR,
+  id,
+  imgSrc,
+  alt,
+}));
 
-const tarotDeckData = [
-  ...majorArcanaArray,
-  ...swordArray,
-  ...cupArray,
-  ...pentacleArray,
-];
+const tarotDeckData = [...majorArcanaArray, ...swordArray, ...cupArray, ...pentacleArray];
 
 export default tarotDeckData;

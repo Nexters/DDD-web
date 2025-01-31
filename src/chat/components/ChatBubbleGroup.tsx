@@ -9,10 +9,6 @@ type Props = {
 
 export default function ChatBubbleGroup({ message }: Props) {
   const renderMessage = (message: MessageType) => {
-    if (message.tarotName) {
-      return <ChatBubble key={message.messageId} sender={"SYSTEM"} card={message.tarotName} />;
-    }
-
     if (message.loading) {
       return <ChatBubble key={message.messageId} sender={"SYSTEM"} loading />;
     }
@@ -20,9 +16,9 @@ export default function ChatBubbleGroup({ message }: Props) {
     const addIdToMessages = (messages: string[]) => {
       return messages.map((answer) => ({ messageId: Math.random(), sender: "SYSTEM", message: answer }));
     };
-    return addIdToMessages(message.answers).map((answer) => (
-      <ChatBubble key={answer.messageId} sender={"SYSTEM"} message={answer.message} />
-    ));
+    return addIdToMessages(message.answers).map((answer) => {
+      return <ChatBubble key={answer.messageId} sender={"SYSTEM"} message={answer.message} />;
+    });
   };
 
   return (
@@ -48,6 +44,14 @@ export default function ChatBubbleGroup({ message }: Props) {
             gap: 4px;
           `}
         >
+          {message.tarotName && (
+            <ChatBubble
+              key={message.messageId}
+              sender={"SYSTEM"}
+              cardId={message.tarotName}
+              resultId={message.tarotResultId}
+            />
+          )}
           {renderMessage(message)}
         </div>
       </div>
