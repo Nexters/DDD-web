@@ -11,13 +11,11 @@ import MainContent from "@/shared/components/MainContent";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { css } from "styled-components";
-import { useState } from "react";
 import ChatCardSelect from "./ChatCardSelect";
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const { data } = useChatMessages(Number(chatId));
   const { copyServerState, state: messages } = useChatMessagesContext();
-  const [cardApper, setCardApper] = useState(true);
 
   useEffect(() => {
     if (data) {
@@ -80,7 +78,7 @@ export default function ChatRoom() {
       </div>
 
       <div style={{ overflowY: "hidden" }}>
-        <ChatCardSelect onClick={() => setCardApper(false)}></ChatCardSelect>
+        <ChatCardSelect />
         <FullscreenOverflowDivider />
         <div
           css={css`
