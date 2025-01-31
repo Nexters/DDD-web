@@ -9,8 +9,12 @@ import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
 import MainContent from "@/shared/components/MainContent";
 import { delay } from "@/shared/utils/delay";
-
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useEffect } from "react";
 import { css } from "styled-components";
 import { useStickToBottom } from "use-stick-to-bottom";
@@ -19,15 +23,19 @@ import { useSendChatMessage } from "../hooks/useSendChatMessage";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatHeader from "./ChatHeader";
 
-import { useState } from "react";
-import ChatCardSelect from "./ChatCardSelect";
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
   const { scrollRef, contentRef } = useStickToBottom();
-  const { copyServerState, state: messages, addMessage, editMessage, deleteMessage } = useChatMessagesContext();
+  const {
+    copyServerState,
+    state: messages,
+    addMessage,
+    editMessage,
+    deleteMessage,
+  } = useChatMessagesContext();
   const {
     isVisible: isTextFieldVisible,
     enable: enableTextField,
@@ -97,57 +105,9 @@ export default function ChatRoom() {
     });
   }, [data]);
 
-    disableTextField();
-
-    addMessage({
-      messageId: Math.random(),
-      type: "USER_NORMAL",
-      sender: "USER",
-      answers: [message.message],
-    });
-
-    const loadingMessageId = Math.random();
-
-    addMessage({
-      messageId: loadingMessageId,
-      type: "SYSTEM_NORMAL_REPLY",
-      sender: "SYSTEM",
-      loading: true,
-      answers: [],
-    });
-
-    sendChatMessage(JSON.parse(initialMessage), {
-      onSuccess: async (data) => {
-        deleteMessage(loadingMessageId);
-
-        addMessage({
-          messageId: data.messageId,
-          type: data.type,
-          sender: data.sender,
-          answers: [data.answers[0]],
-        });
-
-        for (let index = 1; index < data.answers.length; index++) {
-          await delay(1000);
-          editMessage({
-            messageId: data.messageId,
-            type: data.type,
-            sender: data.sender,
-            answers: data.answers.slice(0, index + 1),
-          });
-        }
-
-        if (data.type === "SYSTEM_TAROT_QUESTION_REPLY") {
-          disableTextField();
-          return;
-        }
-
-        enableTextField();
-        await delay(1);
-        focusTextField();
-      },
-    });
-  }, [data]);
+  if (!chatId)
+    throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
+  if (!data) return null;
 
   return (
     <MainContent>
@@ -182,9 +142,17 @@ export default function ChatRoom() {
         >
           {messages.map((message) => {
             if (message.sender === "SYSTEM") {
-              return <ChatBubbleGroup key={message.messageId} message={message} />;
+              return (
+                <ChatBubbleGroup key={message.messageId} message={message} />
+              );
             }
-            return <ChatBubble key={message.messageId} sender={message.sender} message={message.answers[0]} />;
+            return (
+              <ChatBubble
+                key={message.messageId}
+                sender={message.sender}
+                message={message.answers[0]}
+              />
+            );
           })}
         </div>
 
@@ -200,7 +168,6 @@ export default function ChatRoom() {
             `}
           >
             <TextFieldInChat />
-
           </div>
         </div>
       )}
