@@ -1,40 +1,20 @@
 "use client";
 import styled, { useTheme, keyframes } from "styled-components";
 import Image from "next/image";
-import TarotImage from "@/shared/assets/images/Card1.jpg";
-// import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
+
+import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 
-import { TarotCardType } from "@/tarot/models/tarotCard";
 import findCardById from "@/tarot/utils/findCardById";
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
 
 import ProfileIcon from "@/shared/assets/icons/profile.svg";
 import LinkIcon from "@/shared/assets/icons/link.svg";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
-
+import shareLink from "@/shared/utils/shareLink";
 import Button from "@/shared/components/Button";
-
-//추후 제거
-interface TarotReadingResultResponse {
-  tarot: string;
-  type: string;
-  cardValue: {
-    summary: string;
-    description: string;
-  };
-  answer: {
-    summary: string;
-    description: string;
-    question: string;
-  };
-  advice: {
-    summary: string;
-    description: string;
-  };
-}
-
+import Toast from "@/shared/components/Toast";
+import { useState } from "react";
 const fadeInOut = keyframes`
   0% {
     opacity: 0;
@@ -48,60 +28,52 @@ const fadeInOut = keyframes`
 `;
 
 const TarotResult = () => {
-  const [data, setData] = useState<TarotReadingResultResponse | null>(null);
-  const [tarrotCard, setTarotCard] = useState<TarotCardType | undefined>(
-    undefined
-  );
-  const [loading, setLoading] = useState(true);
   const { resultId } = useParams<{ resultId: string }>();
-
+  const [toastOpen, setToastOpen] = useState(false);
   const { data: recommendQuestions } = useTarotQuestionRecommends();
-
+  const { handleWebShare } = shareLink();
   const theme = useTheme();
-  /**
-   * Mock data 추후 Tanstack query로 변경
-   */
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch(`/api/v1/tarot/result/${resultId}`);
-        const json = await res.json();
-        setData(json.data);
-        setTarotCard(findCardById(json.data.tarot));
-      } catch (error) {
-        console.error("Error fetching tarot data:", error);
-      } finally {
-        setLoading(false);
-      }
+
+  const { data, isError } = useTarotReadingResult(Number(resultId));
+
+  if (isError) {
+    <div>Error</div>;
+  }
+
+  const TarotData = findCardById(data?.tarot);
+
+  const handleShareLink = async () => {
+    const shareSuccess = await handleWebShare();
+    if (shareSuccess) {
+      setToastOpen(true);
     }
-    fetchData();
-  }, [resultId]);
-
-  if (loading) return <p>Loading...</p>;
-  if (!data) return <p>No data available</p>;
-
-  // const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
-
+  };
   return (
     <TarotResultWrapper>
       <TarotCard>
-        <CardImg src={TarotImage} alt="타로카드 이미지" />
+        <CardImg
+          src={TarotData?.imgSrc || ""}
+          alt={TarotData?.alt || ""}
+          width={180}
+          height={100}
+        />
         <Title>
-          {tarrotCard?.nameKR} <br /> {tarrotCard?.name}
+          {TarotData?.nameKR} <br />
+          {TarotData?.name}
         </Title>
       </TarotCard>
 
       <TarotCardResult>
-        <ResultType>{data.type}</ResultType>
+        <ResultType>{data?.type}</ResultType>
 
         <ResultBox>
-          <h2> {data.cardValue.summary}</h2>
-          <p> {data.cardValue.description}</p>
+          <h2> {data?.cardValue.summary}</h2>
+          <p> {data?.cardValue.description}</p>
         </ResultBox>
 
         <ResultBox>
-          <h2> {data.answer.summary}</h2>
-          <p> {data.answer.description}</p>
+          <h2> {data?.answer.summary}</h2>
+          <p> {data?.answer.description}</p>
 
           <ChatImageFrame>
             <UserMessageBubble>
@@ -122,8 +94,8 @@ const TarotResult = () => {
         </ResultBox>
 
         <ResultBox>
-          <h2> {data.advice.summary}</h2>
-          <p> {data.advice.description}</p>
+          <h2> {data?.advice.summary}</h2>
+          <p> {data?.advice.description}</p>
         </ResultBox>
       </TarotCardResult>
 
@@ -132,9 +104,15 @@ const TarotResult = () => {
         <IconBtn>
           결과 저장하기 <DownLoadIcon />
         </IconBtn>
-        <IconBtn>
-          링크 복사하기 <LinkIcon />
-        </IconBtn>
+        <Toast.Provider>
+          <IconBtn onClick={handleShareLink}>
+            링크 복사하기 <LinkIcon />
+          </IconBtn>
+          <Toast.Root open={toastOpen} onOpenChange={setToastOpen}>
+            <Toast.Title>링크 복사 완료!</Toast.Title>
+          </Toast.Root>
+          <Toast.Viewport> </Toast.Viewport>
+        </Toast.Provider>
       </IconBtnWrapper>
 
       <AdditionalMessage>
