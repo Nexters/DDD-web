@@ -29,7 +29,7 @@ const shareLink = () => {
       return false;
     }
   };
-  return { handleWebShare };
+  return { handleWebShare, handleCopyToClipboard };
 };
 
 export default shareLink;

@@ -15,7 +15,7 @@ import shareLink from "@/shared/utils/shareLink";
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
 import { useState } from "react";
-import { div } from "motion/react-client";
+import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
 const fadeInOut = keyframes`
   0% {
     opacity: 0;
@@ -32,7 +32,7 @@ const TarotResult = () => {
   const { resultId } = useParams<{ resultId: string }>();
   const [toastOpen, setToastOpen] = useState(false);
   const { data: recommendQuestions } = useTarotQuestionRecommends();
-  const { handleWebShare } = shareLink();
+  const { handleWebShare, handleCopyToClipboard } = shareLink();
   const theme = useTheme();
 
   const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
@@ -48,7 +48,7 @@ const TarotResult = () => {
   const TarotData = findCardById(data?.tarot);
 
   const handleShareLink = async () => {
-    const shareSuccess = await handleWebShare();
+    const shareSuccess = await handleCopyToClipboard();
     if (shareSuccess) {
       setToastOpen(true);
     }
@@ -58,7 +58,7 @@ const TarotResult = () => {
       <TarotCard>
         <CardImg
           src={TarotData?.imgSrc || ""}
-          alt={TarotData?.alt || ""}
+          alt={TarotData?.alt || "타로카드 이미지"}
           width={180}
           height={100}
         />
@@ -110,9 +110,16 @@ const TarotResult = () => {
           결과 저장하기 <DownLoadIcon />
         </IconBtn>
         <Toast.Provider>
-          <IconBtn onClick={handleShareLink}>
-            링크 복사하기 <LinkIcon />
-          </IconBtn>
+          {checkBrowserForWebShare() ? (
+            <IconBtn onClick={handleWebShare}>
+              링크 복사하기 <LinkIcon />
+            </IconBtn>
+          ) : (
+            <IconBtn onClick={handleShareLink}>
+              링크 복사하기 <LinkIcon />
+            </IconBtn>
+          )}
+
           <Toast.Root open={toastOpen} onOpenChange={setToastOpen}>
             <Toast.Title>링크 복사 완료!</Toast.Title>
           </Toast.Root>
