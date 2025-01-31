@@ -23,6 +23,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-textarea-autosize": "^8.5.7",
+    "sharp": "^0.33.5",
     "styled-components": "^6.1.14",
     "styled-reset": "^4.5.2",
     "use-stick-to-bottom": "^1.0.44",
