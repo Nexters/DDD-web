@@ -8,32 +8,13 @@ import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecomm
 import { TarotCardType } from "@/tarot/models/tarotCard";
 import findCardById from "@/tarot/utils/findCardById";
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import ProfileIcon from "@/shared/assets/icons/profile.svg";
 import LinkIcon from "@/shared/assets/icons/link.svg";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
 
 import Button from "@/shared/components/Button";
-
-// //추후 제거
-// interface TarotReadingResultResponse {
-//   tarot: string;
-//   type: string;
-//   cardValue: {
-//     summary: string;
-//     description: string;
-//   };
-//   answer: {
-//     summary: string;
-//     description: string;
-//     question: string;
-//   };
-//   advice: {
-//     summary: string;
-//     description: string;
-//   };
-// }
 
 const fadeInOut = keyframes`
   0% {
@@ -48,7 +29,6 @@ const fadeInOut = keyframes`
 `;
 
 const TarotResult = () => {
-  // const [data, setData] = useState<TarotReadingResultResponse | null>(null);
   const [tarrotCard, setTarotCard] = useState<TarotCardType | undefined>(
     undefined
   );
@@ -58,30 +38,12 @@ const TarotResult = () => {
   const { data: recommendQuestions } = useTarotQuestionRecommends();
 
   const theme = useTheme();
-  /**
-   * Mock data 추후 Tanstack query로 변경
-   */
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const res = await fetch(`/api/v1/tarot/result/${resultId}`);
-  //       const json = await res.json();
-  //       setData(json.data);
-  //       setTarotCard(findCardById(json.data.tarot));
-  //     } catch (error) {
-  //       console.error("Error fetching tarot data:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchData();
-  // }, [resultId]);
 
-  // if (loading) return <p>Loading...</p>;
-  // if (!data) return <p>No data available</p>;
+  const { data, isError } = useTarotReadingResult(Number(resultId));
 
-  const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
-
+  if (isError) {
+    <div>Error</div>;
+  }
   return (
     <TarotResultWrapper>
       <TarotCard>
@@ -92,16 +54,16 @@ const TarotResult = () => {
       </TarotCard>
 
       <TarotCardResult>
-        <ResultType>{data.type}</ResultType>
+        <ResultType>{data?.type}</ResultType>
 
         <ResultBox>
-          <h2> {data.cardValue.summary}</h2>
-          <p> {data.cardValue.description}</p>
+          <h2> {data?.cardValue.summary}</h2>
+          <p> {data?.cardValue.description}</p>
         </ResultBox>
 
         <ResultBox>
-          <h2> {data.answer.summary}</h2>
-          <p> {data.answer.description}</p>
+          <h2> {data?.answer.summary}</h2>
+          <p> {data?.answer.description}</p>
 
           <ChatImageFrame>
             <UserMessageBubble>
@@ -122,8 +84,8 @@ const TarotResult = () => {
         </ResultBox>
 
         <ResultBox>
-          <h2> {data.advice.summary}</h2>
-          <p> {data.advice.description}</p>
+          <h2> {data?.advice.summary}</h2>
+          <p> {data?.advice.description}</p>
         </ResultBox>
       </TarotCardResult>
 
