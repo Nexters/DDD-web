@@ -1,462 +1,463 @@
 import { TarotCardType } from "../models/tarotCard";
-import Card from "@/shared/assets/images/Card1.jpg";
+
+import images from "@/shared/assets/images";
+
 const majorArcanaObjects: Record<string, TarotCardType> = {
   Fool: {
     name: "Fool",
-    nameKR: "바보 카드",
     id: "M_00",
-    imgSrc: Card,
+    imgSrc: images.majorArcanaImages.TheFool,
     alt: "바보 카드: 새로운 시작과 모험을 상징하는 카드로, 예측할 수 없는 미래로 나아가는 순수한 마음을 나타냅니다.",
+    nameKR: "바보 카드",
   },
   Magician: {
     name: "Magician",
-    nameKR: "바보 카드",
     id: "M_01",
-
+    imgSrc: images.majorArcanaImages.TheMagician,
     alt: "마법사 카드: 창의성, 기술, 지혜의 활용을 통해 자신의 목표를 달성할 수 있는 능력을 나타내는 카드입니다.",
+    nameKR: "마법사 카드",
   },
   HighPriestess: {
     name: "HighPriestess",
-    nameKR: "바보 카드",
     id: "M_02",
-
+    imgSrc: images.majorArcanaImages.TheHighPriestess,
     alt: "여제 카드: 직관과 신비, 숨겨진 진리를 탐구하는 능력을 상징하는 카드로, 내면의 목소리를 따르는 것을 의미합니다.",
+    nameKR: "여제 카드",
   },
   Empress: {
     name: "Empress",
-    nameKR: "바보 카드",
     id: "M_03",
-
+    imgSrc: images.majorArcanaImages.TheEmpress,
     alt: "여왕 카드: 풍요, 창조, 자연과의 연결을 나타내며, 사랑과 보살핌을 통해 성장과 번영을 이끌어냅니다.",
+    nameKR: "여왕 카드",
   },
   Emperor: {
     name: "Emperor",
-    nameKR: "바보 카드",
     id: "M_04",
-
+    imgSrc: images.majorArcanaImages.TheEmperor,
     alt: "황제 카드: 권위, 구조, 안정성을 상징하는 카드로, 리더십과 질서 있는 삶을 유지하는 것을 강조합니다.",
+    nameKR: "황제 카드",
   },
   Hierophant: {
     name: "Hierophant",
-    nameKR: "바보 카드",
     id: "M_05",
-
+    imgSrc: images.majorArcanaImages.TheHierophant,
     alt: "교황 카드: 전통, 교육, 종교적 교리를 통해 지혜와 가르침을 전달하는 카드를 의미합니다.",
+    nameKR: "교황 카드",
   },
   Lovers: {
     name: "Lovers",
-    nameKR: "바보 카드",
     id: "M_06",
-
+    imgSrc: images.majorArcanaImages.TheLovers,
     alt: "연인 카드: 중요한 결정을 내리기 위한 사랑과 관계의 상징적인 카드로, 선택과 균형을 나타냅니다.",
+    nameKR: "연인 카드",
   },
   Chariot: {
     name: "Chariot",
-    nameKR: "바보 카드",
     id: "M_07",
-
+    imgSrc: images.majorArcanaImages.TheChariot,
     alt: "전차 카드: 승리와 목표 달성을 위한 의지와 결단력을 상징하는 카드로, 장애물을 극복하는 능력을 의미합니다.",
+    nameKR: "전차 카드",
   },
   Strength: {
     name: "Strength",
-    nameKR: "바보 카드",
     id: "M_08",
-
+    imgSrc: images.majorArcanaImages.Strength,
     alt: "힘 카드: 내면의 강인함과 용기를 의미하는 카드로, 물리적 힘보다는 정신적인 강인함을 강조합니다.",
+    nameKR: "힘 카드",
   },
   Hermit: {
     name: "Hermit",
-    nameKR: "바보 카드",
     id: "M_09",
-
+    imgSrc: images.majorArcanaImages.TheHermit,
     alt: "은둔자 카드: 고독 속에서 진리를 찾고 내면의 지혜를 탐구하는 카드로, 자기 반성과 고독의 의미를 담고 있습니다.",
+    nameKR: "운둔자 카드",
   },
   WheelOfFortune: {
     name: "WheelOfFortune",
-    nameKR: "바보 카드",
     id: "M_10",
-
+    imgSrc: images.majorArcanaImages.WheelOfFortune,
     alt: "운명의 수레바퀴 카드: 변화와 전환의 순간을 나타내며, 인생의 흐름과 주기의 변화를 상징합니다.",
+    nameKR: " 운명의 수레바퀴 카드",
   },
   Justice: {
     name: "Justice",
-    nameKR: "바보 카드",
     id: "M_11",
-
+    imgSrc: images.majorArcanaImages.Justice,
     alt: "정의 카드: 균형과 공정성을 의미하며, 모든 상황에서 올바른 판단을 내리는 능력을 강조합니다.",
+    nameKR: "정의 카드",
   },
   HangedMan: {
     name: "HangedMan",
-    nameKR: "바보 카드",
     id: "M_12",
-
+    imgSrc: images.majorArcanaImages.TheHangedMan,
     alt: "교수형 카드: 희생과 새로운 시각을 통해 깨달음을 얻는 카드로, 다른 관점에서 상황을 바라보는 중요성을 나타냅니다.",
+    nameKR: "교수형 카드",
   },
   Death: {
     name: "Death",
-    nameKR: "바보 카드",
     id: "M_13",
-
+    imgSrc: images.majorArcanaImages.Death,
     alt: "죽음 카드: 끝과 새로운 시작을 의미하는 카드로, 자연스러운 변화와 전환을 상징합니다.",
+    nameKR: "죽음 카드",
   },
   Temperance: {
     name: "Temperance",
-    nameKR: "바보 카드",
     id: "M_14",
-
+    imgSrc: images.majorArcanaImages.Temperance,
     alt: "절제 카드: 균형과 절제를 의미하며, 감정과 행동에서의 조화를 이루는 것을 강조합니다.",
+    nameKR: "절제 카드",
   },
   Devil: {
     name: "Devil",
-    nameKR: "바보 카드",
     id: "M_15",
-
+    imgSrc: images.majorArcanaImages.TheDevil,
     alt: "악마 카드: 물질적 욕망과 집착, 그리고 유혹에 빠지지 않도록 경고하는 카드입니다.",
+    nameKR: "악마 카드",
   },
   Tower: {
     name: "Tower",
-    nameKR: "바보 카드",
     id: "M_16",
-
+    imgSrc: images.majorArcanaImages.TheTower,
     alt: "탑 카드: 갑작스러운 변화와 충격적인 사건을 의미하며, 기존의 구조가 붕괴되기를 나타냅니다.",
+    nameKR: "탑 카드",
   },
   Star: {
     name: "Star",
-    nameKR: "바보 카드",
     id: "M_17",
-
+    imgSrc: images.majorArcanaImages.TheStar,
     alt: "별 카드: 희망, 영감, 긍정적인 에너지를 의미하는 카드로, 밝은 미래를 향한 비전과 믿음을 강조합니다.",
+    nameKR: "별 카드",
   },
   Moon: {
     name: "Moon",
-    nameKR: "바보 카드",
     id: "M_18",
-
+    imgSrc: images.majorArcanaImages.TheMoon,
     alt: "달 카드: 직관과 꿈, 불확실성을 상징하는 카드로, 현실과 환상이 교차하는 순간을 나타냅니다.",
+    nameKR: "달 카드",
   },
   Sun: {
     name: "Sun",
-    nameKR: "바보 카드",
     id: "M_19",
-
+    imgSrc: images.majorArcanaImages.TheSun,
     alt: "해 카드: 성공, 행복, 밝은 미래를 의미하는 카드로, 모든 것이 명확하고 빛을 발하는 순간을 나타냅니다.",
+    nameKR: "해 카드",
   },
   Judgement: {
     name: "Judgement",
-    nameKR: "바보 카드",
     id: "M_20",
-
+    imgSrc: images.majorArcanaImages.Judgement,
     alt: "심판 카드: 과거를 반성하고 새로운 시작을 맞이하는 중요한 전환점을 나타내는 카드입니다.",
+    nameKR: "심판 카드",
   },
   World: {
     name: "World",
-    nameKR: "바보 카드",
     id: "M_21",
-
+    imgSrc: images.majorArcanaImages.TheWorld,
     alt: "세계 카드: 완성과 성취, 우주와의 조화를 의미하는 카드로, 삶의 순환을 마치고 새로운 단계로 나아감을 상징합니다.",
+    nameKR: "세계 카드",
   },
 } as const;
 
 const swordObjects: Record<string, TarotCardType> = {
   Sword01: {
     name: "Sword01",
-    nameKR: "바보 카드",
     id: "S_01",
-
+    imgSrc: images.minorArcanaImages.Sword1,
     alt: "검 1 카드: 갈등, 어려움, 도전적인 상황을 나타내며, 정신적 투쟁과 갈등을 상징하는 카드입니다.",
+    nameKR: "검 1 카드",
   },
   Sword02: {
     name: "Sword02",
-    nameKR: "바보 카드",
     id: "S_02",
-
+    imgSrc: images.minorArcanaImages.Sword2,
     alt: "검 2 카드: 선택과 균형을 나타내며, 내적 갈등과 결정을 내리는 과정을 상징하는 카드입니다.",
+    nameKR: "검 2 카드",
   },
   Sword03: {
     name: "Sword03",
-    nameKR: "바보 카드",
     id: "S_03",
-
+    imgSrc: images.minorArcanaImages.Sword3,
     alt: "검 3 카드: 고통과 상처를 나타내며, 감정적 고통과 이별을 상징하는 카드입니다.",
+    nameKR: "검 3 카드",
   },
   Sword04: {
     name: "Sword04",
-    nameKR: "바보 카드",
     id: "S_04",
-
+    imgSrc: images.minorArcanaImages.Sword4,
     alt: "검 4 카드: 휴식과 회복을 나타내며, 잠시 멈추고 치유하는 시간을 상징하는 카드입니다.",
+    nameKR: "검 4 카드",
   },
   Sword05: {
     name: "Sword05",
-    nameKR: "바보 카드",
     id: "S_05",
-
+    imgSrc: images.minorArcanaImages.Sword5,
     alt: "검 5 카드: 패배와 상실을 나타내며, 실망과 후회, 갈등을 상징하는 카드입니다.",
+    nameKR: "검 5 카드",
   },
   Sword06: {
     name: "Sword06",
-    nameKR: "바보 카드",
     id: "S_06",
-
+    imgSrc: images.minorArcanaImages.Sword6,
     alt: "검 6 카드: 변화와 이동을 나타내며, 새로운 시작을 향해 떠나는 여정을 상징하는 카드입니다.",
+    nameKR: "검 6 카드",
   },
   Sword07: {
     name: "Sword07",
-    nameKR: "바보 카드",
     id: "S_07",
-
+    imgSrc: images.minorArcanaImages.Sword7,
     alt: "검 7 카드: 전략과 계획을 나타내며, 기민한 사고와 교활함을 상징하는 카드입니다.",
+    nameKR: "검 7 카드",
   },
   Sword08: {
     name: "Sword08",
-    nameKR: "바보 카드",
     id: "S_08",
-
+    imgSrc: images.minorArcanaImages.Sword8,
     alt: "검 8 카드: 제약과 속박을 나타내며, 자신을 가두고 있는 상황을 상징하는 카드입니다.",
+    nameKR: "검 8 카드",
   },
   Sword09: {
     name: "Sword09",
-    nameKR: "바보 카드",
     id: "S_09",
-
+    imgSrc: images.minorArcanaImages.Sword9,
     alt: "검 9 카드: 불안과 고통을 나타내며, 걱정과 심리적 압박을 상징하는 카드입니다.",
+    nameKR: "검 9 카드",
   },
   Sword10: {
     name: "Sword10",
-    nameKR: "바보 카드",
     id: "S_10",
-
+    imgSrc: images.minorArcanaImages.Sword10,
     alt: "검 10 카드: 끝과 변화의 시기를 나타내며, 심리적 고통과 고난의 끝을 상징하는 카드입니다.",
+    nameKR: "검 10 카드",
   },
   SwordKing: {
     name: "SwordKing",
-    nameKR: "바보 카드",
     id: "S_K",
-
+    imgSrc: images.minorArcanaImages.SwordKing,
     alt: "검의 왕 카드: 지혜와 권력을 가진 지도자를 나타내며, 논리적이고 공정한 결정을 내리는 능력을 상징하는 카드입니다.",
+    nameKR: "검의 왕 카드",
   },
   SwordQueen: {
     name: "SwordQueen",
-    nameKR: "바보 카드",
     id: "S_Q",
-
+    imgSrc: images.minorArcanaImages.SwordQueen,
     alt: "검의 여왕 카드: 직관과 냉정함을 나타내며, 감정적으로 강하고 독립적인 성격을 상징하는 카드입니다.",
+    nameKR: "검의 여왕 카드",
   },
   SwordKnight: {
     name: "SwordKnight",
-    nameKR: "바보 카드",
     id: "S_N",
-
+    imgSrc: images.minorArcanaImages.SwordKnight,
     alt: "검의 기사 카드: 용기와 결단력을 나타내며, 빠르고 결단력 있는 행동을 상징하는 카드입니다.",
+    nameKR: "검의 기사 카드",
   },
   SwordPage: {
     name: "SwordPage",
-    nameKR: "바보 카드",
     id: "S_P",
-
+    imgSrc: images.minorArcanaImages.SwordPage,
     alt: "검의 기사 카드: 새로운 아이디어와 시작을 나타내며, 지적인 탐구와 분석을 상징하는 카드입니다.",
+    nameKR: "검의 기사 카드",
   },
 } as const;
-
 const cupObjects: Record<string, TarotCardType> = {
   Cup01: {
     name: "Cup01",
-    nameKR: "바보 카드",
     id: "C_01",
-
+    imgSrc: images.minorArcanaImages.Cup1,
     alt: "컵 1 카드: 감정과 사랑의 시작을 나타내며, 새로운 사랑과 감정의 흐름을 상징하는 카드입니다.",
+    nameKR: "컵 1 카드",
   },
   Cup02: {
     name: "Cup02",
-    nameKR: "바보 카드",
     id: "C_02",
-
+    imgSrc: images.minorArcanaImages.Cup2,
     alt: "컵 2 카드: 관계와 화합을 나타내며, 두 사람 간의 연결과 조화를 상징하는 카드입니다.",
+    nameKR: "컵 2 카드",
   },
   Cup03: {
     name: "Cup03",
-    nameKR: "바보 카드",
     id: "C_03",
-
+    imgSrc: images.minorArcanaImages.Cup3,
     alt: "컵 3 카드: 기쁨과 축하를 나타내며, 우정과 사회적 교류를 상징하는 카드입니다.",
+    nameKR: "컵 3 카드",
   },
   Cup04: {
     name: "Cup04",
-    nameKR: "바보 카드",
     id: "C_04",
-
+    imgSrc: images.minorArcanaImages.Cup4,
     alt: "컵 4 카드: 내성적이고 반성적인 상태를 나타내며, 감정적 불만족과 무관심을 상징하는 카드입니다.",
+    nameKR: "컵 4 카드",
   },
   Cup05: {
     name: "Cup05",
-    nameKR: "바보 카드",
     id: "C_05",
-
+    imgSrc: images.minorArcanaImages.Cup5,
     alt: "컵 5 카드: 상실과 후회를 나타내며, 감정적인 실패와 실망을 상징하는 카드입니다.",
+    nameKR: "컵 5 카드",
   },
   Cup06: {
     name: "Cup06",
-    nameKR: "바보 카드",
     id: "C_06",
-
+    imgSrc: images.minorArcanaImages.Cup6,
     alt: "컵 6 카드: 과거와의 연결을 나타내며, 추억과 회상, 순수한 감정을 상징하는 카드입니다.",
+    nameKR: "컵 6 카드",
   },
   Cup07: {
     name: "Cup07",
-    nameKR: "바보 카드",
     id: "C_07",
-
+    imgSrc: images.minorArcanaImages.Cup7,
     alt: "컵 7 카드: 선택의 갈림길을 나타내며, 혼란과 선택에서 오는 갈등을 상징하는 카드입니다.",
+    nameKR: "컵 7 카드",
   },
   Cup08: {
     name: "Cup08",
-    nameKR: "바보 카드",
     id: "C_08",
-
+    imgSrc: images.minorArcanaImages.Cup8,
     alt: "컵 8 카드: 떠남과 새로운 시작을 나타내며, 감정적으로 떨어져 나오는 과정과 내적 탐구를 상징하는 카드입니다.",
+    nameKR: "컵 8 카드",
   },
   Cup09: {
     name: "Cup09",
-    nameKR: "바보 카드",
     id: "C_09",
-
+    imgSrc: images.minorArcanaImages.Cup9,
     alt: "컵 9 카드: 감정적 만족과 성취를 나타내며, 원하는 것들이 모두 이루어지는 상태를 상징하는 카드입니다.",
+    nameKR: "컵 9 카드",
   },
   Cup10: {
     name: "Cup10",
-    nameKR: "바보 카드",
     id: "C_10",
-
+    imgSrc: images.minorArcanaImages.Cup10,
     alt: "컵 10 카드: 가족과 관계의 완성을 나타내며, 감정적 안정과 행복을 상징하는 카드입니다.",
+    nameKR: "컵 10 카드",
   },
   CupKing: {
     name: "CupKing",
-    nameKR: "바보 카드",
     id: "C_K",
-
+    imgSrc: images.minorArcanaImages.CupKing,
     alt: "컵의 왕 카드: 감정적 지혜와 이해를 나타내며, 감정을 잘 조절하고 타인과의 관계에서 이해심을 보이는 능력을 상징하는 카드입니다.",
+    nameKR: "컵의 왕 카드",
   },
   CupQueen: {
     name: "CupQueen",
-    nameKR: "바보 카드",
     id: "C_Q",
-
+    imgSrc: images.minorArcanaImages.CupQueen,
     alt: "컵의 여왕 카드: 감정과 직관의 강력한 연계를 나타내며, 부드럽고 따뜻한 성격을 상징하는 카드입니다.",
+    nameKR: "컵의 여왕 카드",
   },
   CupKnight: {
     name: "CupKnight",
-    nameKR: "바보 카드",
     id: "C_N",
-
+    imgSrc: images.minorArcanaImages.CupKnight,
     alt: "컵의 기사 카드: 이상적인 사랑과 감정을 나타내며, 감성적이고 직관적인 행동을 상징하는 카드입니다.",
+    nameKR: "컵의 기사 카드",
   },
   CupPage: {
     name: "CupPage",
-    nameKR: "바보 카드",
     id: "C_P",
-
+    imgSrc: images.minorArcanaImages.CupPage,
     alt: "컵의 기사 카드: 새로운 감정과 아이디어를 나타내며, 새로운 감정적 여정의 시작을 상징하는 카드입니다.",
+    nameKR: "컵의 기사 카드",
   },
 } as const;
 
 const pentacleObjects: Record<string, TarotCardType> = {
   Pentacle01: {
     name: "Pentacle01",
-    nameKR: "바보 카드",
     id: "P_01",
-
+    imgSrc: images.minorArcanaImages.Pentacle1,
     alt: "펜타클 1 카드: 새로운 재정적 기회나 시작을 나타내며, 물질적 안정과 성공을 상징하는 카드입니다.",
+    nameKR: "펜타클 1 카드",
   },
   Pentacle02: {
     name: "Pentacle02",
-    nameKR: "바보 카드",
     id: "P_02",
-
+    imgSrc: images.minorArcanaImages.Pentacle2,
     alt: "펜타클 2 카드: 균형과 조화를 나타내며, 재정적 안정과 변화를 상징하는 카드입니다.",
+    nameKR: "펜타클 2 카드",
   },
   Pentacle03: {
     name: "Pentacle03",
-    nameKR: "바보 카드",
     id: "P_03",
-
+    imgSrc: images.minorArcanaImages.Pentacle3,
     alt: "펜타클 3 카드: 팀워크와 협력을 나타내며, 물질적 성취와 건설적인 프로젝트를 상징하는 카드입니다.",
+    nameKR: "펜타클 3 카드",
   },
   Pentacle04: {
     name: "Pentacle04",
-    nameKR: "바보 카드",
     id: "P_04",
-
+    imgSrc: images.minorArcanaImages.Pentacle4,
     alt: "펜타클 4 카드: 재정적 안전을 나타내며, 자원의 보호와 소유욕을 상징하는 카드입니다.",
+    nameKR: "펜타클 4 카드",
   },
   Pentacle05: {
     name: "Pentacle05",
-    nameKR: "바보 카드",
     id: "P_05",
-
+    imgSrc: images.minorArcanaImages.Pentacle5,
     alt: "펜타클 5 카드: 경제적 어려움을 나타내며, 물질적 결핍과 어려움을 상징하는 카드입니다.",
+    nameKR: "펜타클 5 카드",
   },
   Pentacle06: {
     name: "Pentacle06",
-    nameKR: "바보 카드",
     id: "P_06",
-
+    imgSrc: images.minorArcanaImages.Pentacle6,
     alt: "펜타클 6 카드: 나눔과 균형을 나타내며, 자선과 물질적 지원을 상징하는 카드입니다.",
+    nameKR: "펜타클 6 카드",
   },
   Pentacle07: {
     name: "Pentacle07",
-    nameKR: "펜타클 7 ",
     id: "P_07",
-
+    imgSrc: images.minorArcanaImages.Pentacle7,
     alt: "펜타클 7 카드: 노력과 인내를 나타내며, 재정적 성취를 위한 시간이 필요함을 상징하는 카드입니다.",
+    nameKR: "펜타클 7 카드",
   },
   Pentacle08: {
     name: "Pentacle08",
-    nameKR: "펜타클 7 ",
     id: "P_08",
-
+    imgSrc: images.minorArcanaImages.Pentacle8,
     alt: "펜타클 8 카드: 근면과 수고를 나타내며, 지속적인 노력과 기술 향상을 상징하는 카드입니다.",
+    nameKR: "펜타클 8 카드",
   },
   Pentacle09: {
     name: "Pentacle09",
-    nameKR: "펜타클 7 ",
     id: "P_09",
-
+    imgSrc: images.minorArcanaImages.Pentacle9,
     alt: "펜타클 9 카드: 자립과 물질적 풍요를 나타내며, 성취된 목표와 독립적인 삶을 상징하는 카드입니다.",
+    nameKR: "펜타클 9 카드",
   },
   Pentacle10: {
     name: "Pentacle10",
-    nameKR: "펜타클 7 ",
     id: "P_10",
-
+    imgSrc: images.minorArcanaImages.Pentacle10,
     alt: "펜타클 10 카드: 물질적 안정과 가족을 나타내며, 세대 간의 풍요와 안정된 삶을 상징하는 카드입니다.",
+    nameKR: "펜타클 10 카드",
   },
   PentacleKing: {
     name: "PentacleKing",
-    nameKR: "펜타클 7 ",
     id: "P_K",
-
+    imgSrc: images.minorArcanaImages.PentacleKing,
     alt: "펜타클의 왕 카드: 재정적 권력과 안정, 실용적이고 목표 지향적인 성격을 상징하는 카드입니다.",
+    nameKR: "펜타클의 왕 카드",
   },
   PentacleQueen: {
     name: "PentacleQueen",
-    nameKR: "펜타클 7 ",
     id: "P_Q",
-
+    imgSrc: images.minorArcanaImages.PentacleQueen,
     alt: "펜타클의 여왕 카드: 풍요와 자원을 잘 관리하는 능력을 나타내며, 안정적이고 현실적인 성격을 상징하는 카드입니다.",
+    nameKR: "펜타클의 여왕 카드",
   },
   PentacleKnight: {
     name: "PentacleKnight",
-    nameKR: "펜타클 7 ",
     id: "P_N",
-
+    imgSrc: images.minorArcanaImages.PentacleKnight,
     alt: "펜타클의 기사 카드: 성실함과 노력, 현실적이고 실용적인 접근을 나타내며, 안정적인 수입을 추구하는 카드를 상징하는 카드입니다.",
+    nameKR: "펜타클의 기사 카드",
   },
   PentaclePage: {
     name: "PentaclePage",
-    nameKR: "펜타클 7 ",
     id: "P_P",
-
+    imgSrc: images.minorArcanaImages.PentaclePage,
     alt: "펜타클의 기사 카드: 새로운 기회와 학습을 나타내며, 물질적 성장을 위한 실용적인 접근을 상징하는 카드입니다.",
+    nameKR: "펜타클의 기사 카드",
   },
 };
 
