@@ -12,7 +12,8 @@ const shareLink = () => {
     };
 
     if (navigator.share) {
-      navigator.share(shareData.meet);
+      await navigator.share(shareData.meet);
+      return true;
     } else {
       handleCopyToClipboard();
     }
@@ -20,14 +21,15 @@ const shareLink = () => {
 
   const handleCopyToClipboard = async () => {
     try {
-      console.log(inviteURL);
+      console.log("복사성공");
       await navigator.clipboard.writeText(inviteURL);
+      return true;
     } catch {
       alert("링크복사에 실패했습니다. \n 다시 시도해주세요.");
+      return false;
     }
   };
-
-  handleWebShare();
+  return { handleWebShare };
 };
 
 export default shareLink;

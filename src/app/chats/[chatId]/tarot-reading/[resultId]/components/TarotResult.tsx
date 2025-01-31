@@ -1,7 +1,7 @@
 "use client";
 import styled, { useTheme, keyframes } from "styled-components";
 import Image from "next/image";
-import TarotImage from "@/shared/assets/images/Card1.jpg";
+
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 
@@ -11,10 +11,10 @@ import { useParams } from "next/navigation";
 import ProfileIcon from "@/shared/assets/icons/profile.svg";
 import LinkIcon from "@/shared/assets/icons/link.svg";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
-
-import Button from "@/shared/components/Button";
 import shareLink from "@/shared/utils/shareLink";
-
+import Button from "@/shared/components/Button";
+import Toast from "@/shared/components/Toast";
+import { useState } from "react";
 const fadeInOut = keyframes`
   0% {
     opacity: 0;
@@ -29,9 +29,9 @@ const fadeInOut = keyframes`
 
 const TarotResult = () => {
   const { resultId } = useParams<{ resultId: string }>();
-
+  const [toastOpen, setToastOpen] = useState(false);
   const { data: recommendQuestions } = useTarotQuestionRecommends();
-
+  const { handleWebShare } = shareLink();
   const theme = useTheme();
 
   const { data, isError } = useTarotReadingResult(Number(resultId));
@@ -40,13 +40,26 @@ const TarotResult = () => {
     <div>Error</div>;
   }
 
+  const TarotData = findCardById(data?.tarot);
+
+  const handleShareLink = async () => {
+    const shareSuccess = await handleWebShare();
+    if (shareSuccess) {
+      setToastOpen(true);
+    }
+  };
   return (
     <TarotResultWrapper>
       <TarotCard>
-        <CardImg src={TarotImage} alt="타로카드 이미지" />
+        <CardImg
+          src={TarotData?.imgSrc || ""}
+          alt={TarotData?.alt || ""}
+          width={180}
+          height={100}
+        />
         <Title>
-          {findCardById(data?.tarot)?.nameKR} <br />{" "}
-          {findCardById(data?.tarot)?.name}
+          {TarotData?.nameKR} <br />
+          {TarotData?.name}
         </Title>
       </TarotCard>
 
@@ -91,9 +104,15 @@ const TarotResult = () => {
         <IconBtn>
           결과 저장하기 <DownLoadIcon />
         </IconBtn>
-        <IconBtn onClick={shareLink}>
-          링크 복사하기 <LinkIcon />
-        </IconBtn>
+        <Toast.Provider>
+          <IconBtn onClick={handleShareLink}>
+            링크 복사하기 <LinkIcon />
+          </IconBtn>
+          <Toast.Root open={toastOpen} onOpenChange={setToastOpen}>
+            <Toast.Title>링크 복사 완료!</Toast.Title>
+          </Toast.Root>
+          <Toast.Viewport> </Toast.Viewport>
+        </Toast.Provider>
       </IconBtnWrapper>
 
       <AdditionalMessage>
