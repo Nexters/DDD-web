@@ -9,7 +9,12 @@ import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
 import MainContent from "@/shared/components/MainContent";
 import { delay } from "@/shared/utils/delay";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useEffect } from "react";
 import { css } from "styled-components";
 import { useStickToBottom } from "use-stick-to-bottom";
@@ -24,7 +29,13 @@ export default function ChatRoom() {
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
   const { scrollRef, contentRef } = useStickToBottom();
-  const { copyServerState, state: messages, addMessage, editMessage, deleteMessage } = useChatMessagesContext();
+  const {
+    copyServerState,
+    state: messages,
+    addMessage,
+    editMessage,
+    deleteMessage,
+  } = useChatMessagesContext();
   const {
     isVisible: isTextFieldVisible,
     enable: enableTextField,
@@ -94,7 +105,8 @@ export default function ChatRoom() {
     });
   }, [data]);
 
-  if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
+  if (!chatId)
+    throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
   if (!data) return null;
 
   return (
@@ -130,9 +142,17 @@ export default function ChatRoom() {
         >
           {messages.map((message) => {
             if (message.sender === "SYSTEM") {
-              return <ChatBubbleGroup key={message.messageId} message={message} />;
+              return (
+                <ChatBubbleGroup key={message.messageId} message={message} />
+              );
             }
-            return <ChatBubble key={message.messageId} sender={message.sender} message={message.answers[0]} />;
+            return (
+              <ChatBubble
+                key={message.messageId}
+                sender={message.sender}
+                message={message.answers[0]}
+              />
+            );
           })}
         </div>
 
