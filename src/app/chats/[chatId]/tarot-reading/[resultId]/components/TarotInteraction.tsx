@@ -35,7 +35,7 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
   const routingTarotResult = () => {
     setTimeout(() => {
       setTarotInteractation(false);
-    }, 100000);
+    }, 1000);
   };
 
   return (

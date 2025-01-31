@@ -5,16 +5,15 @@ import TarotImage from "@/shared/assets/images/Card1.jpg";
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 
-import { TarotCardType } from "@/tarot/models/tarotCard";
 import findCardById from "@/tarot/utils/findCardById";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 
 import ProfileIcon from "@/shared/assets/icons/profile.svg";
 import LinkIcon from "@/shared/assets/icons/link.svg";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
 
 import Button from "@/shared/components/Button";
+import shareLink from "@/shared/utils/shareLink";
 
 const fadeInOut = keyframes`
   0% {
@@ -92,7 +91,7 @@ const TarotResult = () => {
         <IconBtn>
           결과 저장하기 <DownLoadIcon />
         </IconBtn>
-        <IconBtn>
+        <IconBtn onClick={shareLink}>
           링크 복사하기 <LinkIcon />
         </IconBtn>
       </IconBtnWrapper>
