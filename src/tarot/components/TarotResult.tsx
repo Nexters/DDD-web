@@ -73,7 +73,7 @@ const TarotResult = () => {
   ) => {
     const object = {
       roomId: chatId,
-      recommendQuestionId: recommendQuestionId,
+      referenceQuestionId: recommendQuestionId,
       intent: "RECOMMEND_QUESTION",
       message: message,
     };
