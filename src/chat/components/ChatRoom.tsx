@@ -23,6 +23,8 @@ import { useSendChatMessage } from "../hooks/useSendChatMessage";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatHeader from "./ChatHeader";
 
+import { useState } from "react";
+import ChatCardSelect from "./ChatCardSelect";
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
@@ -45,6 +47,8 @@ export default function ChatRoom() {
   const { mutate: sendChatMessage } = useSendChatMessage();
   const pathname = usePathname();
   const router = useRouter();
+  const { copyServerState, state: messages } = useChatMessagesContext();
+  const [cardApper, setCardApper] = useState(true);
 
   useEffect(() => {
     if (!data) return;
@@ -118,6 +122,15 @@ export default function ChatRoom() {
           padding: 0px 20px 16px;
           display: flex;
           flex-direction: column;
+          overflow-y: auto;
+          /**
+          FIXME: 데스크탑에서 스크롤바 영역이 좁게 설정된 (600px) 모습이 전체 화면을 채우는 디바이더와 어색한 조화를 이루어 스크롤바 영역 임시 제거.
+           */
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+          &::-webkit-scrollbar {
+            display: none;
+          }
         `}
       >
         <div
@@ -155,17 +168,7 @@ export default function ChatRoom() {
           </div>
           <AcceptRejectButtons open={showAcceptRejectButtons} />
         </div>
-          overflow-y: auto;
-          /**
-          FIXME: 데스크탑에서 스크롤바 영역이 좁게 설정된 (600px) 모습이 전체 화면을 채우는 디바이더와 어색한 조화를 이루어 스크롤바 영역 임시 제거.
-           */
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-          &::-webkit-scrollbar {
-            display: none;
-          }
-        `}
-      >
+
         <ChatHeader />
         <div
           ref={contentRef}
@@ -196,18 +199,17 @@ export default function ChatRoom() {
         <AcceptRejectButtons />
       </div>
 
-      {isTextFieldVisible && (
-        <div>
-          <FullscreenOverflowDivider />
-          <div
-            css={css`
-              padding: 16px 20px;
-            `}
-          >
-            <TextFieldInChat />
-          </div>
+      <div style={{ overflowY: "hidden" }}>
+        <ChatCardSelect onClick={() => setCardApper(false)} />
+        <FullscreenOverflowDivider />
+        <div
+          css={css`
+            padding: 16px 20px;
+          `}
+        >
+          <TextFieldInChat />
         </div>
-      )}
+      </div>
     </MainContent>
   );
 }
