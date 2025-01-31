@@ -35,7 +35,7 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
   const routingTarotResult = () => {
     setTimeout(() => {
       setTarotInteractation(false);
-    }, 1000);
+    }, 100000);
   };
 
   return (
@@ -52,7 +52,7 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
             transition={putCardtransition}
           >
             <CardInner
-              animate={{ rotateY: -180 }}
+              animate={{ rotateY: 180 }}
               transition={cardRotateTransition}
               onAnimationComplete={routingTarotResult}
             >
@@ -83,12 +83,15 @@ const CardFront = styled(Image)`
   width: 100%;
   height: 100%;
   position: absolute;
+
+  transform: rotateY(180deg);
 `;
 
 const CardBack = styled(Image)`
   width: 100%;
   height: 100%;
   position: absolute;
+
   backface-visibility: hidden;
 `;
 const CardInner = styled(motion.div)`
