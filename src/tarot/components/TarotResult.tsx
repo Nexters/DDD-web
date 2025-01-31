@@ -67,6 +67,20 @@ const TarotResult = () => {
   };
   console.log(recommendQuestions);
 
+  const handleContinueRecommendConversation = (
+    recommendQuestionId: number,
+    message: string
+  ) => {
+    const object = {
+      roomId: chatId,
+      recommendQuestionId: recommendQuestionId,
+      intent: "RECOMMEND_QUESTION",
+      message: message,
+    };
+
+    queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
+    router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
+  };
   return (
     <TarotResultWrapper>
       <TarotCard>
@@ -153,7 +167,15 @@ const TarotResult = () => {
         <MainText>나도 물어보면 좋을 질문</MainText>
         <RecommendContainer>
           {recommendQuestions?.questions.map((item, idx) => (
-            <RecommendQuestionBtn key={idx}>
+            <RecommendQuestionBtn
+              key={idx}
+              onClick={() =>
+                handleContinueRecommendConversation(
+                  item.recommendQuestionId,
+                  item.question
+                )
+              }
+            >
               <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
               <QuestionTitle>{item.question} </QuestionTitle>
             </RecommendQuestionBtn>
