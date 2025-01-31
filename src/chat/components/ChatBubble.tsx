@@ -1,5 +1,9 @@
 import { MessageSenderType } from "@/chat/models/messageSender";
 import { TarotCardIdType } from "@/tarot/models/tarotCardId";
+import findCardById from "@/tarot/utils/findCardById";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import styled, { css, keyframes, useTheme } from "styled-components";
 
 const fadeInOut = keyframes`
@@ -17,12 +21,16 @@ const fadeInOut = keyframes`
 type Props = {
   sender: MessageSenderType;
   message?: string;
-  card?: TarotCardIdType;
+  cardId?: TarotCardIdType;
+  resultId?: number;
   loading?: boolean;
 };
 // TODO: 말풍선 컴포넌트 리팩터
-export default function ChatBubble({ sender, message, card, loading }: Props) {
+export default function ChatBubble({ sender, message, cardId, resultId, loading }: Props) {
   const theme = useTheme();
+  const { chatId } = useParams<{ chatId: string }>();
+
+  if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   if (sender === "USER") {
     return (
@@ -65,16 +73,27 @@ export default function ChatBubble({ sender, message, card, loading }: Props) {
     );
   }
 
-  if (card) {
+  if (cardId) {
+    const card = findCardById(cardId);
+
     return (
-      <div // TODO: 이미지로 교체
+      <Link
+        href={`/chats/${chatId}/tarot-reading/${resultId}`}
         css={css`
-          background-color: ${({ theme }) => theme.colors.grey50};
-          border-radius: 8px;
-          width: 100px;
-          height: 160px;
+          width: fit-content;
         `}
-      />
+      >
+        <Image
+          src={card.imgSrc}
+          alt={card.alt}
+          width={100}
+          height={160}
+          css={css`
+            background-color: ${({ theme }) => theme.colors.grey50};
+            border-radius: 8px;
+          `}
+        />
+      </Link>
     );
   }
 

@@ -4,6 +4,7 @@ import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChipButton from "./ChipButton";
 export default function AcceptRejectButtons() {
@@ -16,6 +17,7 @@ export default function AcceptRejectButtons() {
     hide: hideTextField,
     focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
+  const { show: showTarotCardDeck } = useTarotCardDeckDisplayContext();
   const { chatId } = useParams<{ chatId: string }>();
 
   const rejectMessage = "아니, 얘기 더 들어봐";
@@ -77,6 +79,7 @@ export default function AcceptRejectButtons() {
       }
     );
     setIsButtonDisabled(false);
+    showTarotCardDeck();
   };
 
   const handleRejectClick = async () => {
