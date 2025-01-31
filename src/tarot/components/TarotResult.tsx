@@ -82,7 +82,7 @@ const TarotResult = () => {
 
           <ChatImageFrame>
             <UserMessageBubble>
-              <div>전남친이 아직 저에게 미련이 남았는지 궁금해요</div>
+              <div>{data?.answer.question}</div>
             </UserMessageBubble>
             <SystemMassegeBubble>
               <ProfileIcon />
