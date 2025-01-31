@@ -9,28 +9,33 @@ import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
 import MainContent from "@/shared/components/MainContent";
 import { delay } from "@/shared/utils/delay";
-import { useParams, usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useEffect } from "react";
 import { css } from "styled-components";
-<<<<<<< HEAD
 import { useStickToBottom } from "use-stick-to-bottom";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import { useSendChatMessage } from "../hooks/useSendChatMessage";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatHeader from "./ChatHeader";
 
-=======
-import { useState } from "react";
-import ChatCardSelect from "./ChatCardSelect";
->>>>>>> 11edb51 (feat: 카드 Rise up animation)
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
-<<<<<<< HEAD
   const { scrollRef, contentRef } = useStickToBottom();
-  const { copyServerState, state: messages, addMessage, editMessage, deleteMessage } = useChatMessagesContext();
+  const {
+    copyServerState,
+    state: messages,
+    addMessage,
+    editMessage,
+    deleteMessage,
+  } = useChatMessagesContext();
   const {
     isVisible: isTextFieldVisible,
     enable: enableTextField,
@@ -40,10 +45,6 @@ export default function ChatRoom() {
   const { mutate: sendChatMessage } = useSendChatMessage();
   const pathname = usePathname();
   const router = useRouter();
-=======
-  const { copyServerState, state: messages } = useChatMessagesContext();
-  const [cardApper, setCardApper] = useState(true);
->>>>>>> 11edb51 (feat: 카드 Rise up animation)
 
   useEffect(() => {
     if (!data) return;
@@ -108,12 +109,6 @@ export default function ChatRoom() {
     throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
   if (!data) return null;
 
-<<<<<<< HEAD
-=======
-  const showAcceptRejectButtons =
-    messages[messages.length - 1]?.type === "SYSTEM_TAROT_QUESTION_REPLY";
-
->>>>>>> 11edb51 (feat: 카드 Rise up animation)
   return (
     <MainContent>
       <div
@@ -182,50 +177,25 @@ export default function ChatRoom() {
             margin-top: 16px;
           `}
         >
-<<<<<<< HEAD
           {messages.map((message) => {
             if (message.sender === "SYSTEM") {
-              return <ChatBubbleGroup key={message.messageId} message={message} />;
-            }
-            return <ChatBubble key={message.messageId} sender={message.sender} message={message.answers[0]} />;
-          })}
-=======
-          {/* TODO: 오버플로우 컨테이너 */}
-          <div
-            css={css`
-              flex: 1;
-              display: flex;
-              flex-direction: column;
-              gap: 16px;
-            `}
-          >
-            {messages.map((message, index, array) => {
-              if (message.sender === "SYSTEM") {
-                return (
-                  <ChatBubbleGroup
-                    key={message.messageId}
-                    message={message}
-                    isJustSent={index === array.length - 1}
-                  />
-                );
-              }
               return (
-                <ChatBubble
-                  key={message.messageId}
-                  sender={message.sender}
-                  message={message.answers[0]}
-                />
+                <ChatBubbleGroup key={message.messageId} message={message} />
               );
-            })}
-          </div>
-          <AcceptRejectButtons open={showAcceptRejectButtons} />
->>>>>>> 11edb51 (feat: 카드 Rise up animation)
+            }
+            return (
+              <ChatBubble
+                key={message.messageId}
+                sender={message.sender}
+                message={message.answers[0]}
+              />
+            );
+          })}
         </div>
 
         <AcceptRejectButtons />
       </div>
 
-<<<<<<< HEAD
       {isTextFieldVisible && (
         <div>
           <FullscreenOverflowDivider />
@@ -236,17 +206,6 @@ export default function ChatRoom() {
           >
             <TextFieldInChat />
           </div>
-=======
-      <div style={{ overflowY: "hidden" }}>
-        <ChatCardSelect onClick={() => setCardApper(false)}></ChatCardSelect>
-        <FullscreenOverflowDivider />
-        <div
-          css={css`
-            padding: 16px 20px;
-          `}
-        >
-          <TextFieldInChat />
->>>>>>> 11edb51 (feat: 카드 Rise up animation)
         </div>
       )}
     </MainContent>
