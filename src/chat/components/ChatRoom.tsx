@@ -19,7 +19,6 @@ import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplay
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatCardSelect from "./ChatCardSelect";
 import ChatHeader from "./ChatHeader";
-
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
