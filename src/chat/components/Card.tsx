@@ -7,25 +7,29 @@ import { cubicBezier, easeOut } from "motion";
 import { div } from "motion/react-client";
 import { useState } from "react";
 import { Dispatch, SetStateAction, useRef, useEffect } from "react";
-
+import { CardPickState } from "../models/CardPickState";
+import { DeckState } from "../models/DeckState";
 interface PropTypes {
   idx: number;
-  cardDeckAnimation: boolean;
-  setCardDeckAnimation: Dispatch<SetStateAction<boolean>>;
+  deckState: DeckState;
+  setDeckState: Dispatch<SetStateAction<DeckState>>;
+  onClick: (index: number) => void;
+  cardPickState: CardPickState[];
 }
 
-const moveCardDeck = {
-  duration: 0.5,
-  delay: 1.5,
-};
-
-const Card = ({ idx, cardDeckAnimation, setCardDeckAnimation }: PropTypes) => {
+const Card = ({
+  idx,
+  deckState,
+  setDeckState,
+  onClick,
+  cardPickState,
+}: PropTypes) => {
   const [isCardShadow, setIsCardShadow] = useState(false);
   const [moveDistance, setMoveDistance] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const cardVariants = {
-    initial: { x: 0 },
+    initial: { x: 0, y: 0, rotate: 0 },
     spread: {
       x: [0, idx * 50, idx * 50 + moveDistance],
       transition: {
@@ -36,18 +40,47 @@ const Card = ({ idx, cardDeckAnimation, setCardDeckAnimation }: PropTypes) => {
       },
     },
 
-    temp: {
+    infiniteScroll: {
       x: [0, idx * 50, idx * 50 + moveDistance],
       transition: {
         duration: 0.01,
         ease: easeOut,
       },
     },
+
+    clickAnimation: {
+      y: -50,
+      rotate: 16,
+      transition: {
+        duration: 0.3,
+      },
+    },
+
+    cardDownAnimation: {
+      y: 0,
+      rotate: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
   };
 
   const onAnimationEnd = () => {
     setIsCardShadow(true);
-    setCardDeckAnimation(false);
+    setDeckState("Spread");
+  };
+
+  const handleClickCard = () => {
+    onClick(idx);
+  };
+
+  const getCardAnimation = () => {
+    if (deckState === "Stack") return "spread";
+    if (deckState === "Spread") {
+      if (cardPickState[idx] === "Pick") return "clickAnimation";
+      if (cardPickState[idx] === "Down") return "cardDownAnimation";
+    }
+    return "infiniteScroll";
   };
 
   useEffect(() => {
@@ -57,18 +90,17 @@ const Card = ({ idx, cardDeckAnimation, setCardDeckAnimation }: PropTypes) => {
     }
   }, []);
 
-  console.log(moveDistance);
-
   return (
     <CardAnimationWrapper
       ref={cardRef}
       variants={cardVariants}
-      animate={cardDeckAnimation ? "spread" : "temp"}
+      animate={getCardAnimation()}
+      onClick={handleClickCard}
       onAnimationComplete={onAnimationEnd}
     >
       <CardWrapper
         src={CardBack}
-        alt="카드 뒷면이미지"
+        alt="카드 뒷면 이미지"
         isCardShadow={isCardShadow}
       />
     </CardAnimationWrapper>
