@@ -29,10 +29,6 @@ const fadeInOut = keyframes`
 `;
 
 const TarotResult = () => {
-  const [tarrotCard, setTarotCard] = useState<TarotCardType | undefined>(
-    undefined
-  );
-
   const { resultId } = useParams<{ resultId: string }>();
 
   const { data: recommendQuestions } = useTarotQuestionRecommends();
@@ -44,12 +40,14 @@ const TarotResult = () => {
   if (isError) {
     <div>Error</div>;
   }
+
   return (
     <TarotResultWrapper>
       <TarotCard>
         <CardImg src={TarotImage} alt="타로카드 이미지" />
         <Title>
-          {tarrotCard?.nameKR} <br /> {tarrotCard?.name}
+          {findCardById(data?.tarot)?.nameKR} <br />{" "}
+          {findCardById(data?.tarot)?.name}
         </Title>
       </TarotCard>
 
