@@ -1,6 +1,6 @@
 import * as RadixToast from "@radix-ui/react-toast";
 import styled from "styled-components";
-
+import zIndex from "../constants/zIndex";
 const ToastProvider = RadixToast.Provider;
 
 const StyledToastRoot = styled(RadixToast.Root)`
@@ -22,6 +22,7 @@ const ToastViewport = styled(RadixToast.Viewport)`
   text-align: center;
   flex-direction: column;
   max-width: 268px;
+  z-index: ${zIndex.toast};
   color: ${({ theme }) => theme.colors.white};
   word-break: keep-all;
   ${({ theme }) => theme.fonts.body2};

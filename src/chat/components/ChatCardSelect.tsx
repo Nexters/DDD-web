@@ -36,7 +36,6 @@ const ChatCardSelect = () => {
     }
     /** Pick된 카드 최종 선택시 타로 선택 API 호출 */
     if (items[index] === "Pick") {
-      const picked = items[index];
       setIsCardPicked(true);
       selectTarotCard(
         {
