@@ -7,7 +7,7 @@ import { DeckState } from "../models/DeckState";
 import { CardPickState } from "../models/CardPickState";
 interface PropTypes {
   /** 타입 변경 필요 */
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const riseUpCardDeck = {
@@ -15,7 +15,7 @@ const riseUpCardDeck = {
   ease: easeInOut,
 };
 
-const ChatCardSelect = ({}: PropTypes) => {
+const ChatCardSelect = ({ onClick }: PropTypes) => {
   const [deckState, setDeckState] = useState<DeckState>("Stack");
   const ITEMS_PER_LOAD = 15;
   const [items, setItems] = useState<CardPickState[]>(
@@ -34,7 +34,7 @@ const ChatCardSelect = ({}: PropTypes) => {
     /** Pick된 카드 최종 선택시 타로 선택 API 호출 */
     if (items[index] === "Pick") {
       alert("Card Select!");
-      //onClick();
+      onClick();
     }
   };
 
