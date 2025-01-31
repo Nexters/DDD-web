@@ -15,6 +15,7 @@ import shareLink from "@/shared/utils/shareLink";
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
 import { useState } from "react";
+import { div } from "motion/react-client";
 const fadeInOut = keyframes`
   0% {
     opacity: 0;
@@ -34,10 +35,14 @@ const TarotResult = () => {
   const { handleWebShare } = shareLink();
   const theme = useTheme();
 
-  const { data, isError } = useTarotReadingResult(Number(resultId));
+  const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
 
   if (isError) {
     <div>Error</div>;
+  }
+
+  if (isLoading) {
+    <div>isLoading</div>;
   }
 
   const TarotData = findCardById(data?.tarot);
@@ -52,8 +57,8 @@ const TarotResult = () => {
     <TarotResultWrapper>
       <TarotCard>
         <CardImg
-          src={TarotData?.imgSrc || ""}
-          alt={TarotData?.alt || ""}
+          src={TarotData?.imgSrc}
+          alt={TarotData?.alt}
           width={180}
           height={100}
         />

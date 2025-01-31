@@ -1,10 +1,10 @@
 import tarotDeckData from "../constants/tarotCardDeck";
-import { TarotCardIdType } from "../models/tarotCardId";
+import { TarotCardIdType } from "@/tarot/models/tarotCardId";
+
 const findCardById = (id: TarotCardIdType | undefined) => {
-  if (id === undefined) {
-    throw new Error("Tarot id is undefined");
+  if (id !== undefined) {
+    return tarotDeckData.find((item) => item.id === id);
   }
-  return tarotDeckData.find((item) => item.id === id) || undefined;
 };
 
 export default findCardById;

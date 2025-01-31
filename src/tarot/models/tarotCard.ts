@@ -9,5 +9,5 @@ export type TarotCardType = {
   /**
    * TODO: 카드 이미지 경로 추가, optional 타입 제거
    * */
-  imgSrc?: StaticImageData;
+  imgSrc: StaticImageData;
 };
