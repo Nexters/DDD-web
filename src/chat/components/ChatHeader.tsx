@@ -4,12 +4,28 @@ import KebobMenuIcon from "@/shared/assets/icons/kebab-menu.svg";
 import BottomSheet from "@/shared/components/BottomSheet";
 import HeaderContent from "@/shared/components/HeaderContent";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useRouter } from "next/navigation";
 import { css } from "styled-components";
+import { useCreateChatRoom } from "../hooks/useCreateChatRoom";
 
 export default function ChatHeader() {
+  const { mutate: createChatRoom } = useCreateChatRoom();
+  const router = useRouter();
+
+  const handleResetChatClick = () => {
+    createChatRoom(undefined, {
+      onSuccess: (data) => {
+        router.push(`/chats/${data.roomId}`);
+      },
+    });
+  };
+
   return (
     <HeaderContent
-      divider
+      /**
+       * FIXME: 구분선이 추가되어야 하나 쌓임 맥락에 의해 전체 화면 오버플로우 되지 않는 문제
+       * 레이아웃 구조 개선 후 divider prop 적용 필요
+       *  */
       sticky
       endAction={
         <BottomSheet.Root>
@@ -47,8 +63,9 @@ export default function ChatHeader() {
                   <button type="button">친구에게 타로냥 알리기</button>
                 </li>
                 <li>
-                  {/* TODO: 메뉴 버튼 액션 추가 */}
-                  <button type="button">새 대화 시작하기</button>
+                  <button type="button" onClick={handleResetChatClick}>
+                    새 대화 시작하기
+                  </button>
                 </li>
               </ul>
             </BottomSheet.Content>

@@ -1,17 +1,17 @@
 "use client";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
-import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import TextareaAutoSize from "./TextareaAutoSize";
 
 export default function TextFieldInChatOverview() {
   const [message, setMessage] = useState("");
-  const { mutate: createChatRoom, isPending: isCreatingChatRoom } = useCreateChatRoom();
-  const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
+  const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
+  const [isMessageSent, setIsMessageSent] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -23,26 +23,22 @@ export default function TextFieldInChatOverview() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
+    setIsMessageSent(true);
 
     createChatRoom(undefined, {
       onSuccess: (data) => {
-        sendChatMessage(
-          {
-            roomId: data.roomId,
-            message: message,
-            intent: "NORMAL",
-          },
-          {
-            onSuccess: () => {
-              router.push(`/chats/${data.roomId}`);
-            },
-          }
-        );
+        const messageRequest: SendChatMessageRequest = {
+          roomId: data.roomId,
+          message: message,
+          intent: "NORMAL",
+        };
+
+        router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
       },
     });
   };
   const maxMessageLength = 300;
-  const disabled = isCreatingChatRoom || isSendingChatMessage;
+  const disabled = isMessageSent;
 
   return (
     <form
@@ -60,6 +56,7 @@ export default function TextFieldInChatOverview() {
         minRows={1}
         maxRows={8}
         maxLength={maxMessageLength}
+        autoFocus
       />
       <button
         type="submit"

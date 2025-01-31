@@ -85,6 +85,7 @@ export default function ChatBubble({ sender, message, card, loading }: Props) {
         background-color: ${({ theme }) => theme.colors.grey10};
         ${({ theme }) => theme.fonts.body3}
         border-radius: 8px;
+        width: fit-content;
         max-width: 260px;
         color: ${({ theme }) => theme.colors.grey90};
         white-space: pre-wrap;

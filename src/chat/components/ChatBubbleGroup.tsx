@@ -5,11 +5,9 @@ import ChatBubble from "./ChatBubble";
 
 type Props = {
   message: MessageType;
-  isJustSent: boolean;
 };
 
 export default function ChatBubbleGroup({ message }: Props) {
-  // TODO: 응답을 새로 받은 경우에만 메세지를 순차적으로 렌더링
   const renderMessage = (message: MessageType) => {
     if (message.tarotName) {
       return <ChatBubble key={message.messageId} sender={"SYSTEM"} card={message.tarotName} />;

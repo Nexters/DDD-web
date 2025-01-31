@@ -1,18 +1,26 @@
 "use client";
 import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
-import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
+import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
 import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import TextareaAutoSize from "./TextareaAutoSize";
 
 export default function TextFieldInChat() {
   const [message, setMessage] = useState("");
-  const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
+  const { mutate: sendChatMessage } = useSendChatMessage();
   const { chatId } = useParams<{ chatId: string }>();
-  const { addMessage, deleteMessage } = useChatMessagesContext();
+  const { addMessage, deleteMessage, editMessage } = useChatMessagesContext();
+  const {
+    isDisabled: isTextFieldDisabled,
+    enable: enableTextField,
+    disable: disableTextField,
+    textareaRef,
+    focus: focusTextField,
+  } = useTextFieldInChatDisplayContext();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -21,10 +29,10 @@ export default function TextFieldInChat() {
     }
   };
 
-  // TODO: 채팅을 전송한 경우 최하단으로 스크롤
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage("");
+    disableTextField();
 
     addMessage({
       messageId: Math.random(),
@@ -52,21 +60,39 @@ export default function TextFieldInChat() {
         intent: "NORMAL",
       },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           deleteMessage(loadingMessageId);
 
           addMessage({
             messageId: data.messageId,
             type: data.type,
             sender: data.sender,
-            answers: data.answers,
+            answers: [data.answers[0]],
           });
+
+          for (let index = 1; index < data.answers.length; index++) {
+            await delay(1000);
+            editMessage({
+              messageId: data.messageId,
+              type: data.type,
+              sender: data.sender,
+              answers: data.answers.slice(0, index + 1),
+            });
+          }
+
+          if (data.type === "SYSTEM_TAROT_QUESTION_REPLY") {
+            disableTextField();
+            return;
+          }
+
+          enableTextField();
+          await delay(1);
+          focusTextField();
         },
       }
     );
   };
   const maxMessageLength = 300;
-  const disabled = isSendingChatMessage;
 
   return (
     <form
@@ -79,15 +105,16 @@ export default function TextFieldInChat() {
       <TextareaAutoSize
         value={message}
         onChange={handleChange}
-        disabled={disabled}
+        disabled={isTextFieldDisabled}
         placeholder="오늘의 운세는 어떨까?"
         minRows={1}
         maxRows={8}
         maxLength={maxMessageLength}
+        textareaRef={textareaRef}
       />
       <button
         type="submit"
-        disabled={disabled}
+        disabled={isTextFieldDisabled}
         css={css`
           position: absolute;
           right: 12px;

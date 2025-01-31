@@ -1,25 +1,33 @@
 import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
-import { useSendChatMessage } from "@/chat/hooks/useSendChatMesasge";
+import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import { css } from "styled-components";
+import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChipButton from "./ChipButton";
-
-type Props = {
-  open: boolean;
-};
-
-export default function AcceptRejectButtons({ open }: Props) {
-  const { addMessage, deleteMessage } = useChatMessagesContext();
-  const { mutate: sendChatMessage, isPending: isSendingChatMessage } = useSendChatMessage();
+export default function AcceptRejectButtons() {
+  const { addMessage, deleteMessage, editMessage, state: messages } = useChatMessagesContext();
+  const { mutate: sendChatMessage } = useSendChatMessage();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const {
+    enable: enableTextField,
+    disable: disableTextField,
+    hide: hideTextField,
+    focus: focusTextField,
+  } = useTextFieldInChatDisplayContext();
   const { chatId } = useParams<{ chatId: string }>();
 
   const rejectMessage = "아니, 얘기 더 들어봐";
   const acceptMessage = "좋아! 타로 볼래";
 
+  const isSystemRepliedQuestion = messages[messages.length - 1]?.type === "SYSTEM_TAROT_QUESTION_REPLY";
+
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   const handleAcceptClick = async () => {
+    setIsButtonDisabled(true);
+    hideTextField();
     addMessage({
       messageId: Math.random(),
       type: "USER_NORMAL",
@@ -46,21 +54,34 @@ export default function AcceptRejectButtons({ open }: Props) {
         intent: "TAROT_ACCEPT",
       },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           deleteMessage(loadingMessageId);
 
           addMessage({
             messageId: data.messageId,
             type: data.type,
             sender: data.sender,
-            answers: data.answers,
+            answers: [data.answers[0]],
           });
+
+          for (let index = 1; index < data.answers.length; index++) {
+            await delay(1000);
+            editMessage({
+              messageId: data.messageId,
+              type: data.type,
+              sender: data.sender,
+              answers: data.answers.slice(0, index + 1),
+            });
+          }
         },
       }
     );
+    setIsButtonDisabled(false);
   };
 
   const handleRejectClick = async () => {
+    setIsButtonDisabled(true);
+    disableTextField();
     addMessage({
       messageId: Math.random(),
       type: "USER_NORMAL",
@@ -87,21 +108,35 @@ export default function AcceptRejectButtons({ open }: Props) {
         intent: "TAROT_DECLINE",
       },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
           deleteMessage(loadingMessageId);
 
           addMessage({
             messageId: data.messageId,
             type: data.type,
             sender: data.sender,
-            answers: data.answers,
+            answers: [data.answers[0]],
           });
+
+          for (let index = 1; index < data.answers.length; index++) {
+            await delay(1000);
+            editMessage({
+              messageId: data.messageId,
+              type: data.type,
+              sender: data.sender,
+              answers: data.answers.slice(0, index + 1),
+            });
+          }
+          enableTextField();
+          await delay(1);
+          focusTextField();
         },
       }
     );
+    setIsButtonDisabled(false);
   };
 
-  if (!open) return null;
+  if (!isSystemRepliedQuestion) return null;
 
   return (
     <div
@@ -111,10 +146,10 @@ export default function AcceptRejectButtons({ open }: Props) {
         margin-top: 76px;
       `}
     >
-      <ChipButton type="button" disabled={isSendingChatMessage} color="primary02" onClick={handleAcceptClick}>
+      <ChipButton type="button" disabled={isButtonDisabled} color="primary02" onClick={handleAcceptClick}>
         {acceptMessage}
       </ChipButton>
-      <ChipButton type="button" disabled={isSendingChatMessage} color="grey30" onClick={handleRejectClick}>
+      <ChipButton type="button" disabled={isButtonDisabled} color="grey30" onClick={handleRejectClick}>
         {rejectMessage}
       </ChipButton>
     </div>
