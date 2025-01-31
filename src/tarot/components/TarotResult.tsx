@@ -57,8 +57,8 @@ const TarotResult = () => {
     <TarotResultWrapper>
       <TarotCard>
         <CardImg
-          src={TarotData?.imgSrc}
-          alt={TarotData?.alt}
+          src={TarotData?.imgSrc || ""}
+          alt={TarotData?.alt || ""}
           width={180}
           height={100}
         />
