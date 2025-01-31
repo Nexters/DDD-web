@@ -1,19 +1,19 @@
 "use client";
-import styled, { useTheme, keyframes } from "styled-components";
 import Image from "next/image";
+import styled, { keyframes, useTheme } from "styled-components";
 
-import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
+import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 
 import findCardById from "@/tarot/utils/findCardById";
 import { useParams } from "next/navigation";
 
-import ProfileIcon from "@/shared/assets/icons/profile.svg";
-import LinkIcon from "@/shared/assets/icons/link.svg";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
-import shareLink from "@/shared/utils/shareLink";
+import LinkIcon from "@/shared/assets/icons/link.svg";
+import ProfileIcon from "@/shared/assets/icons/profile.svg";
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
+import shareLink from "@/shared/utils/shareLink";
 import { useState } from "react";
 const fadeInOut = keyframes`
   0% {
@@ -40,7 +40,9 @@ const TarotResult = () => {
     <div>Error</div>;
   }
 
-  const TarotData = findCardById(data?.tarot);
+  if (!data || !recommendQuestions) return null;
+
+  const TarotData = findCardById(data.tarot);
 
   const handleShareLink = async () => {
     const shareSuccess = await handleWebShare();
@@ -51,29 +53,24 @@ const TarotResult = () => {
   return (
     <TarotResultWrapper>
       <TarotCard>
-        <CardImg
-          src={TarotData?.imgSrc || ""}
-          alt={TarotData?.alt || ""}
-          width={180}
-          height={100}
-        />
+        <CardImg src={TarotData.imgSrc || ""} alt={TarotData.alt || ""} width={180} height={100} />
         <Title>
-          {TarotData?.nameKR} <br />
-          {TarotData?.name}
+          {TarotData.nameKR} <br />
+          {TarotData.name}
         </Title>
       </TarotCard>
 
       <TarotCardResult>
-        <ResultType>{data?.type}</ResultType>
+        <ResultType>{data.type}</ResultType>
 
         <ResultBox>
-          <h2> {data?.cardValue.summary}</h2>
-          <p> {data?.cardValue.description}</p>
+          <h2> {data.cardValue.summary}</h2>
+          <p> {data.cardValue.description}</p>
         </ResultBox>
 
         <ResultBox>
-          <h2> {data?.answer.summary}</h2>
-          <p> {data?.answer.description}</p>
+          <h2> {data.answer.summary}</h2>
+          <p> {data.answer.description}</p>
 
           <ChatImageFrame>
             <UserMessageBubble>
@@ -94,8 +91,8 @@ const TarotResult = () => {
         </ResultBox>
 
         <ResultBox>
-          <h2> {data?.advice.summary}</h2>
-          <p> {data?.advice.description}</p>
+          <h2> {data.advice.summary}</h2>
+          <p> {data.advice.description}</p>
         </ResultBox>
       </TarotCardResult>
 
@@ -116,8 +113,7 @@ const TarotResult = () => {
       </IconBtnWrapper>
 
       <AdditionalMessage>
-        집사의 고민이 잘 해결되었으면 좋겠다냥! <br /> 궁금한게 있으면 더
-        물어봐라냥
+        집사의 고민이 잘 해결되었으면 좋겠다냥! <br /> 궁금한게 있으면 더 물어봐라냥
       </AdditionalMessage>
 
       <Divider />
@@ -126,7 +122,7 @@ const TarotResult = () => {
         <SubText>다른 집사들도 타로냥에게 물어봤어요</SubText>
         <MainText>나도 물어보면 좋을 질문</MainText>
         <RecommendContainer>
-          {recommendQuestions?.questions.map((item, idx) => (
+          {recommendQuestions.questions.map((item, idx) => (
             <RecommendQuestionBtn key={idx}>
               <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
               <QuestionTitle>{item.question} </QuestionTitle>
