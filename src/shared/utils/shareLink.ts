@@ -5,7 +5,7 @@ const shareLink = () => {
   const handleWebShare = async () => {
     const shareData = {
       meet: {
-        title: "타로냥이",
+        title: "타로냥 - 고양이 타로술사 \n",
         text: "귀여운 타로냥이가 봐주는 타로 보러 보러가기 \n",
         url: inviteURL,
       },
