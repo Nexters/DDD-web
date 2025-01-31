@@ -58,7 +58,10 @@ const TarotInteraction = ({ setTarotInteractation, tarotId }: PropTypes) => {
               transition={cardRotateTransition}
               onAnimationComplete={routingTarotResult}
             >
-              <CardFront alt="카드 앞면" src={findCardById(tarotId)?.imgSrc} />
+              <CardFront
+                alt="카드 앞면"
+                src={findCardById(tarotId)?.imgSrc || ""}
+              />
               <CardBack alt="카드 뒷면" src={cardBack} />
             </CardInner>
 

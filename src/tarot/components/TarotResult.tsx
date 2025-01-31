@@ -16,6 +16,9 @@ import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
 import { useState } from "react";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
+import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+
 const fadeInOut = keyframes`
   0% {
     opacity: 0;
@@ -29,13 +32,17 @@ const fadeInOut = keyframes`
 `;
 
 const TarotResult = () => {
-  const { resultId } = useParams<{ resultId: string }>();
+  const { resultId, chatId } = useParams<{
+    resultId: string;
+    chatId: string;
+  }>();
   const [toastOpen, setToastOpen] = useState(false);
   const { data: recommendQuestions } = useTarotQuestionRecommends();
   const { handleWebShare, handleCopyToClipboard } = shareLink();
   const theme = useTheme();
-
+  const router = useRouter();
   const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
+  const queryClient = useQueryClient();
 
   if (isError) {
     <div>Error</div>;
@@ -53,6 +60,13 @@ const TarotResult = () => {
       setToastOpen(true);
     }
   };
+
+  const handleContinueConversation = () => {
+    queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
+    router.push(`/chats/${chatId}`);
+  };
+  console.log(recommendQuestions);
+
   return (
     <TarotResultWrapper>
       <TarotCard>
@@ -147,7 +161,11 @@ const TarotResult = () => {
         </RecommendContainer>
       </RecommendBox>
 
-      <Button color="grey70" css={{ marginBottom: "98px" }}>
+      <Button
+        color="grey70"
+        css={{ marginBottom: "98px" }}
+        onClick={handleContinueConversation}
+      >
         이어서 대화하기
       </Button>
     </TarotResultWrapper>

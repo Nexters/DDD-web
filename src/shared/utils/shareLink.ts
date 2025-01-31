@@ -6,7 +6,7 @@ const shareLink = () => {
     const shareData = {
       meet: {
         title: "타로냥 - 고양이 타로술사 \n",
-        text: "귀여운 타로냥이가 봐주는 타로 보러 보러가기 \n",
+        text: "고양이 타로술사 타로냥이 당신의 질문에 답해주는 AI 타로 서비스입니다. \n",
         url: inviteURL,
       },
     };
