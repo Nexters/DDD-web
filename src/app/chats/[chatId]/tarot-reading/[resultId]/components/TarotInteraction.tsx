@@ -37,6 +37,7 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
       setTarotInteractation(false);
     }, 1000);
   };
+
   return (
     <TarotWaitingWrapper>
       <Center>

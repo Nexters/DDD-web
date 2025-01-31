@@ -2,7 +2,7 @@
 import styled, { useTheme, keyframes } from "styled-components";
 import Image from "next/image";
 import TarotImage from "@/shared/assets/images/Card1.jpg";
-// import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
+import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 
 import { TarotCardType } from "@/tarot/models/tarotCard";
@@ -16,24 +16,24 @@ import DownLoadIcon from "@/shared/assets/icons/download.svg";
 
 import Button from "@/shared/components/Button";
 
-//추후 제거
-interface TarotReadingResultResponse {
-  tarot: string;
-  type: string;
-  cardValue: {
-    summary: string;
-    description: string;
-  };
-  answer: {
-    summary: string;
-    description: string;
-    question: string;
-  };
-  advice: {
-    summary: string;
-    description: string;
-  };
-}
+// //추후 제거
+// interface TarotReadingResultResponse {
+//   tarot: string;
+//   type: string;
+//   cardValue: {
+//     summary: string;
+//     description: string;
+//   };
+//   answer: {
+//     summary: string;
+//     description: string;
+//     question: string;
+//   };
+//   advice: {
+//     summary: string;
+//     description: string;
+//   };
+// }
 
 const fadeInOut = keyframes`
   0% {
@@ -48,11 +48,11 @@ const fadeInOut = keyframes`
 `;
 
 const TarotResult = () => {
-  const [data, setData] = useState<TarotReadingResultResponse | null>(null);
+  // const [data, setData] = useState<TarotReadingResultResponse | null>(null);
   const [tarrotCard, setTarotCard] = useState<TarotCardType | undefined>(
     undefined
   );
-  const [loading, setLoading] = useState(true);
+
   const { resultId } = useParams<{ resultId: string }>();
 
   const { data: recommendQuestions } = useTarotQuestionRecommends();
@@ -61,26 +61,26 @@ const TarotResult = () => {
   /**
    * Mock data 추후 Tanstack query로 변경
    */
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch(`/api/v1/tarot/result/${resultId}`);
-        const json = await res.json();
-        setData(json.data);
-        setTarotCard(findCardById(json.data.tarot));
-      } catch (error) {
-        console.error("Error fetching tarot data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, [resultId]);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const res = await fetch(`/api/v1/tarot/result/${resultId}`);
+  //       const json = await res.json();
+  //       setData(json.data);
+  //       setTarotCard(findCardById(json.data.tarot));
+  //     } catch (error) {
+  //       console.error("Error fetching tarot data:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchData();
+  // }, [resultId]);
 
-  if (loading) return <p>Loading...</p>;
-  if (!data) return <p>No data available</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (!data) return <p>No data available</p>;
 
-  // const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
+  const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
 
   return (
     <TarotResultWrapper>
