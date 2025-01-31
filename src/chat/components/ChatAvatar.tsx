@@ -2,7 +2,7 @@ import ChatBotProfileImage from "@/shared/assets/images/chatbot-profile.webp";
 import Image from "next/image";
 import { css } from "styled-components";
 export default function ChatAvatar() {
-  // TODO: 이미지로 교체
+
   return (
     <Image
       src={ChatBotProfileImage}
