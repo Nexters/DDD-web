@@ -86,11 +86,11 @@ export default function ChatBubble({ sender, message, cardId, resultId, loading 
         <Image
           src={card.imgSrc}
           alt={card.alt}
+          width={100}
+          height={160}
           css={css`
             background-color: ${({ theme }) => theme.colors.grey50};
             border-radius: 8px;
-            width: 100px;
-            height: 160px;
           `}
         />
       </Link>
