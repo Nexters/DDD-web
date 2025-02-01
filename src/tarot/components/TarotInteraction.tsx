@@ -4,13 +4,15 @@ import * as motion from "motion/react-client";
 import Image from "next/image";
 import catHand from "@/shared/assets/images/catHand.png";
 import cardBack from "@/shared/assets/images/cardBack.webp";
-import cardFront from "@/shared/assets/images/Card1.jpg";
 import styled from "styled-components";
 import { easeInOut } from "motion";
 import { SetStateAction, useState, Dispatch } from "react";
+import { TarotCardIdType } from "@/tarot/models/tarotCardId";
+import findCardById from "@/tarot/utils/findCardById";
 
 type PropTypes = {
   setTarotInteractation: Dispatch<SetStateAction<boolean>>;
+  tarotId: TarotCardIdType | undefined;
 };
 
 const putCardtransition = {
@@ -29,7 +31,7 @@ const cardRotateTransition = {
   duration: 0.6,
 };
 
-const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
+const TarotInteraction = ({ setTarotInteractation, tarotId }: PropTypes) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const routingTarotResult = () => {
@@ -38,6 +40,11 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
     }, 1000);
   };
 
+  if (!tarotId) {
+    return null;
+  }
+
+  const card = findCardById(tarotId);
   return (
     <TarotWaitingWrapper>
       <Center>
@@ -56,7 +63,7 @@ const TarotInteraction = ({ setTarotInteractation }: PropTypes) => {
               transition={cardRotateTransition}
               onAnimationComplete={routingTarotResult}
             >
-              <CardFront alt="카드 앞면" src={cardFront} />
+              <CardFront alt="카드 앞면" src={card.imgSrc} />
               <CardBack alt="카드 뒷면" src={cardBack} />
             </CardInner>
 
