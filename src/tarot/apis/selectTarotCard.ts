@@ -23,7 +23,7 @@ const schema = z.object({
   messageId: z.number(),
   type: z.literal(MessageCategorySchema.Enum.SYSTEM_TAROT_RESULT),
   sender: z.literal(MessageSenderTypeSchema.Enum.SYSTEM),
-  answer: z.array(z.string()),
+  answers: z.array(z.string()),
   tarotName: TarotCardIdSchema,
   tarotResultId: z.number(),
 });
@@ -37,10 +37,7 @@ const validate = (data: SelectTarotCardResponse): SelectTarotCardData => {
 
 export const selectTarotCard = async (request: SelectTarotCardRequest) => {
   return apiClient
-    .post<SelectTarotCardResponse>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`,
-      request,
-    )
+    .post<SelectTarotCardResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`, request)
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

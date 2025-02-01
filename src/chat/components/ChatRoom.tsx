@@ -15,9 +15,10 @@ import { css } from "styled-components";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import { useSendChatMessage } from "../hooks/useSendChatMessage";
+import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
+import ChatCardSelect from "./ChatCardSelect";
 import ChatHeader from "./ChatHeader";
-
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
@@ -25,6 +26,7 @@ export default function ChatRoom() {
   const { data } = useChatMessages(Number(chatId));
   const { scrollRef, contentRef } = useStickToBottom();
   const { copyServerState, state: messages, addMessage, editMessage, deleteMessage } = useChatMessagesContext();
+  const { isVisible: isTarotCardDeckVisible } = useTarotCardDeckDisplayContext();
   const {
     isVisible: isTextFieldVisible,
     enable: enableTextField,
@@ -86,7 +88,17 @@ export default function ChatRoom() {
           disableTextField();
           return;
         }
-
+      },
+      onError: () => {
+        deleteMessage(loadingMessageId);
+        addMessage({
+          messageId: Math.random(),
+          type: "SYSTEM_NORMAL_REPLY",
+          sender: "USER",
+          answers: ["문제가 생겼다냥! 다시 시도해봐냥."],
+        });
+      },
+      onSettled: async () => {
         enableTextField();
         await delay(1);
         focusTextField();
@@ -138,7 +150,7 @@ export default function ChatRoom() {
 
         <AcceptRejectButtons />
       </div>
-
+      {isTarotCardDeckVisible && <ChatCardSelect />}
       {isTextFieldVisible && (
         <div>
           <FullscreenOverflowDivider />
