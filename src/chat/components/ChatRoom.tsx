@@ -19,7 +19,6 @@ import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplay
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatCardSelect from "./ChatCardSelect";
 import ChatHeader from "./ChatHeader";
-
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
@@ -89,7 +88,17 @@ export default function ChatRoom() {
           disableTextField();
           return;
         }
-
+      },
+      onError: () => {
+        deleteMessage(loadingMessageId);
+        addMessage({
+          messageId: Math.random(),
+          type: "SYSTEM_NORMAL_REPLY",
+          sender: "USER",
+          answers: ["문제가 생겼다냥! 다시 시도해봐냥."],
+        });
+      },
+      onSettled: async () => {
         enableTextField();
         await delay(1);
         focusTextField();

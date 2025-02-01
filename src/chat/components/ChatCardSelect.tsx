@@ -1,3 +1,4 @@
+import LoadingModal from "@/shared/components/LoadingModal";
 import tarotDeckData from "@/tarot/constants/tarotCardDeck";
 import { useSelectTarotCard } from "@/tarot/hooks/useSelectTarotCard";
 import { easeInOut } from "motion";
@@ -75,20 +76,23 @@ const ChatCardSelect = () => {
   }, []);
 
   return (
-    <CardDeckWrapper initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={riseUpCardDeck}>
-      {items.map((_, idx) => (
-        <Card
-          key={idx}
-          idx={idx}
-          deckState={deckState}
-          setDeckState={setDeckState}
-          onClick={handleClickCard}
-          cardPickState={items}
-        />
-      ))}
+    <>
+      <CardDeckWrapper initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={riseUpCardDeck}>
+        {items.map((_, idx) => (
+          <Card
+            key={idx}
+            idx={idx}
+            deckState={deckState}
+            setDeckState={setDeckState}
+            onClick={handleClickCard}
+            cardPickState={items}
+          />
+        ))}
 
-      <InfinteScrollTrigger ref={observerRef} pos={items.length} />
-    </CardDeckWrapper>
+        <InfinteScrollTrigger ref={observerRef} pos={items.length} />
+      </CardDeckWrapper>
+      <LoadingModal isOpen={isCardPicked} />
+    </>
   );
 };
 

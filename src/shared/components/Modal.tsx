@@ -1,6 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { ReactNode } from "react";
 import styled, { keyframes } from "styled-components";
+import zIndex from "../constants/zIndex";
 
 const overlaySlow = keyframes`
 	from {
@@ -13,7 +14,7 @@ const overlaySlow = keyframes`
 
 interface ModalProps {
   isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChange?: (open: boolean) => void;
   children: ReactNode;
 }
 
@@ -27,6 +28,8 @@ const Root = ({ isOpen, onOpenChange, children }: ModalProps) => {
 
 const Trigger = Dialog.Trigger;
 
+const Portal = Dialog.Portal;
+
 const Content = styled(Dialog.Content)`
   position: fixed;
   top: 50%;
@@ -37,6 +40,7 @@ const Content = styled(Dialog.Content)`
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 8px;
+  z-index: ${zIndex.dialog};
 `;
 
 const Overlay = styled(Dialog.Overlay)`
@@ -47,6 +51,7 @@ const Overlay = styled(Dialog.Overlay)`
   background-color: ${({ theme }) => theme.colors.black};
   opacity: 0.4;
   animation: ${overlaySlow} 200ms;
+  z-index: ${zIndex.dialog};
 `;
 
 const Title = styled(Dialog.Title)`
@@ -68,6 +73,7 @@ const Modal = {
   Content,
   Title,
   Description,
+  Portal,
 };
 
 export default Modal;
