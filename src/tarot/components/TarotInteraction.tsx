@@ -40,6 +40,11 @@ const TarotInteraction = ({ setTarotInteractation, tarotId }: PropTypes) => {
     }, 1000);
   };
 
+  if (!tarotId) {
+    return null;
+  }
+
+  const card = findCardById(tarotId);
   return (
     <TarotWaitingWrapper>
       <Center>
@@ -58,10 +63,7 @@ const TarotInteraction = ({ setTarotInteractation, tarotId }: PropTypes) => {
               transition={cardRotateTransition}
               onAnimationComplete={routingTarotResult}
             >
-              <CardFront
-                alt="카드 앞면"
-                src={findCardById(tarotId)?.imgSrc || ""}
-              />
+              <CardFront alt="카드 앞면" src={card.imgSrc} />
               <CardBack alt="카드 뒷면" src={cardBack} />
             </CardInner>
 

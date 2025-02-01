@@ -42,18 +42,12 @@ const TarotResult = () => {
   const { handleWebShare, handleCopyToClipboard } = shareLink(shareURL);
   const theme = useTheme();
   const router = useRouter();
-  const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
+  const { data, isError } = useTarotReadingResult(Number(resultId));
   const queryClient = useQueryClient();
 
   if (isError) {
-    <div>Error</div>;
+    return null;
   }
-
-  if (isLoading) {
-    <div>isLoading</div>;
-  }
-
-  const TarotData = findCardById(data?.tarot);
 
   const handleShareLink = async () => {
     const shareSuccess = await handleCopyToClipboard();
@@ -82,117 +76,128 @@ const TarotResult = () => {
     queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
     router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
   };
-  return (
-    <TarotResultWrapper>
-      <TarotCard>
-        <CardImg
-          src={TarotData?.imgSrc || ""}
-          alt={TarotData?.alt || "타로카드 이미지"}
-          width={180}
-          height={100}
-        />
-        <Title>
-          {TarotData?.nameKR} <br />
-          {TarotData?.name}
-        </Title>
-      </TarotCard>
 
-      <TarotCardResult>
-        <ResultType>{data?.type}</ResultType>
+  if (data?.tarot) {
+    const TarotData = findCardById(data?.tarot);
 
-        <ResultBox>
-          <h2> {data?.cardValue.summary}</h2>
-          <p> {data?.cardValue.description}</p>
-        </ResultBox>
+    if (!TarotData) {
+      return null;
+    }
+    return (
+      <TarotResultWrapper>
+        <TarotCard>
+          <CardImg
+            src={TarotData?.imgSrc || ""}
+            alt={TarotData?.alt || "타로카드 이미지"}
+            width={180}
+            height={100}
+          />
+          <Title>
+            {TarotData?.nameKR} <br />
+            {TarotData?.name}
+          </Title>
+        </TarotCard>
 
-        <ResultBox>
-          <h2> {data?.answer.summary}</h2>
-          <p> {data?.answer.description}</p>
+        <TarotCardResult>
+          <ResultType>{data?.type}</ResultType>
 
-          <ChatImageFrame>
-            <UserMessageBubble>
-              <div>{data?.answer.question}</div>
-            </UserMessageBubble>
-            <SystemMassegeBubble>
-              <ProfileIcon />
-              <div>
-                <p>타로냥</p>
-                <SystemMessgeDelay>
-                  <Dot $delay={0} $color={theme.colors.primary01} />
-                  <Dot $delay={0.3} $color={theme.colors.primary02} />
-                  <Dot $delay={0.6} $color={theme.colors.primary03} />
-                </SystemMessgeDelay>
-              </div>
-            </SystemMassegeBubble>
-          </ChatImageFrame>
-        </ResultBox>
+          <ResultBox>
+            <h2> {data?.cardValue.summary}</h2>
+            <p> {data?.cardValue.description}</p>
+          </ResultBox>
 
-        <ResultBox>
-          <h2> {data?.advice.summary}</h2>
-          <p> {data?.advice.description}</p>
-        </ResultBox>
-      </TarotCardResult>
+          <ResultBox>
+            <h2> {data?.answer.summary}</h2>
+            <p> {data?.answer.description}</p>
 
-      <IconBtnWrapper>
-        {/* To Do 기능 추가 */}
-        <IconBtn>
-          결과 저장하기 <DownLoadIcon />
-        </IconBtn>
-        <Toast.Provider>
-          {checkBrowserForWebShare() ? (
-            <IconBtn onClick={handleWebShare}>
-              링크 복사하기 <LinkIcon />
-            </IconBtn>
-          ) : (
-            <IconBtn onClick={handleShareLink}>
-              링크 복사하기 <LinkIcon />
-            </IconBtn>
-          )}
+            <ChatImageFrame>
+              <UserMessageBubble>
+                <div>{data?.answer.question}</div>
+              </UserMessageBubble>
+              <SystemMassegeBubble>
+                <ProfileIcon />
+                <div>
+                  <p>타로냥</p>
+                  <SystemMessgeDelay>
+                    <Dot $delay={0} $color={theme.colors.primary01} />
+                    <Dot $delay={0.3} $color={theme.colors.primary02} />
+                    <Dot $delay={0.6} $color={theme.colors.primary03} />
+                  </SystemMessgeDelay>
+                </div>
+              </SystemMassegeBubble>
+            </ChatImageFrame>
+          </ResultBox>
 
-          <Toast.Root open={toastOpen} onOpenChange={setToastOpen}>
-            <Toast.Title>링크 복사 완료!</Toast.Title>
-          </Toast.Root>
-          <Toast.Viewport> </Toast.Viewport>
-        </Toast.Provider>
-      </IconBtnWrapper>
+          <ResultBox>
+            <h2> {data?.advice.summary}</h2>
+            <p> {data?.advice.description}</p>
+          </ResultBox>
+        </TarotCardResult>
 
-      <AdditionalMessage>
-        집사의 고민이 잘 해결되었으면 좋겠다냥! <br /> 궁금한게 있으면 더
-        물어봐라냥
-      </AdditionalMessage>
+        <IconBtnWrapper>
+          {/* To Do 기능 추가 */}
+          <IconBtn>
+            결과 저장하기 <DownLoadIcon />
+          </IconBtn>
+          <Toast.Provider>
+            {checkBrowserForWebShare() ? (
+              <IconBtn onClick={handleWebShare}>
+                링크 복사하기 <LinkIcon />
+              </IconBtn>
+            ) : (
+              <IconBtn onClick={handleShareLink}>
+                링크 복사하기 <LinkIcon />
+              </IconBtn>
+            )}
 
-      <Divider />
+            <Toast.Root open={toastOpen} onOpenChange={setToastOpen}>
+              <Toast.Title>링크 복사 완료!</Toast.Title>
+            </Toast.Root>
+            <Toast.Viewport> </Toast.Viewport>
+          </Toast.Provider>
+        </IconBtnWrapper>
 
-      <RecommendBox>
-        <SubText>다른 집사들도 타로냥에게 물어봤어요</SubText>
-        <MainText>나도 물어보면 좋을 질문</MainText>
-        <RecommendContainer>
-          {recommendQuestions?.questions.map((item, idx) => (
-            <RecommendQuestionBtn
-              key={idx}
-              onClick={() =>
-                handleContinueRecommendConversation(
-                  item.recommendQuestionId,
-                  item.question
-                )
-              }
-            >
-              <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
-              <QuestionTitle>{item.question} </QuestionTitle>
-            </RecommendQuestionBtn>
-          ))}
-        </RecommendContainer>
-      </RecommendBox>
+        <AdditionalMessage>
+          집사의 고민이 잘 해결되었으면 좋겠다냥! <br /> 궁금한게 있으면 더
+          물어봐라냥
+        </AdditionalMessage>
 
-      <Button
-        color="grey70"
-        css={{ marginBottom: "98px" }}
-        onClick={handleContinueConversation}
-      >
-        이어서 대화하기
-      </Button>
-    </TarotResultWrapper>
-  );
+        <Divider />
+
+        <RecommendBox>
+          <SubText>다른 집사들도 타로냥에게 물어봤어요</SubText>
+          <MainText>나도 물어보면 좋을 질문</MainText>
+          <RecommendContainer>
+            {recommendQuestions?.questions.map((item, idx) => (
+              <RecommendQuestionBtn
+                key={idx}
+                onClick={() =>
+                  handleContinueRecommendConversation(
+                    item.recommendQuestionId,
+                    item.question
+                  )
+                }
+              >
+                <QuestionCount>
+                  {" "}
+                  {item.referenceCount}명이 질문 중
+                </QuestionCount>
+                <QuestionTitle>{item.question} </QuestionTitle>
+              </RecommendQuestionBtn>
+            ))}
+          </RecommendContainer>
+        </RecommendBox>
+
+        <Button
+          color="grey70"
+          css={{ marginBottom: "98px" }}
+          onClick={handleContinueConversation}
+        >
+          이어서 대화하기
+        </Button>
+      </TarotResultWrapper>
+    );
+  }
 };
 
 export default TarotResult;
