@@ -11,14 +11,13 @@ import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare"
 import shareLink from "@/shared/utils/shareLink";
 import Toast from "@/shared/components/Toast";
 import { useState } from "react";
-import styled from "styled-components";
-import zIndex from "@/shared/constants/zIndex";
+
 export default function ChatHeader() {
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
 
   const tarotNyangUrl = window.location.hostname;
-  const currentUrl = window.location.href;
+
   const { handleWebShare, handleCopyToClipboard } = shareLink(tarotNyangUrl);
   const [toastOpen, setToastOpen] = useState(false);
 
@@ -119,7 +118,7 @@ export default function ChatHeader() {
               주세요.
             </Toast.Title>
           </Toast.Root>
-          <Toast.Viewport></Toast.Viewport>
+          <Toast.Viewport />
           <span
             css={css`
               ${({ theme }) => theme.fonts.subHead3}
