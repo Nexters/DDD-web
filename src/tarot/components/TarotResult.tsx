@@ -38,7 +38,8 @@ const TarotResult = () => {
   }>();
   const [toastOpen, setToastOpen] = useState(false);
   const { data: recommendQuestions } = useTarotQuestionRecommends();
-  const { handleWebShare, handleCopyToClipboard } = shareLink();
+  const shareURL = window.location.href;
+  const { handleWebShare, handleCopyToClipboard } = shareLink(shareURL);
   const theme = useTheme();
   const router = useRouter();
   const { data, isError, isLoading } = useTarotReadingResult(Number(resultId));
