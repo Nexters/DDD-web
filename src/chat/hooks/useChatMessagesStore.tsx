@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useReducer } from "react";
 import { ChatMessagesByRoomIdData } from "../apis/getChatMessagesByRoomId";
-import { MessageType } from "../models/message";
+import { MessageType } from "../types/message";
 
 type AddMessageAction = {
   type: "ADD_MESSAGE";

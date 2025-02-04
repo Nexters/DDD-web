@@ -1,9 +1,9 @@
-import { MessageCategorySchema } from "@/chat/models/messageCategory";
-import { MessageSenderTypeSchema } from "@/chat/models/messageSender";
+import { MessageCategorySchema } from "@/chat/types/messageCategory";
+import { MessageSenderTypeSchema } from "@/chat/types/messageSender";
 import apiClient from "@/shared/lib/axios/apiClient";
 import { z } from "zod";
-import { TarotCardType } from "../models/tarotCard";
-import { TarotCardIdSchema } from "../models/tarotCardId";
+import { TarotCardType } from "../types/tarotCard";
+import { TarotCardIdSchema } from "../types/tarotCardId";
 
 export type SelectTarotCardRequest = {
   roomId: number;

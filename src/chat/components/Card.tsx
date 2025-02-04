@@ -1,14 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import styled from "styled-components";
 import CardBack from "@/shared/assets/images/cardBack.webp";
 import { cubicBezier, easeOut } from "motion";
 import { div } from "motion/react-client";
-import { useState } from "react";
-import { Dispatch, SetStateAction, useRef, useEffect } from "react";
-import { CardPickState } from "../models/CardPickState";
-import { DeckState } from "../models/DeckState";
+import Image from "next/image";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
+import { CardPickState } from "../types/CardPickState";
+import { DeckState } from "../types/DeckState";
 interface PropTypes {
   idx: number;
   deckState: DeckState;
@@ -17,13 +16,7 @@ interface PropTypes {
   cardPickState: CardPickState[];
 }
 
-const Card = ({
-  idx,
-  deckState,
-  setDeckState,
-  onClick,
-  cardPickState,
-}: PropTypes) => {
+const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropTypes) => {
   const [isCardShadow, setIsCardShadow] = useState(false);
   const [moveDistance, setMoveDistance] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -98,11 +91,7 @@ const Card = ({
       onClick={handleClickCard}
       onAnimationComplete={onAnimationEnd}
     >
-      <CardWrapper
-        src={CardBack}
-        alt="카드 뒷면 이미지"
-        isCardShadow={isCardShadow}
-      />
+      <CardWrapper src={CardBack} alt="카드 뒷면 이미지" isCardShadow={isCardShadow} />
     </CardAnimationWrapper>
   );
 };
@@ -120,8 +109,7 @@ const CardAnimationWrapper = styled(div)`
 const CardWrapper = styled(Image)<{ isCardShadow: boolean }>`
   border-radius: 8px;
 
-  box-shadow: ${({ isCardShadow }) =>
-    isCardShadow ? "-8px 0px 12px 0px rgba(0, 0, 0, 0.15)" : ""};
+  box-shadow: ${({ isCardShadow }) => (isCardShadow ? "-8px 0px 12px 0px rgba(0, 0, 0, 0.15)" : "")};
 
   width: 100px;
   height: 160px;

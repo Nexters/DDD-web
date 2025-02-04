@@ -1,8 +1,8 @@
 import apiClient from "@/shared/lib/axios/apiClient";
-import { TarotCardIdSchema } from "@/tarot/models/tarotCardId";
+import { TarotCardIdSchema } from "@/tarot/types/tarotCardId";
 import { z } from "zod";
-import { MessageCategorySchema } from "../models/messageCategory";
-import { MessageSenderTypeSchema } from "../models/messageSender";
+import { MessageCategorySchema } from "../types/messageCategory";
+import { MessageSenderTypeSchema } from "../types/messageSender";
 
 export type ChatMessagesByRoomIdResponse = {
   messages: {

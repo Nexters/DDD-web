@@ -1,7 +1,7 @@
 import apiClient from "@/shared/lib/axios/apiClient";
 import { z } from "zod";
-import { MessageCategorySchema } from "../models/messageCategory";
-import { MessageSenderTypeSchema } from "../models/messageSender";
+import { MessageCategorySchema } from "../types/messageCategory";
+import { MessageSenderTypeSchema } from "../types/messageSender";
 
 export type SendChatMessageRequest = {
   roomId: number;
@@ -39,10 +39,7 @@ const validate = (data: SendChatMessageResponse): SendChatMessageData => {
 
 export const sendChatMessage = (request: SendChatMessageRequest) => {
   return apiClient
-    .post<SendChatMessageResponse>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`,
-      request,
-    )
+    .post<SendChatMessageResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`, request)
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

@@ -1,4 +1,4 @@
-import { TarotCardIdType } from "@/tarot/models/tarotCardId";
+import { TarotCardIdType } from "@/tarot/types/tarotCardId";
 import { MessageCategory } from "./messageCategory";
 import { MessageSenderType } from "./messageSender";
 
