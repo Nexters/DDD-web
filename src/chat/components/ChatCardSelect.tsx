@@ -126,7 +126,6 @@ const CardDeckWrapper = styled(motion.div)`
   position: relative;
   overflow-x: scroll;
   overflow-y: visible;
-  background: transparent;
 
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none; /* Firefox */

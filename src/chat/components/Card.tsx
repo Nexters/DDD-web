@@ -161,7 +161,7 @@ const CardAnimationWrapper = styled(motion.div)`
   cursor: pointer;
 
   & > [data-radix-popper-content-wrapper] {
-    transform: translate(-81.5px, -47px) !important;
+    transform: translate(-89.5px, -54px) !important;
 
     opacity: 0;
     animation: fadeIn 0.5s ease-out 0.5s forwards;
@@ -170,11 +170,9 @@ const CardAnimationWrapper = styled(motion.div)`
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: translate(-81.5px, -50px);
     }
     to {
       opacity: 1;
-      transform: translate(-81.5px, -47px);
     }
   }
 `;
