@@ -62,10 +62,7 @@ const TarotResult = () => {
   };
   console.log(recommendQuestions);
 
-  const handleContinueRecommendConversation = (
-    recommendQuestionId: number,
-    message: string
-  ) => {
+  const handleContinueRecommendConversation = (recommendQuestionId: number, message: string) => {
     const object = {
       roomId: chatId,
       referenceQuestionId: recommendQuestionId,
@@ -158,8 +155,7 @@ const TarotResult = () => {
         </IconBtnWrapper>
 
         <AdditionalMessage>
-          집사의 고민이 잘 해결되었으면 좋겠다냥! <br /> 궁금한게 있으면 더
-          물어봐라냥
+          집사의 고민이 잘 해결되었으면 좋겠다냥! <br /> 궁금한게 있으면 더 물어봐라냥
         </AdditionalMessage>
 
         <Divider />
@@ -172,27 +168,17 @@ const TarotResult = () => {
               <RecommendQuestionBtn
                 key={idx}
                 onClick={() =>
-                  handleContinueRecommendConversation(
-                    item.recommendQuestionId,
-                    item.question
-                  )
+                  handleContinueRecommendConversation(item.recommendQuestionId, item.question)
                 }
               >
-                <QuestionCount>
-                  {" "}
-                  {item.referenceCount}명이 질문 중
-                </QuestionCount>
+                <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
                 <QuestionTitle>{item.question} </QuestionTitle>
               </RecommendQuestionBtn>
             ))}
           </RecommendContainer>
         </RecommendBox>
 
-        <Button
-          color="grey70"
-          css={{ marginBottom: "98px" }}
-          onClick={handleContinueConversation}
-        >
+        <Button color="grey70" css={{ marginBottom: "98px" }} onClick={handleContinueConversation}>
           이어서 대화하기
         </Button>
       </TarotResultWrapper>

@@ -2,7 +2,6 @@ import ChatBotProfileImage from "@/shared/assets/images/chatbot-profile.webp";
 import Image from "next/image";
 import { css } from "styled-components";
 export default function ChatAvatar() {
-
   return (
     <Image
       src={ChatBotProfileImage}

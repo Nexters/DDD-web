@@ -11,7 +11,9 @@ const TarotCardDeckDisplayContext = createContext<TarotCardDeckDisplayContextTyp
 export const useTarotCardDeckDisplayContext = () => {
   const context = useContext(TarotCardDeckDisplayContext);
   if (!context) {
-    throw new Error("useTarotCardDeckDisplayContext는 TarotCardDeckDisplayProvider 내부에서 사용해야 합니다.");
+    throw new Error(
+      "useTarotCardDeckDisplayContext는 TarotCardDeckDisplayProvider 내부에서 사용해야 합니다."
+    );
   }
   return context;
 };

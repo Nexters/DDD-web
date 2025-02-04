@@ -7,9 +7,5 @@ export const checkBrowserForWebShare = () => {
 
   const checkMobile = isMobile().phone;
   const checkTablet = isMobile().tablet;
-  return !(
-    isFirefoxForAndroid ||
-    isAndroidWebView ||
-    !(checkMobile || checkTablet)
-  );
+  return !(isFirefoxForAndroid || isAndroidWebView || !(checkMobile || checkTablet));
 };

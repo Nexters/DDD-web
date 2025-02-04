@@ -14,7 +14,11 @@ export default function ChatBubbleGroup({ message }: Props) {
     }
 
     const addIdToMessages = (messages: string[]) => {
-      return messages.map((answer) => ({ messageId: Math.random(), sender: "SYSTEM", message: answer }));
+      return messages.map((answer) => ({
+        messageId: Math.random(),
+        sender: "SYSTEM",
+        message: answer,
+      }));
     };
     return addIdToMessages(message.answers).map((answer) => {
       return <ChatBubble key={answer.messageId} sender={"SYSTEM"} message={answer.message} />;

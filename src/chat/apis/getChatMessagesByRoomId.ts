@@ -37,11 +37,14 @@ const validate = (data: ChatMessagesByRoomIdResponse): ChatMessagesByRoomIdData 
 
 export const getChatMessagesByRoomId = (roomId: number) => {
   return apiClient
-    .get<ChatMessagesByRoomIdResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/messages`, {
-      params: {
-        roomId,
-      },
-    })
+    .get<ChatMessagesByRoomIdResponse>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/messages`,
+      {
+        params: {
+          roomId,
+        },
+      }
+    )
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

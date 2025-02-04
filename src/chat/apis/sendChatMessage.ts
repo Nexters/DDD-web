@@ -41,7 +41,7 @@ export const sendChatMessage = (request: SendChatMessageRequest) => {
   return apiClient
     .post<SendChatMessageResponse>(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`,
-      request,
+      request
     )
     .then((res) => validate(res.data))
     .catch((error) => {

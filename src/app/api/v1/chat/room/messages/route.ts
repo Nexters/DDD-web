@@ -15,10 +15,7 @@ export async function GET(request: NextRequest) {
         messageId: 1,
         type: "USER_NORMAL",
         sender: "SYSTEM",
-        answers: [
-          "타로결과를 다시 보고 싶으면 카드를 눌러보라냥🐾",
-          "또 궁금한 거 있어냥?",
-        ],
+        answers: ["타로결과를 다시 보고 싶으면 카드를 눌러보라냥🐾", "또 궁금한 거 있어냥?"],
         tarotName: "M_00",
         tarotResultId: 1,
       },
@@ -26,10 +23,7 @@ export async function GET(request: NextRequest) {
         messageId: 2,
         type: "USER_TAROT_QUESTION",
         sender: "USER",
-        answers: [
-          "이 타로 카드가 의미하는 게 뭐냐냥?",
-          "뭔가 다른 카드를 보고 싶다냥.",
-        ],
+        answers: ["이 타로 카드가 의미하는 게 뭐냐냥?", "뭔가 다른 카드를 보고 싶다냥."],
         tarotName: "M_01",
         tarotResultId: 2,
       },

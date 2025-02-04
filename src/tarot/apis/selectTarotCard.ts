@@ -37,7 +37,10 @@ const validate = (data: SelectTarotCardResponse): SelectTarotCardData => {
 
 export const selectTarotCard = async (request: SelectTarotCardRequest) => {
   return apiClient
-    .post<SelectTarotCardResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`, request)
+    .post<SelectTarotCardResponse>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`,
+      request
+    )
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

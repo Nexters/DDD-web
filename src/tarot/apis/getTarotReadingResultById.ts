@@ -48,7 +48,7 @@ const validate = (data: TarotReadingResultResponse): TarotReadingResultData => {
 export const getTarotReadingResultById = async (resultId: number) => {
   return apiClient
     .get<TarotReadingResultResponse>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/result/${resultId}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/result/${resultId}`
     )
     .then((res) => validate(res.data))
     .catch((error) => {

@@ -25,7 +25,13 @@ export default function ChatRoom() {
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
   const { scrollRef, contentRef } = useStickToBottom();
-  const { copyServerState, state: messages, addMessage, editMessage, deleteMessage } = useChatMessagesContext();
+  const {
+    copyServerState,
+    state: messages,
+    addMessage,
+    editMessage,
+    deleteMessage,
+  } = useChatMessagesContext();
   const { isVisible: isTarotCardDeckVisible } = useTarotCardDeckDisplayContext();
   const {
     isVisible: isTextFieldVisible,
@@ -144,7 +150,13 @@ export default function ChatRoom() {
             if (message.sender === "SYSTEM") {
               return <ChatBubbleGroup key={message.messageId} message={message} />;
             }
-            return <ChatBubble key={message.messageId} sender={message.sender} message={message.answers[0]} />;
+            return (
+              <ChatBubble
+                key={message.messageId}
+                sender={message.sender}
+                message={message.answers[0]}
+              />
+            );
           })}
         </div>
 

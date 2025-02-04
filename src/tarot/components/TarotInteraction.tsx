@@ -162,11 +162,7 @@ const TarotAnimationBackground = styled.div`
   height: 425px;
 
   border-radius: 425px;
-  background: radial-gradient(
-    50% 50% at 50% 50%,
-    #bc95ff 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: radial-gradient(50% 50% at 50% 50%, #bc95ff 0%, rgba(255, 255, 255, 0) 100%);
 
   display: flex;
   flex-direction: column;

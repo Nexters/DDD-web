@@ -25,7 +25,13 @@ interface HeaderContentProps {
   divider?: boolean;
 }
 
-export default function HeaderContent({ children, startAction, endAction, sticky, divider }: HeaderContentProps) {
+export default function HeaderContent({
+  children,
+  startAction,
+  endAction,
+  sticky,
+  divider,
+}: HeaderContentProps) {
   return (
     <>
       <header
@@ -35,7 +41,8 @@ export default function HeaderContent({ children, startAction, endAction, sticky
           display: flex;
           align-items: center;
           justify-content: space-between;
-          ${sticky && `position: sticky; top: 0; z-index: ${zIndex.header}; background-color: white;`}
+          ${sticky &&
+          `position: sticky; top: 0; z-index: ${zIndex.header}; background-color: white;`}
         `}
       >
         {startAction ? startAction : <span role="presentation" />}
