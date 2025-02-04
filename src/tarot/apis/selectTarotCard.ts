@@ -10,7 +10,7 @@ export type SelectTarotCardRequest = {
   tarotName: TarotCardType["id"];
 };
 
-export type SelectTarotCardResponse = {
+type serverResponse = {
   messageId: number;
   type: string;
   sender: string;
@@ -18,6 +18,8 @@ export type SelectTarotCardResponse = {
   tarotName: string;
   tarotResultId: number;
 };
+
+export type SelectTarotCardResponse = z.infer<typeof schema>;
 
 const schema = z.object({
   messageId: z.number(),
@@ -30,14 +32,14 @@ const schema = z.object({
 
 type SelectTarotCardData = z.infer<typeof schema>;
 
-const validate = (data: SelectTarotCardResponse): SelectTarotCardData => {
+const validate = (data: serverResponse): SelectTarotCardData => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
 
-export const selectTarotCard = async (request: SelectTarotCardRequest) => {
+export const selectTarotCard = async (request: SelectTarotCardRequest): Promise<SelectTarotCardResponse> => {
   return apiClient
-    .post<SelectTarotCardResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`, request)
+    .post<serverResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`, request)
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

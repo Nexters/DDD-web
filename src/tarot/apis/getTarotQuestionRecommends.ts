@@ -1,7 +1,7 @@
 import apiClient from "@/shared/lib/axios/apiClient";
 import { z } from "zod";
 
-export type TarotQuestionRecommendListResponse = {
+type serverResponse = {
   questions: {
     recommendQuestionId: number;
     question: string;
@@ -15,24 +15,20 @@ const schema = z.object({
       recommendQuestionId: z.number(),
       question: z.string(),
       referenceCount: z.number(),
-    }),
+    })
   ),
 });
 
-export type TarotQuestionRecommendListData = z.infer<typeof schema>;
+export type TarotQuestionRecommendListResponse = z.infer<typeof schema>;
 
-const validate = (
-  data: TarotQuestionRecommendListResponse,
-): TarotQuestionRecommendListData => {
+const validate = (data: serverResponse): TarotQuestionRecommendListResponse => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
 
-export const getTarotQuestionRecommends = async () => {
+export const getTarotQuestionRecommends = (): Promise<TarotQuestionRecommendListResponse> => {
   return apiClient
-    .get<TarotQuestionRecommendListResponse>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/question/recommends`,
-    )
+    .get<serverResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/question/recommends`)
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

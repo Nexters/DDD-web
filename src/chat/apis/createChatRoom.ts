@@ -1,7 +1,7 @@
-import apiClient from '@/shared/lib/axios/apiClient';
-import { z } from 'zod';
+import apiClient from "@/shared/lib/axios/apiClient";
+import { z } from "zod";
 
-type Response = {
+type serverResponse = {
   roomId: number;
 };
 
@@ -11,14 +11,14 @@ const schema = z.object({
 
 export type CreateChatRoomResponse = z.infer<typeof schema>;
 
-const validate = (data: Response): CreateChatRoomResponse => {
+const validate = (data: serverResponse): CreateChatRoomResponse => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
 
-export const createChatRoom = () => {
+export const createChatRoom = (): Promise<CreateChatRoomResponse> => {
   return apiClient
-    .post<Response>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room`)
+    .post<serverResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room`)
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
