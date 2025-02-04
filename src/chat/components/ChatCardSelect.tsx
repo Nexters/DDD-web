@@ -26,8 +26,7 @@ const ChatCardSelect = () => {
   const router = useRouter();
   const [isCardPicked, setIsCardPicked] = useState(false);
 
-  if (!chatId)
-    throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
+  if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -36,17 +35,14 @@ const ChatCardSelect = () => {
 
     /** 첫번째 선택시 Card Pick animation을 위한 상태변경 */
     if (deckState === "Spread") {
-      setItems((prevItems) =>
-        prevItems.map((_, i) => (i === index ? "Pick" : "Down"))
-      );
+      setItems((prevItems) => prevItems.map((_, i) => (i === index ? "Pick" : "Down")));
     }
     /** Pick된 카드 최종 선택시 타로 선택 API 호출 */
     if (items[index] === "Pick") {
       setIsCardPicked(true);
       selectTarotCard(
         {
-          tarotName:
-            tarotDeckData[Math.floor(Math.random() * tarotDeckData.length)].id,
+          tarotName: tarotDeckData[Math.floor(Math.random() * tarotDeckData.length)].id,
           roomId: Number(chatId),
         },
         {
@@ -67,10 +63,7 @@ const ChatCardSelect = () => {
           if (entry.isIntersecting) {
             setItems((prev) => [
               ...prev,
-              ...Array.from(
-                { length: ITEMS_PER_LOAD },
-                () => "Default" as CardPickState
-              ),
+              ...Array.from({ length: ITEMS_PER_LOAD }, () => "Default" as CardPickState),
             ]);
           }
         });
@@ -129,7 +122,7 @@ const CardDeckWrapper = styled(motion.div)`
   align-items: end;
   padding-bottom: 44px;
   width: 100%;
-  height: 270px;
+  height: 310px;
   position: relative;
   overflow-x: scroll;
   overflow-y: visible;
