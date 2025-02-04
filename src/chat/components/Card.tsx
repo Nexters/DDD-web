@@ -100,25 +100,14 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
           onAnimationComplete={onAnimationEnd}
         >
           <Tooltip.Trigger asChild>
-            <CardWrapper src={CardBack} alt="카드 뒷면 이미지" isCardShadow={isCardShadow} />
+            <CardWrapper
+              src={CardBack}
+              alt="카드 뒷면 이미지"
+              isCardShadow={isCardShadow}
+              cardPickState={cardPickState[idx]}
+            />
           </Tooltip.Trigger>
 
-          {/* <motion.div
-            initial={{ opacity: 0 }} // 시작 상태: 불투명도 0, 아래로 20px
-            animate={{ opacity: 1 }} // 애니메이션 완료 상태: 불투명도 1, 위치 0px
-            transition={{
-              duration: 10.5, // 애니메이션 지속 시간 1초
-              delay: 10, // 애니메이션 시작 전 0.5초 지연
-            }}
-            css={css`
-              cursor: pointer;
-              transform: rotate(-16deg);
-
-              & > [data-radix-popper-content-wrapper] {
-                transform: translate(-43px, -213.5px) !important;
-              }
-            `}
-          > */}
           <Tooltip.Content
             css={css`
               background-color: ${({ theme }) => theme.colors.grey90};
@@ -144,7 +133,6 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
             />
             이 카드를 뽑으려면 한 번 더 터치해줘냥
           </Tooltip.Content>
-          {/* </motion.div> */}
         </CardAnimationWrapper>
       </Tooltip.Root>
     </Tooltip.Provider>
@@ -177,11 +165,15 @@ const CardAnimationWrapper = styled(motion.div)`
   }
 `;
 
-const CardWrapper = styled(Image)<{ isCardShadow: boolean }>`
+const CardWrapper = styled(Image)<{ isCardShadow: boolean; cardPickState: CardPickState }>`
   border-radius: 8px;
 
-  box-shadow: ${({ isCardShadow }) =>
-    isCardShadow ? "-8px 0px 12px 0px rgba(0, 0, 0, 0.15)" : ""};
+  box-shadow: ${({ isCardShadow, cardPickState }) =>
+    !isCardShadow
+      ? ""
+      : cardPickState === "Pick"
+        ? "0px 4px 20px 0px rgba(255, 247, 171, 0.40)"
+        : "-8px 0px 12px 0px rgba(0, 0, 0, 0.15)"};
 
   width: 100px;
   height: 160px;
