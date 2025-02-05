@@ -1,6 +1,6 @@
 import tarotDeckData from "../constants/tarotCardDeck";
 
-import { TarotCardIdType } from "../models/tarotCardId";
+import { TarotCardIdType } from "../types/tarotCardId";
 
 const findCardById = (id: TarotCardIdType) => {
   const found = tarotDeckData.find((item) => item.id === id);

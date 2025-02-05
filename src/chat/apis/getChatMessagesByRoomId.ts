@@ -1,10 +1,10 @@
 import apiClient from "@/shared/lib/axios/apiClient";
-import { TarotCardIdSchema } from "@/tarot/models/tarotCardId";
+import { TarotCardIdSchema } from "@/tarot/types/tarotCardId";
 import { z } from "zod";
-import { MessageCategorySchema } from "../models/messageCategory";
-import { MessageSenderTypeSchema } from "../models/messageSender";
+import { MessageCategorySchema } from "../types/messageCategory";
+import { MessageSenderTypeSchema } from "../types/messageSender";
 
-export type ChatMessagesByRoomIdResponse = {
+type serverResponse = {
   messages: {
     messageId: number;
     type: string;
@@ -28,16 +28,16 @@ const schema = z.object({
   ),
 });
 
-export type ChatMessagesByRoomIdData = z.infer<typeof schema>;
+export type ChatMessagesByRoomIdResponse = z.infer<typeof schema>;
 
-const validate = (data: ChatMessagesByRoomIdResponse): ChatMessagesByRoomIdData => {
+const validate = (data: serverResponse): ChatMessagesByRoomIdResponse => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
 
-export const getChatMessagesByRoomId = (roomId: number) => {
+export const getChatMessagesByRoomId = (roomId: number): Promise<ChatMessagesByRoomIdResponse> => {
   return apiClient
-    .get<ChatMessagesByRoomIdResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/messages`, {
+    .get<serverResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/messages`, {
       params: {
         roomId,
       },

@@ -1,4 +1,4 @@
-import { MessageType } from "@/chat/models/message";
+import { MessageType } from "@/chat/types/message";
 import { css, styled } from "styled-components";
 import ChatAvatar from "./ChatAvatar";
 import ChatBubble from "./ChatBubble";

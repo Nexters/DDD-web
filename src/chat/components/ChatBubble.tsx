@@ -1,5 +1,5 @@
-import { MessageSenderType } from "@/chat/models/messageSender";
-import { TarotCardIdType } from "@/tarot/models/tarotCardId";
+import { MessageSenderType } from "@/chat/types/messageSender";
+import { TarotCardIdType } from "@/tarot/types/tarotCardId";
 import findCardById from "@/tarot/utils/findCardById";
 import Image from "next/image";
 import Link from "next/link";

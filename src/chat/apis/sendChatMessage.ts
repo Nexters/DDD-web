@@ -1,7 +1,7 @@
 import apiClient from "@/shared/lib/axios/apiClient";
 import { z } from "zod";
-import { MessageCategorySchema } from "../models/messageCategory";
-import { MessageSenderTypeSchema } from "../models/messageSender";
+import { MessageCategorySchema } from "../types/messageCategory";
+import { MessageSenderTypeSchema } from "../types/messageSender";
 
 export type SendChatMessageRequest = {
   roomId: number;
@@ -10,7 +10,7 @@ export type SendChatMessageRequest = {
   referenceQuestionId?: number;
 };
 
-export type SendChatMessageResponse = {
+type serverResponse = {
   messageId: number;
   type: string;
   sender: string;
@@ -30,19 +30,16 @@ const schema = z.object({
   answers: z.array(z.string()),
 });
 
-type SendChatMessageData = z.infer<typeof schema>;
+export type SendChatMessageResponse = z.infer<typeof schema>;
 
-const validate = (data: SendChatMessageResponse): SendChatMessageData => {
+const validate = (data: serverResponse): SendChatMessageResponse => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
 
-export const sendChatMessage = (request: SendChatMessageRequest) => {
+export const sendChatMessage = (request: SendChatMessageRequest): Promise<SendChatMessageResponse> => {
   return apiClient
-    .post<SendChatMessageResponse>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`,
-      request,
-    )
+    .post<serverResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/chat/room/message`, request)
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);
