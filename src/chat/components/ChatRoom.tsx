@@ -125,6 +125,10 @@ export default function ChatRoom() {
     showTarotCardDeck();
   }
 
+  if (messages.length > 0 && messages[messages.length - 1].type === "SYSTEM_TAROT_QUESTION_REPLY") {
+    disableTextField();
+  }
+
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
   if (!data) return null;
 
