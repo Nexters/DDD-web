@@ -172,9 +172,8 @@ export default function ChatRoom() {
               />
             );
           })}
+          <AcceptRejectButtons />
         </div>
-
-        <AcceptRejectButtons />
       </div>
       {isTarotCardDeckVisible && <ChatCardSelect />}
       {isTextFieldVisible && (
