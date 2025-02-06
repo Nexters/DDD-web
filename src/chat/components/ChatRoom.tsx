@@ -24,7 +24,10 @@ export default function ChatRoom() {
   const searchParams = useSearchParams();
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
-  const { scrollRef, contentRef } = useStickToBottom();
+  const { scrollRef, contentRef } = useStickToBottom({
+    initial: "instant",
+    resize: "instant",
+  });
 
   const {
     copyServerState,
