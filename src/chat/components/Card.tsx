@@ -1,13 +1,16 @@
 "use client";
 
+import Image from "next/image";
+import styled, { css } from "styled-components";
 import CardBack from "@/shared/assets/images/cardBack.webp";
 import { cubicBezier, easeOut } from "motion";
-import { div } from "motion/react-client";
-import Image from "next/image";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { Dispatch, SetStateAction, useRef, useEffect } from "react";
 import { CardPickState } from "../types/CardPickState";
 import { DeckState } from "../types/DeckState";
+import * as Tooltip from "@radix-ui/react-tooltip";
+
 interface PropTypes {
   idx: number;
   deckState: DeckState;
@@ -61,6 +64,9 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
   const onAnimationEnd = () => {
     setIsCardShadow(true);
     setDeckState("Spread");
+
+    if (cardPickState[idx] === "Pick") {
+    }
   };
 
   const handleClickCard = () => {
@@ -84,32 +90,90 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
   }, []);
 
   return (
-    <CardAnimationWrapper
-      ref={cardRef}
-      variants={cardVariants}
-      animate={getCardAnimation()}
-      onClick={handleClickCard}
-      onAnimationComplete={onAnimationEnd}
-    >
-      <CardWrapper src={CardBack} alt="카드 뒷면 이미지" isCardShadow={isCardShadow} />
-    </CardAnimationWrapper>
+    <Tooltip.Provider>
+      <Tooltip.Root open={cardPickState[idx] === "Pick"}>
+        <CardAnimationWrapper
+          ref={cardRef}
+          variants={cardVariants}
+          animate={getCardAnimation()}
+          onClick={handleClickCard}
+          onAnimationComplete={onAnimationEnd}
+        >
+          <Tooltip.Trigger asChild>
+            <CardWrapper
+              src={CardBack}
+              alt="카드 뒷면 이미지"
+              isCardShadow={isCardShadow}
+              cardPickState={cardPickState[idx]}
+            />
+          </Tooltip.Trigger>
+
+          <Tooltip.Content
+            css={css`
+              background-color: ${({ theme }) => theme.colors.grey90};
+              color: ${({ theme }) => theme.colors.white};
+              padding: 6px 8px;
+              border-radius: 8px;
+              ${({ theme }) => theme.fonts.body1}
+              text-align: center;
+              cursor: pointer;
+              transform: rotate(-16deg);
+              border: 1px solid #24292f;
+              & > span {
+                left: 107.5px !important;
+              }
+            `}
+          >
+            <Tooltip.Arrow
+              width={16}
+              height={10}
+              css={css`
+                fill: ${({ theme }) => theme.colors.grey90};
+              `}
+            />
+            이 카드를 뽑으려면 한 번 더 터치해줘냥
+          </Tooltip.Content>
+        </CardAnimationWrapper>
+      </Tooltip.Root>
+    </Tooltip.Provider>
   );
 };
 
 export default Card;
 
-const CardAnimationWrapper = styled(div)`
+const CardAnimationWrapper = styled(motion.div)`
   width: 100px;
   height: 160px;
   position: absolute;
 
   cursor: pointer;
+
+  & > [data-radix-popper-content-wrapper] {
+    transform: translate(-89.5px, -54px) !important;
+
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 0.5s forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
-const CardWrapper = styled(Image)<{ isCardShadow: boolean }>`
+const CardWrapper = styled(Image)<{ isCardShadow: boolean; cardPickState: CardPickState }>`
   border-radius: 8px;
 
-  box-shadow: ${({ isCardShadow }) => (isCardShadow ? "-8px 0px 12px 0px rgba(0, 0, 0, 0.15)" : "")};
+  box-shadow: ${({ isCardShadow, cardPickState }) =>
+    !isCardShadow
+      ? ""
+      : cardPickState === "Pick"
+        ? "0px 4px 20px 0px rgba(255, 247, 171, 0.40)"
+        : "-8px 0px 12px 0px rgba(0, 0, 0, 0.15)"};
 
   width: 100px;
   height: 160px;

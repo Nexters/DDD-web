@@ -27,7 +27,9 @@ const Description = Sheet.Description;
 const Overlay = React.forwardRef<
   React.ElementRef<typeof Sheet.Overlay>,
   React.ComponentPropsWithoutRef<typeof Sheet.Overlay>
->(({ className, ...props }, ref) => <StyledBottomSheetOverlay className={className} {...props} ref={ref} />);
+>(({ className, ...props }, ref) => (
+  <StyledBottomSheetOverlay className={className} {...props} ref={ref} />
+));
 Overlay.displayName = Sheet.Overlay.displayName;
 
 type SheetContentProps = React.ComponentPropsWithoutRef<typeof Sheet.Content>;

@@ -23,7 +23,8 @@ export default function AcceptRejectButtons() {
   const rejectMessage = "아니, 얘기 더 들어봐";
   const acceptMessage = "좋아! 타로 볼래";
 
-  const isSystemRepliedQuestion = messages[messages.length - 1]?.type === "SYSTEM_TAROT_QUESTION_REPLY";
+  const isSystemRepliedQuestion =
+    messages[messages.length - 1]?.type === "SYSTEM_TAROT_QUESTION_REPLY";
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
@@ -158,10 +159,20 @@ export default function AcceptRejectButtons() {
         margin-top: 76px;
       `}
     >
-      <ChipButton type="button" disabled={isButtonDisabled} color="primary02" onClick={handleAcceptClick}>
+      <ChipButton
+        type="button"
+        disabled={isButtonDisabled}
+        color="primary02"
+        onClick={handleAcceptClick}
+      >
         {acceptMessage}
       </ChipButton>
-      <ChipButton type="button" disabled={isButtonDisabled} color="grey30" onClick={handleRejectClick}>
+      <ChipButton
+        type="button"
+        disabled={isButtonDisabled}
+        color="grey30"
+        onClick={handleRejectClick}
+      >
         {rejectMessage}
       </ChipButton>
     </div>

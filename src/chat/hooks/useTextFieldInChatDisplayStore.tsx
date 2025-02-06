@@ -16,7 +16,9 @@ const TextFieldInChatDisplayContext = createContext<TextFieldInChatDisplayContex
 export const useTextFieldInChatDisplayContext = () => {
   const context = useContext(TextFieldInChatDisplayContext);
   if (!context) {
-    throw new Error("useTextFieldInChatDisplayContext는 TextFieldInChatDisplayProvider 내부에서 사용해야 합니다.");
+    throw new Error(
+      "useTextFieldInChatDisplayContext는 TextFieldInChatDisplayProvider 내부에서 사용해야 합니다."
+    );
   }
   return context;
 };

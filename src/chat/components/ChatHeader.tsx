@@ -108,14 +108,9 @@ export default function ChatHeader() {
         `}
       >
         <Toast.Provider>
-          <Toast.Root
-            open={toastOpen}
-            onOpenChange={setToastOpen}
-            duration={3000}
-          >
+          <Toast.Root open={toastOpen} onOpenChange={setToastOpen} duration={3000}>
             <Toast.Title>
-              링크 복사 완료! 타로냥을 알리고 싶은 친구에게 링크를 전송해
-              주세요.
+              링크 복사 완료! 타로냥을 알리고 싶은 친구에게 링크를 전송해 주세요.
             </Toast.Title>
           </Toast.Root>
           <Toast.Viewport />

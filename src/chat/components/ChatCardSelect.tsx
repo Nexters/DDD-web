@@ -20,7 +20,9 @@ const ChatCardSelect = () => {
   const { chatId } = useParams<{ chatId: string }>();
   const { mutate: selectTarotCard } = useSelectTarotCard();
   const ITEMS_PER_LOAD = 15;
-  const [items, setItems] = useState<CardPickState[]>(Array.from({ length: ITEMS_PER_LOAD }, () => "Default"));
+  const [items, setItems] = useState<CardPickState[]>(
+    Array.from({ length: ITEMS_PER_LOAD }, () => "Default")
+  );
   const router = useRouter();
   const [isCardPicked, setIsCardPicked] = useState(false);
 
@@ -59,7 +61,10 @@ const ChatCardSelect = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setItems((prev) => [...prev, ...Array.from({ length: ITEMS_PER_LOAD }, () => "Default" as CardPickState)]);
+            setItems((prev) => [
+              ...prev,
+              ...Array.from({ length: ITEMS_PER_LOAD }, () => "Default" as CardPickState),
+            ]);
           }
         });
       },
@@ -77,7 +82,11 @@ const ChatCardSelect = () => {
 
   return (
     <>
-      <CardDeckWrapper initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={riseUpCardDeck}>
+      <CardDeckWrapper
+        initial={{ opacity: 0, y: 200 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={riseUpCardDeck}
+      >
         {items.map((_, idx) => (
           <Card
             key={idx}
@@ -110,12 +119,13 @@ const InfinteScrollTrigger = styled.div<{ pos: number }>`
 const CardDeckWrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
-  align-items: center;
-
+  align-items: end;
+  padding-bottom: 44px;
   width: 100%;
-  height: 400px;
+  height: 310px;
   position: relative;
   overflow-x: scroll;
+  overflow-y: visible;
 
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none; /* Firefox */

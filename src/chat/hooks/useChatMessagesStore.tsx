@@ -40,7 +40,9 @@ const chatMessagesReducer = (state: MessageType[], action: Action) => {
     case actionTypes.DELETE_MESSAGE:
       return state.filter((message) => message.messageId !== action.payload);
     case actionTypes.EDIT_MESSAGE:
-      return state.map((message) => (message.messageId === action.payload.messageId ? action.payload : message));
+      return state.map((message) =>
+        message.messageId === action.payload.messageId ? action.payload : message
+      );
     default:
       return state;
   }
@@ -84,7 +86,9 @@ export const ChatMessagesProvider = ({ children }: { children: React.ReactNode }
   }, []);
 
   return (
-    <ChatMessagesContext.Provider value={{ state, addMessage, copyServerState, deleteMessage, editMessage }}>
+    <ChatMessagesContext.Provider
+      value={{ state, addMessage, copyServerState, deleteMessage, editMessage }}
+    >
       {children}
     </ChatMessagesContext.Provider>
   );

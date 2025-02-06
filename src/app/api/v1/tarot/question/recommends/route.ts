@@ -11,7 +11,8 @@ export async function GET() {
       },
       {
         recommendQuestionId: 2,
-        question: "상반기에 취업할 수 있을까? 상반기에 취업할 수 있을까? 상반기에 취업할 수 있을까?",
+        question:
+          "상반기에 취업할 수 있을까? 상반기에 취업할 수 있을까? 상반기에 취업할 수 있을까?",
         referenceCount: 222,
       },
       {

@@ -18,10 +18,7 @@ export default function TarotReadingResultPage() {
       {!tarotInteractation && <ChatHeader />}
       <MainContent>
         {tarotInteractation || isLoading ? (
-          <TarotInteraction
-            setTarotInteractation={setTarotInteractation}
-            tarotId={data?.tarot}
-          />
+          <TarotInteraction setTarotInteractation={setTarotInteractation} tarotId={data?.tarot} />
         ) : (
           <TarotResult />
         )}
