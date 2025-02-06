@@ -124,7 +124,7 @@ export default function TextFieldInChat() {
       />
       <button
         type="submit"
-        disabled={isTextFieldDisabled}
+        disabled={isTextFieldDisabled || message.length === 0}
         css={css`
           position: absolute;
           right: 12px;
