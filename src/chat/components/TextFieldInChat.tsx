@@ -6,6 +6,7 @@ import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectButtonDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import TextareaAutoSize from "./TextareaAutoSize";
 
@@ -21,6 +22,7 @@ export default function TextFieldInChat() {
     textareaRef,
     focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
+  const { show: showAcceptRejectButtons } = useAcceptRejectButtonDisplayContext();
   const [isComposing, setIsComposing] = useState(false);
 
   const handleCompositionStart = () => {
@@ -90,6 +92,7 @@ export default function TextFieldInChat() {
 
           if (data.type === "SYSTEM_TAROT_QUESTION_REPLY") {
             disableTextField();
+            showAcceptRejectButtons();
             return;
           }
         },

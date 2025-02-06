@@ -14,11 +14,13 @@ import { useEffect } from "react";
 import { css } from "styled-components";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
+import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectButtonDisplayStore";
 import { useSendChatMessage } from "../hooks/useSendChatMessage";
 import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatCardSelect from "./ChatCardSelect";
 import ChatHeader from "./ChatHeader";
+
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
@@ -48,6 +50,8 @@ export default function ChatRoom() {
   const { mutate: sendChatMessage } = useSendChatMessage();
   const pathname = usePathname();
   const router = useRouter();
+  const { isVisible: isAcceptRejectButtonsVisible, show: showAcceptRejectButtons } =
+    useAcceptRejectButtonDisplayContext();
 
   useEffect(() => {
     if (!data) return;
@@ -130,6 +134,7 @@ export default function ChatRoom() {
 
   if (messages.length > 0 && messages[messages.length - 1].type === "SYSTEM_TAROT_QUESTION_REPLY") {
     disableTextField();
+    showAcceptRejectButtons();
   }
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
@@ -178,7 +183,7 @@ export default function ChatRoom() {
               />
             );
           })}
-          <AcceptRejectButtons />
+          <AcceptRejectButtons show={isAcceptRejectButtonsVisible} />
         </div>
       </div>
       {isTarotCardDeckVisible && <ChatCardSelect />}
