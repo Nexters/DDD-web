@@ -1,4 +1,4 @@
-import { TarotCardType } from "../models/tarotCard";
+import { TarotCardType } from "../types/tarotCard";
 
 import images from "@/shared/assets/images";
 

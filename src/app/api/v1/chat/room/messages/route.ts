@@ -1,4 +1,3 @@
-import { ChatMessagesByRoomIdResponse } from "@/chat/apis/getChatMessagesByRoomId";
 import { NextRequest } from "next/server";
 
 import { NextResponse } from "next/server";
@@ -9,7 +8,7 @@ export async function GET(request: NextRequest) {
 
   console.log(roomId);
 
-  const mockData: ChatMessagesByRoomIdResponse = {
+  const mockData = {
     messages: [
       {
         messageId: 1,
@@ -31,10 +30,7 @@ export async function GET(request: NextRequest) {
         messageId: 3,
         type: "SYSTEM_TAROT_RESULT",
         sender: "SYSTEM",
-        answers: [
-          "새로운 결과를 보고 싶다면 다른 질문을 해보라냥!",
-          "타로 카드 속에 숨겨진 비밀을 알려줄게냥!",
-        ],
+        answers: ["새로운 결과를 보고 싶다면 다른 질문을 해보라냥!", "타로 카드 속에 숨겨진 비밀을 알려줄게냥!"],
         tarotName: "M_02",
         tarotResultId: 3,
       },

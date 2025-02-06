@@ -1,4 +1,5 @@
-import { SendChatMessageRequest, SendChatMessageResponse } from "@/chat/apis/sendChatMessage";
+
+import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -6,35 +7,28 @@ export async function POST(request: NextRequest) {
 
   console.log(body);
 
-  const normalReplyMockData: SendChatMessageResponse = {
+  const normalReplyMockData = {
     messageId: 1,
     type: "SYSTEM_NORMAL_REPLY",
     sender: "SYSTEM",
-    answers: [
-      "안녕 내담자",
-      "따듯한 마룻바닥이 그리운 겨울 밤이야",
-      "오늘은 어떤게 궁금해서 찾어왔어냥?",
-    ],
+    answers: ["안녕 내담자", "따듯한 마룻바닥이 그리운 겨울 밤이야", "오늘은 어떤게 궁금해서 찾어왔어냥?"],
   };
 
-  const invalidQuestionReplyMockData: SendChatMessageResponse = {
+  const invalidQuestionReplyMockData = {
     messageId: 1,
     type: "SYSTEM_INVALID_QUESTION_REPLY",
     sender: "SYSTEM",
     answers: ["잘못된 질문이네냥!", "다시 질문해보라냥!"],
   };
 
-  const questionReplyMockData: SendChatMessageResponse = {
+  const questionReplyMockData = {
     messageId: 1,
     type: "SYSTEM_TAROT_QUESTION_REPLY",
     sender: "SYSTEM",
-    answers: [
-      "전남친이 아직 미련이 남았는지 궁금하구낭!",
-      "타로카드로 그 사람의 마음을 함계 들여다 볼까냥?",
-    ],
+    answers: ["전남친이 아직 미련이 남았는지 궁금하구낭!", "타로카드로 그 사람의 마음을 함계 들여다 볼까냥?"],
   };
 
-  const questionAcceptanceReplyMockData: SendChatMessageResponse = {
+  const questionAcceptanceReplyMockData = {
     messageId: 1,
     type: "SYSTEM_TAROT_QUESTION_ACCEPTANCE_REPLY",
     sender: "SYSTEM",

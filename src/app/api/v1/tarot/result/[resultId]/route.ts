@@ -1,4 +1,3 @@
-import { TarotReadingResultResponse } from "@/tarot/apis/getTarotReadingResultById";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -6,7 +5,7 @@ export async function GET(request: NextRequest) {
 
   console.log(parseInt(resultId, 10));
 
-  const mockData: TarotReadingResultResponse = {
+  const mockData = {
     tarot: "M_00",
     type: "연애",
     cardValue: {

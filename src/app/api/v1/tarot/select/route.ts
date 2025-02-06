@@ -1,11 +1,11 @@
-import { SelectTarotCardRequest, SelectTarotCardResponse } from "@/tarot/apis/selectTarotCard";
+import { SelectTarotCardRequest } from "@/tarot/apis/selectTarotCard";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   const body: SelectTarotCardRequest = await request.json();
   console.log(body);
 
-  const mockData: SelectTarotCardResponse = {
+  const mockData = {
     messageId: 1,
     type: "SYSTEM_TAROT_RESULT",
     sender: "SYSTEM",

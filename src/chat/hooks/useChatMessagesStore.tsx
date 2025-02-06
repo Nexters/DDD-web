@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useReducer } from "react";
-import { ChatMessagesByRoomIdData } from "../apis/getChatMessagesByRoomId";
-import { MessageType } from "../models/message";
+import { ChatMessagesByRoomIdResponse } from "../apis/getChatMessagesByRoomId";
+import { MessageType } from "../types/message";
 
 type AddMessageAction = {
   type: "ADD_MESSAGE";
@@ -9,7 +9,7 @@ type AddMessageAction = {
 
 type CopyServerStateAction = {
   type: "COPY_SERVER_STATE";
-  payload: ChatMessagesByRoomIdData["messages"];
+  payload: ChatMessagesByRoomIdResponse["messages"];
 };
 
 type DeleteMessageAction = {
@@ -51,7 +51,7 @@ const chatMessagesReducer = (state: MessageType[], action: Action) => {
 type ChatMessagesContextType = {
   state: MessageType[];
   addMessage: (message: MessageType) => void;
-  copyServerState: (messages: ChatMessagesByRoomIdData["messages"]) => void;
+  copyServerState: (messages: ChatMessagesByRoomIdResponse["messages"]) => void;
   deleteMessage: (messageId: MessageType["messageId"]) => void;
   editMessage: (message: MessageType) => void;
 };
@@ -73,7 +73,7 @@ export const ChatMessagesProvider = ({ children }: { children: React.ReactNode }
     dispatch({ type: actionTypes.ADD_MESSAGE, payload: message });
   }, []);
 
-  const copyServerState = useCallback((messages: ChatMessagesByRoomIdData["messages"]) => {
+  const copyServerState = useCallback((messages: ChatMessagesByRoomIdResponse["messages"]) => {
     dispatch({ type: actionTypes.COPY_SERVER_STATE, payload: messages });
   }, []);
 

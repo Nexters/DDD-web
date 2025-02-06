@@ -6,8 +6,8 @@ import * as motion from "motion/react-client";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { CardPickState } from "../models/CardPickState";
-import { DeckState } from "../models/DeckState";
+import { CardPickState } from "../types/CardPickState";
+import { DeckState } from "../types/DeckState";
 import Card from "./Card";
 
 const riseUpCardDeck = {

@@ -1,14 +1,14 @@
 "use client";
 
+import cardBack from "@/shared/assets/images/cardBack.webp";
+import catHand from "@/shared/assets/images/catHand.png";
+import { TarotCardIdType } from "@/tarot/types/tarotCardId";
+import findCardById from "@/tarot/utils/findCardById";
+import { easeInOut } from "motion";
 import * as motion from "motion/react-client";
 import Image from "next/image";
-import catHand from "@/shared/assets/images/catHand.png";
-import cardBack from "@/shared/assets/images/cardBack.webp";
+import { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
-import { easeInOut } from "motion";
-import { SetStateAction, useState, Dispatch } from "react";
-import { TarotCardIdType } from "@/tarot/models/tarotCardId";
-import findCardById from "@/tarot/utils/findCardById";
 
 type PropTypes = {
   setTarotInteractation: Dispatch<SetStateAction<boolean>>;

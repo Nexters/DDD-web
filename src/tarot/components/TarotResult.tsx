@@ -1,23 +1,24 @@
 "use client";
-import styled, { useTheme, keyframes } from "styled-components";
 import Image from "next/image";
+import styled, { keyframes, useTheme } from "styled-components";
 
-import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
+import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 
 import findCardById from "@/tarot/utils/findCardById";
 import { useParams } from "next/navigation";
 
-import ProfileIcon from "@/shared/assets/icons/profile.svg";
-import LinkIcon from "@/shared/assets/icons/link.svg";
+import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
-import shareLink from "@/shared/utils/shareLink";
+import LinkIcon from "@/shared/assets/icons/link.svg";
+import ProfileIcon from "@/shared/assets/icons/profile.svg";
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
-import { useState } from "react";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
-import { useRouter } from "next/navigation";
+import shareLink from "@/shared/utils/shareLink";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const fadeInOut = keyframes`
   0% {
@@ -63,8 +64,8 @@ const TarotResult = () => {
   console.log(recommendQuestions);
 
   const handleContinueRecommendConversation = (recommendQuestionId: number, message: string) => {
-    const object = {
-      roomId: chatId,
+    const object: SendChatMessageRequest = {
+      roomId: Number(chatId),
       referenceQuestionId: recommendQuestionId,
       intent: "RECOMMEND_QUESTION",
       message: message,
@@ -83,12 +84,7 @@ const TarotResult = () => {
     return (
       <TarotResultWrapper>
         <TarotCard>
-          <CardImg
-            src={TarotData?.imgSrc || ""}
-            alt={TarotData?.alt || "타로카드 이미지"}
-            width={180}
-            height={100}
-          />
+          <CardImg src={TarotData?.imgSrc || ""} alt={TarotData?.alt || "타로카드 이미지"} width={180} height={100} />
           <Title>
             {TarotData?.nameKR} <br />
             {TarotData?.name}
@@ -167,9 +163,7 @@ const TarotResult = () => {
             {recommendQuestions?.questions.map((item, idx) => (
               <RecommendQuestionBtn
                 key={idx}
-                onClick={() =>
-                  handleContinueRecommendConversation(item.recommendQuestionId, item.question)
-                }
+                onClick={() => handleContinueRecommendConversation(item.recommendQuestionId, item.question)}
               >
                 <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
                 <QuestionTitle>{item.question} </QuestionTitle>

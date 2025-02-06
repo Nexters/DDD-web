@@ -1,5 +1,5 @@
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
-import { TarotQuestionRecommendListData } from "@/tarot/apis/getTarotQuestionRecommends";
+import { TarotQuestionRecommendListResponse } from "@/tarot/apis/getTarotQuestionRecommends";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,7 +16,7 @@ export default function QuickQuestionPickerBox() {
 
   if (!data) return null;
 
-  const adaptQuestionRecommends = (data: TarotQuestionRecommendListData) => {
+  const adaptQuestionRecommends = (data: TarotQuestionRecommendListResponse) => {
     const colors = ["primary03", "grey10", "primary01", "grey60"] as const;
     return data.questions.map((question, i) => ({
       ...question,

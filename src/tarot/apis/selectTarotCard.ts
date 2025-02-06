@@ -1,16 +1,16 @@
-import { MessageCategorySchema } from "@/chat/models/messageCategory";
-import { MessageSenderTypeSchema } from "@/chat/models/messageSender";
+import { MessageCategorySchema } from "@/chat/types/messageCategory";
+import { MessageSenderTypeSchema } from "@/chat/types/messageSender";
 import apiClient from "@/shared/lib/axios/apiClient";
 import { z } from "zod";
-import { TarotCardType } from "../models/tarotCard";
-import { TarotCardIdSchema } from "../models/tarotCardId";
+import { TarotCardType } from "../types/tarotCard";
+import { TarotCardIdSchema } from "../types/tarotCardId";
 
 export type SelectTarotCardRequest = {
   roomId: number;
   tarotName: TarotCardType["id"];
 };
 
-export type SelectTarotCardResponse = {
+type serverResponse = {
   messageId: number;
   type: string;
   sender: string;
@@ -18,6 +18,8 @@ export type SelectTarotCardResponse = {
   tarotName: string;
   tarotResultId: number;
 };
+
+export type SelectTarotCardResponse = z.infer<typeof schema>;
 
 const schema = z.object({
   messageId: z.number(),
@@ -30,17 +32,14 @@ const schema = z.object({
 
 type SelectTarotCardData = z.infer<typeof schema>;
 
-const validate = (data: SelectTarotCardResponse): SelectTarotCardData => {
+const validate = (data: serverResponse): SelectTarotCardData => {
   const validatedData = schema.parse(data);
   return validatedData;
 };
 
-export const selectTarotCard = async (request: SelectTarotCardRequest) => {
+export const selectTarotCard = async (request: SelectTarotCardRequest): Promise<SelectTarotCardResponse> => {
   return apiClient
-    .post<SelectTarotCardResponse>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`,
-      request
-    )
+    .post<serverResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/select`, request)
     .then((res) => validate(res.data))
     .catch((error) => {
       console.error(error);

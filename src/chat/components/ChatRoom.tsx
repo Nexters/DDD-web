@@ -47,6 +47,7 @@ export default function ChatRoom() {
     if (!data) return;
     copyServerState(data.messages);
     if (!initialMessage) return;
+    console.log(initialMessage);
     router.replace(pathname);
     const message = JSON.parse(initialMessage) as SendChatMessageRequest;
 
@@ -71,6 +72,7 @@ export default function ChatRoom() {
 
     sendChatMessage(JSON.parse(initialMessage), {
       onSuccess: async (data) => {
+        console.log(data);
         deleteMessage(loadingMessageId);
 
         addMessage({
