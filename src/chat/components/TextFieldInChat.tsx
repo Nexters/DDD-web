@@ -21,6 +21,15 @@ export default function TextFieldInChat() {
     textareaRef,
     focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
+  const [isComposing, setIsComposing] = useState(false);
+
+  const handleCompositionStart = () => {
+    setIsComposing(true);
+  };
+
+  const handleCompositionEnd = () => {
+    setIsComposing(false);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -29,8 +38,7 @@ export default function TextFieldInChat() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submit = async () => {
     setMessage("");
     disableTextField();
 
@@ -102,7 +110,14 @@ export default function TextFieldInChat() {
       }
     );
   };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    submit();
+  };
   const maxMessageLength = 300;
+
+  const isOnlyWhiteSpace = message.trim().length === 0;
 
   return (
     <form
@@ -121,10 +136,19 @@ export default function TextFieldInChat() {
         maxRows={8}
         maxLength={maxMessageLength}
         textareaRef={textareaRef}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && e.shiftKey) return;
+          if (e.key === "Enter" && !isComposing) {
+            e.preventDefault();
+            submit();
+          }
+        }}
       />
       <button
         type="submit"
-        disabled={isTextFieldDisabled || message.length === 0}
+        disabled={isTextFieldDisabled || isOnlyWhiteSpace}
         css={css`
           position: absolute;
           right: 12px;
