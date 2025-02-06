@@ -25,6 +25,7 @@ export default function ChatRoom() {
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
   const { scrollRef, contentRef } = useStickToBottom();
+
   const {
     copyServerState,
     state: messages,
@@ -32,12 +33,14 @@ export default function ChatRoom() {
     editMessage,
     deleteMessage,
   } = useChatMessagesContext();
-  const { isVisible: isTarotCardDeckVisible } = useTarotCardDeckDisplayContext();
+  const { isVisible: isTarotCardDeckVisible, show: showTarotCardDeck } =
+    useTarotCardDeckDisplayContext();
   const {
     isVisible: isTextFieldVisible,
     enable: enableTextField,
     disable: disableTextField,
     focus: focusTextField,
+    hide: hideTextField,
   } = useTextFieldInChatDisplayContext();
   const { mutate: sendChatMessage } = useSendChatMessage();
   const pathname = usePathname();
@@ -113,6 +116,15 @@ export default function ChatRoom() {
       },
     });
   }, [data]);
+
+  if (
+    !isTarotCardDeckVisible &&
+    messages.length > 0 &&
+    messages[messages.length - 1].type === "SYSTEM_TAROT_QUESTION_ACCEPTANCE_REPLY"
+  ) {
+    hideTextField();
+    showTarotCardDeck();
+  }
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
   if (!data) return null;
