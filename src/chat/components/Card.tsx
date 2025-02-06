@@ -7,8 +7,8 @@ import { cubicBezier, easeOut } from "motion";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Dispatch, SetStateAction, useRef, useEffect } from "react";
-import { CardPickState } from "../models/CardPickState";
-import { DeckState } from "../models/DeckState";
+import { CardPickState } from "../types/CardPickState";
+import { DeckState } from "../types/DeckState";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 interface PropTypes {
