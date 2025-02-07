@@ -2,49 +2,28 @@
 
 import QuickQuestionPickerBoxB from "./QuickQuestionPickerBoxB";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
-import MainContent from "@/shared/components/MainContent";
 import { css } from "styled-components";
 import TextFieldInChatOverview from "./TextFieldInChatOverview";
-
+import ChatHeader from "./ChatHeader";
+import { useStickToBottom } from "use-stick-to-bottom";
+import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
+import { useEffect } from "react";
+import { useChatMessagesContext } from "../hooks/useChatMessagesStore";
+import { ChatMessagesProvider } from "@/chat/hooks/useChatMessagesStore";
+import { TextFieldInChatDisplayProvider } from "@/chat/hooks/useTextFieldInChatDisplayStore";
+import BChatOverview from "./BChatOverview";
+import ChatBubble from "@/chat/components/ChatBubble";
+import ChatBubbleGroup from "@/chat/components/ChatBubbleGroup";
+import React from "react";
 export default function ChatOverview() {
+  // const messages = ["안녕 집사", "따뜻한 하루야", "오늘은 어떤게 궁금해?"];
+  console.log("Rerender");
+
   return (
-    <MainContent>
-      <div
-        css={css`
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        `}
-      >
-        <h1
-          css={css`
-            margin-top: 170px;
-            text-align: center;
-            ${(props) => props.theme.fonts.headline2}
-          `}
-        >
-          AI 타로 술사, 타로냥에게
-          <br /> 무엇이든 물어봐라냥
-        </h1>
-        <div
-          css={css`
-            margin-top: 32px;
-          `}
-        >
-          <QuickQuestionPickerBoxB />
-        </div>
-      </div>
-      <div>
-        <FullscreenOverflowDivider />
-        <div
-          css={css`
-            padding: 16px 20px;
-          `}
-        >
-          <TextFieldInChatOverview />
-        </div>
-      </div>
-    </MainContent>
+    <ChatMessagesProvider>
+      <TextFieldInChatDisplayProvider>
+        <BChatOverview />
+      </TextFieldInChatDisplayProvider>
+    </ChatMessagesProvider>
   );
 }

@@ -19,6 +19,7 @@ import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplay
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatCardSelect from "./ChatCardSelect";
 import ChatHeader from "./ChatHeader";
+import { MessageType } from "../types/message";
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
@@ -42,7 +43,17 @@ export default function ChatRoom() {
   const { mutate: sendChatMessage } = useSendChatMessage();
   const pathname = usePathname();
   const router = useRouter();
-
+  const InitMessages = {
+    messageId: Math.random(),
+    type: "SYSTEM_HELLO",
+    sender: "SYSTEM",
+    loading: false,
+    answers: [
+      "안녕 집사 🐾",
+      "따뜻한 마룻바닥이 그리운 겨울 밤이야",
+      "오늘은 어떤게 궁금해서 찾아왔어냥?",
+    ],
+  };
   useEffect(() => {
     if (!data) return;
     copyServerState(data.messages);
@@ -50,6 +61,14 @@ export default function ChatRoom() {
     console.log(initialMessage);
     router.replace(pathname);
     const message = JSON.parse(initialMessage) as SendChatMessageRequest;
+
+    addMessage({
+      messageId: InitMessages.messageId,
+      type: InitMessages.type,
+      sender: InitMessages.sender,
+      loading: false,
+      answers: InitMessages.answers,
+    } as MessageType);
 
     disableTextField();
 

@@ -30,7 +30,7 @@ export default function ChatBubble({ sender, message, cardId, resultId, loading 
   const theme = useTheme();
   const { chatId } = useParams<{ chatId: string }>();
 
-  if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
+  // if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   if (sender === "USER") {
     return (
@@ -73,7 +73,7 @@ export default function ChatBubble({ sender, message, cardId, resultId, loading 
     );
   }
 
-  if (cardId) {
+  if (cardId && chatId) {
     const card = findCardById(cardId);
 
     return (
