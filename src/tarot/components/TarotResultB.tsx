@@ -50,6 +50,33 @@ const TarotResultB = () => {
   const { data, isError } = useTarotReadingResult(Number(resultId));
   const queryClient = useQueryClient();
 
+  const tempRecommendQuestions = [
+    {
+      recommendQuestionId: 22,
+      question: "그 사람과 오래 연애할 수 있을까?",
+      referenceCount: 45,
+    },
+    {
+      recommendQuestionId: 20,
+      question: "우리 관계에서 누가 먼저 다가가야 할까?",
+      referenceCount: 82,
+    },
+    {
+      recommendQuestionId: 21,
+      question: "그 사람은 날 많이 좋아할까?",
+      referenceCount: 63,
+    },
+    {
+      recommendQuestionId: 3,
+      question: "그 사람의 속마음이 궁금해!",
+      referenceCount: 64,
+    },
+    {
+      recommendQuestionId: 18,
+      question: "언제쯤 좋은 사람이 나타날까?",
+      referenceCount: 69,
+    },
+  ];
   if (isError) {
     return null;
   }
@@ -174,7 +201,7 @@ const TarotResultB = () => {
             <MainText>많이 물어보는 질문 Top5</MainText>
           </TextWrapper>
           <RecommendContainer>
-            {recommendQuestions?.questions.map((item, idx) => (
+            {tempRecommendQuestions.map((item, idx) => (
               <RecommendQuestionBtn
                 key={idx}
                 onClick={() =>
@@ -205,7 +232,7 @@ const TarotResultB = () => {
                 </QuestionTitle>
               </RecommendQuestionBtn>
             ))}
-            <RecommendQuestionBtn
+            {/* <RecommendQuestionBtn
               key={5}
               onClick={() => handleContinueRecommendConversation(1, "상반기에 취업할 수 있을까?")}
             >
@@ -224,7 +251,7 @@ const TarotResultB = () => {
                 </div>
                 상반기에 취업할 수 있을까?
               </QuestionTitle>
-            </RecommendQuestionBtn>
+            </RecommendQuestionBtn> */}
           </RecommendContainer>
         </RecommendBox>
       </TarotResultWrapper>
