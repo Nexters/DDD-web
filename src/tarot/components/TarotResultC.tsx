@@ -197,8 +197,8 @@ const TarotResultC = () => {
 
         <RecommendBox>
           <TextWrapper>
-            <SubText>이런 질문은 어때요?</SubText>
-            <MainText>많이 물어보는 질문 Top5</MainText>
+            <SubText>다른 질문에 타로냥은 어떻게 대답했을까?</SubText>
+            <MainText>질문 담벼락 🐾</MainText>
           </TextWrapper>
           <RecommendContainer>
             {recommendQuestions?.questions.map((item, idx) => (
@@ -293,7 +293,7 @@ const RecommendQuestionBtn = styled.button`
 
 const SubText = styled.h3`
   color: ${({ theme }) => theme.colors.grey50};
-  ${({ theme }) => theme.fonts.body3};
+  ${({ theme }) => theme.fonts.body1};
 `;
 
 const MainText = styled.h3`

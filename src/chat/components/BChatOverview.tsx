@@ -25,18 +25,6 @@ const BChatOverview = () => {
     deleteMessage,
   } = useChatMessagesContext();
 
-  // const messages1 = {
-  //   answers: [
-  //     "음, 고양이 발자국처럼 살금살금 다가가보는 건 어떨까냥? 타로 카드 한 장 뽑아서 힌트를 얻어보자냥! 🐾✨",
-  //     "123",
-  //     "먼저 다가가는 건 용기 있는 행동이야.",
-  //     "상대방의 마음도 살펴보면서,",
-  //     "조금씩 다가가는 게 좋을 것 같아.",
-  //   ],
-  //   messageId: 2145,
-  //   sender: "SYSTEM",
-  //   type: "SYSTEM_TAROT_QUESTION_REPLY",
-  // };
   const InitMessages = {
     messageId: Math.random(),
     type: "SYSTEM_HELLO",

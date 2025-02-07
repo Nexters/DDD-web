@@ -30,6 +30,7 @@ const ChatCardSelect = () => {
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
+  console.log(window.location.pathname);
   const handleClickCard = (index: number) => {
     if (isCardPicked) return;
 
@@ -48,7 +49,7 @@ const ChatCardSelect = () => {
         {
           onSuccess: (data) => {
             const { tarotResultId } = data;
-            router.push(`/chats/${chatId}/tarot-reading/${tarotResultId}`);
+            router.push(`${window.location.pathname}/tarot-reading/${tarotResultId}`);
           },
         }
       );

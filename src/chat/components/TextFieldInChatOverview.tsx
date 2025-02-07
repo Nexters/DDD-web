@@ -33,7 +33,9 @@ export default function TextFieldInChatOverview() {
           intent: "NORMAL",
         };
 
-        router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
+        router.push(
+          `${window.location.pathname}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`
+        );
       },
     });
   };

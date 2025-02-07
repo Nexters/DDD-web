@@ -1,8 +1,8 @@
 "use client";
 
 import MainContent from "@/shared/components/MainContent";
-import TarotInteraction from "../../../../../tarot/components/TarotInteraction";
-import TarotResultB from "../../../../../tarot/components/TarotResultB";
+import TarotInteraction from "@/tarot/components/TarotInteraction";
+import TarotResult from "@/tarot/components/TarotResult";
 import { useState } from "react";
 import ChatHeader from "@/chat/components/ChatHeader";
 import TarotResultC from "@/tarot/components/TarotResultC";
@@ -20,7 +20,7 @@ export default function TarotReadingResultPage() {
         {tarotInteractation || isLoading ? (
           <TarotInteraction setTarotInteractation={setTarotInteractation} tarotId={data?.tarot} />
         ) : (
-          <TarotResultC />
+          <TarotResult />
         )}
       </MainContent>
     </>

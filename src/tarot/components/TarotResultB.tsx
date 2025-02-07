@@ -232,26 +232,6 @@ const TarotResultB = () => {
                 </QuestionTitle>
               </RecommendQuestionBtn>
             ))}
-            {/* <RecommendQuestionBtn
-              key={5}
-              onClick={() => handleContinueRecommendConversation(1, "상반기에 취업할 수 있을까?")}
-            >
-              <QuestionTitle>
-                {" "}
-                <div
-                  css={css`
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    ${({ theme }) => theme.fonts.subHead1};
-                    width: 20px;
-                  `}
-                >
-                  {5}
-                </div>
-                상반기에 취업할 수 있을까?
-              </QuestionTitle>
-            </RecommendQuestionBtn> */}
           </RecommendContainer>
         </RecommendBox>
       </TarotResultWrapper>

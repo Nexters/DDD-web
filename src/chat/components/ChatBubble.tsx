@@ -78,7 +78,7 @@ export default function ChatBubble({ sender, message, cardId, resultId, loading 
 
     return (
       <Link
-        href={`/chats/${chatId}/tarot-reading/${resultId}`}
+        href={`${window.location.pathname}/tarot-reading/${resultId}`}
         css={css`
           width: fit-content;
         `}
