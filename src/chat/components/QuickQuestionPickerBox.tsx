@@ -14,10 +14,15 @@ export default function QuickQuestionPickerBox() {
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
   const [isQuestionPicked, setIsQuestionPicked] = useState(false);
-  const path = window.location.pathname;
 
+  let path = "";
   if (!data) return null;
 
+  if (typeof window !== "undefined") {
+    // 브라우저 환경에서만 실행
+    path = window.location.pathname.split("/")[1];
+  }
+  console.log(path);
   const adaptQuestionRecommends = (data: TarotQuestionRecommendListResponse) => {
     const colors = ["primary03", "grey10", "primary01", "grey60"] as const;
 
@@ -36,7 +41,9 @@ export default function QuickQuestionPickerBox() {
               referenceQuestionId: question.recommendQuestionId,
             };
 
-            router.push(`${path}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
+            router.push(
+              `${path || ""}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`
+            );
           },
         });
       },

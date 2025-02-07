@@ -16,7 +16,10 @@ export default function ChatHeader() {
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
 
-  const tarotNyangUrl = window.location.hostname;
+  let tarotNyangUrl = "";
+  if (typeof window !== "undefined") {
+    tarotNyangUrl = window.location.hostname;
+  }
 
   const { handleWebShare, handleCopyToClipboard } = shareLink(tarotNyangUrl);
   const [toastOpen, setToastOpen] = useState(false);
