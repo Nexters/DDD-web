@@ -1,6 +1,6 @@
 "use client";
 
-import QuickQuestionPickerBox from "@/chat/components/QuickQuestionPickerBox";
+import QuickQuestionPickerBoxB from "./QuickQuestionPickerBoxB";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
 import MainContent from "@/shared/components/MainContent";
 import { css } from "styled-components";
@@ -12,6 +12,9 @@ export default function ChatOverview() {
       <div
         css={css`
           flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
         `}
       >
         <h1
@@ -29,7 +32,7 @@ export default function ChatOverview() {
             margin-top: 32px;
           `}
         >
-          <QuickQuestionPickerBox />
+          <QuickQuestionPickerBoxB />
         </div>
       </div>
       <div>
