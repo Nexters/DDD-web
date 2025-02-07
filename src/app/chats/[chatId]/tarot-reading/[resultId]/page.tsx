@@ -2,10 +2,10 @@
 
 import MainContent from "@/shared/components/MainContent";
 import TarotInteraction from "../../../../../tarot/components/TarotInteraction";
-import TarotResult from "../../../../../tarot/components/TarotResult";
+import TarotResultB from "../../../../../tarot/components/TarotResultB";
 import { useState } from "react";
 import ChatHeader from "@/chat/components/ChatHeader";
-import TarotResultB from "@/tarot/components/TarotResultB";
+import TarotResultC from "@/tarot/components/TarotResultC";
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useParams } from "next/navigation";
 export default function TarotReadingResultPage() {

@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import styled, { keyframes, useTheme, css } from "styled-components";
-
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 
@@ -36,7 +35,7 @@ const fadeInOut = keyframes`
   }
 `;
 
-const TarotResultB = () => {
+const TarotResultC = () => {
   const { resultId, chatId } = useParams<{
     resultId: string;
     chatId: string;
@@ -205,26 +204,6 @@ const TarotResultB = () => {
                 </QuestionTitle>
               </RecommendQuestionBtn>
             ))}
-            <RecommendQuestionBtn
-              key={5}
-              onClick={() => handleContinueRecommendConversation(1, "상반기에 취업할 수 있을까?")}
-            >
-              <QuestionTitle>
-                {" "}
-                <div
-                  css={css`
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    ${({ theme }) => theme.fonts.subHead1};
-                    width: 20px;
-                  `}
-                >
-                  {5}
-                </div>
-                상반기에 취업할 수 있을까?
-              </QuestionTitle>
-            </RecommendQuestionBtn>
           </RecommendContainer>
         </RecommendBox>
       </TarotResultWrapper>
@@ -232,7 +211,7 @@ const TarotResultB = () => {
   }
 };
 
-export default TarotResultB;
+export default TarotResultC;
 const QuestionLead = styled.p`
   color: ${({ theme }) => theme.colors.primary03};
   ${({ theme }) => theme.fonts.captionBold};
@@ -277,6 +256,11 @@ const RecommendQuestionBtn = styled.button`
   border-radius: 12px;
 
   padding: 16px 20px;
+
+  @media screen and (max-width: 600px) {
+    height: 79px;
+    padding: 15px 20px;
+  }
 `;
 
 const SubText = styled.h3`
