@@ -1,3 +1,4 @@
+"use client";
 import LoadingModal from "@/shared/components/LoadingModal";
 import tarotDeckData from "@/tarot/constants/tarotCardDeck";
 import { useSelectTarotCard } from "@/tarot/hooks/useSelectTarotCard";
@@ -30,7 +31,6 @@ const ChatCardSelect = () => {
 
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  console.log(window.location.pathname);
   const handleClickCard = (index: number) => {
     if (isCardPicked) return;
 

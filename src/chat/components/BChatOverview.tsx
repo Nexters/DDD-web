@@ -8,22 +8,16 @@ import TextFieldInChatOverview from "./TextFieldInChatOverview";
 import { useChatMessagesContext } from "../hooks/useChatMessagesStore";
 import { useStickToBottom } from "use-stick-to-bottom";
 import MainContent from "@/shared/components/MainContent";
-import ChatBubble from "./ChatBubble";
+
 import ChatBubbleGroup from "./ChatBubbleGroup";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { delay } from "@/shared/utils/delay";
 import { MessageType } from "../types/message";
 
 const BChatOverview = () => {
-  const { scrollRef, contentRef } = useStickToBottom();
+  const { contentRef } = useStickToBottom();
 
-  const {
-    copyServerState,
-    state: messages,
-    addMessage,
-    editMessage,
-    deleteMessage,
-  } = useChatMessagesContext();
+  const { state: messages, addMessage, editMessage, deleteMessage } = useChatMessagesContext();
 
   const InitMessages = {
     messageId: Math.random(),
@@ -48,7 +42,6 @@ const BChatOverview = () => {
 
     await delay(1000); // 1초 대기
 
-    // 2. 로딩 메시지 삭제 후 첫 번째 메시지 추가
     deleteMessage(loadingMessageId);
     addMessage({
       messageId: InitMessages.messageId,
@@ -58,7 +51,6 @@ const BChatOverview = () => {
       answers: [InitMessages.answers[0]],
     } as MessageType);
 
-    // 3. 순차적으로 메시지 업데이트 (1초마다)
     for (let index = 1; index < InitMessages.answers.length; index++) {
       await delay(1000);
 

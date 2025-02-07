@@ -49,33 +49,33 @@ const TarotResultC = () => {
   const { data, isError } = useTarotReadingResult(Number(resultId));
   const queryClient = useQueryClient();
 
-  const tempRecommendQuestions = [
-    {
-      recommendQuestionId: 22,
-      question: "그 사람과 오래 연애할 수 있을까?",
-      referenceCount: 45,
-    },
-    {
-      recommendQuestionId: 20,
-      question: "우리 관계에서 누가 먼저 다가가야 할까?",
-      referenceCount: 82,
-    },
-    {
-      recommendQuestionId: 21,
-      question: "그 사람은 날 많이 좋아할까?",
-      referenceCount: 63,
-    },
-    {
-      recommendQuestionId: 3,
-      question: "그 사람의 속마음이 궁금해!",
-      referenceCount: 64,
-    },
-    {
-      recommendQuestionId: 18,
-      question: "언제쯤 좋은 사람이 나타날까?",
-      referenceCount: 69,
-    },
-  ];
+  // const tempRecommendQuestions = [
+  //   {
+  //     recommendQuestionId: 22,
+  //     question: "그 사람과 오래 연애할 수 있을까?",
+  //     referenceCount: 45,
+  //   },
+  //   {
+  //     recommendQuestionId: 20,
+  //     question: "우리 관계에서 누가 먼저 다가가야 할까?",
+  //     referenceCount: 82,
+  //   },
+  //   {
+  //     recommendQuestionId: 21,
+  //     question: "그 사람은 날 많이 좋아할까?",
+  //     referenceCount: 63,
+  //   },
+  //   {
+  //     recommendQuestionId: 3,
+  //     question: "그 사람의 속마음이 궁금해!",
+  //     referenceCount: 64,
+  //   },
+  //   {
+  //     recommendQuestionId: 18,
+  //     question: "언제쯤 좋은 사람이 나타날까?",
+  //     referenceCount: 69,
+  //   },
+  // ];
 
   if (isError) {
     return null;
@@ -240,10 +240,6 @@ const TarotResultC = () => {
 };
 
 export default TarotResultC;
-const QuestionLead = styled.p`
-  color: ${({ theme }) => theme.colors.primary03};
-  ${({ theme }) => theme.fonts.captionBold};
-`;
 
 const TextWrapper = styled.div`
   display: flex;
@@ -267,10 +263,6 @@ const QuestionTitle = styled.div`
   ${({ theme }) => theme.fonts.subHead2};
   color: ${({ theme }) => theme.colors.grey70};
   text-align: left;
-`;
-const QuestionCount = styled.p`
-  ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.grey80};
 `;
 
 const RecommendQuestionBtn = styled.button`

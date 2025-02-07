@@ -1,3 +1,4 @@
+"use client";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { TarotQuestionRecommendListResponse } from "@/tarot/apis/getTarotQuestionRecommends";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";

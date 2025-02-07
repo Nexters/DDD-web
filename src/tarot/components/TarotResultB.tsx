@@ -240,10 +240,10 @@ const TarotResultB = () => {
 };
 
 export default TarotResultB;
-const QuestionLead = styled.p`
-  color: ${({ theme }) => theme.colors.primary03};
-  ${({ theme }) => theme.fonts.captionBold};
-`;
+// const QuestionLead = styled.p`
+//   color: ${({ theme }) => theme.colors.primary03};
+//   ${({ theme }) => theme.fonts.captionBold};
+// `;
 
 const TextWrapper = styled.div`
   display: flex;
@@ -267,10 +267,6 @@ const QuestionTitle = styled.div`
   ${({ theme }) => theme.fonts.subHead2};
   color: ${({ theme }) => theme.colors.grey70};
   text-align: left;
-`;
-const QuestionCount = styled.p`
-  ${({ theme }) => theme.fonts.caption};
-  color: ${({ theme }) => theme.colors.grey80};
 `;
 
 const RecommendQuestionBtn = styled.button`

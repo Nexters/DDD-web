@@ -1,3 +1,4 @@
+"use client";
 import { MessageSenderType } from "@/chat/types/messageSender";
 import { TarotCardIdType } from "@/tarot/types/tarotCardId";
 import findCardById from "@/tarot/utils/findCardById";

@@ -1,3 +1,4 @@
+"use client";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { TarotQuestionRecommendListResponse } from "@/tarot/apis/getTarotQuestionRecommends";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
@@ -13,11 +14,13 @@ export default function QuickQuestionPickerBox() {
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
   const [isQuestionPicked, setIsQuestionPicked] = useState(false);
+  const path = window.location.pathname;
 
   if (!data) return null;
 
   const adaptQuestionRecommends = (data: TarotQuestionRecommendListResponse) => {
     const colors = ["primary03", "grey10", "primary01", "grey60"] as const;
+
     return data.questions.map((question, i) => ({
       ...question,
       color: colors[i],
@@ -33,9 +36,7 @@ export default function QuickQuestionPickerBox() {
               referenceQuestionId: question.recommendQuestionId,
             };
 
-            router.push(
-              `${window.location.pathname}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`
-            );
+            router.push(`${path}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
           },
         });
       },
