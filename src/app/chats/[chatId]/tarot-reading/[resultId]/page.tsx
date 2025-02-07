@@ -5,7 +5,7 @@ import TarotInteraction from "../../../../../tarot/components/TarotInteraction";
 import TarotResult from "../../../../../tarot/components/TarotResult";
 import { useState } from "react";
 import ChatHeader from "@/chat/components/ChatHeader";
-
+import TarotResultA from "@/tarot/components/TarotResultA";
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useParams } from "next/navigation";
 export default function TarotReadingResultPage() {
@@ -20,7 +20,7 @@ export default function TarotReadingResultPage() {
         {tarotInteractation || isLoading ? (
           <TarotInteraction setTarotInteractation={setTarotInteractation} tarotId={data?.tarot} />
         ) : (
-          <TarotResult />
+          <TarotResultA />
         )}
       </MainContent>
     </>

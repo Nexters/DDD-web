@@ -68,6 +68,12 @@ export const theme = {
       font-weight: 400;
       line-height: 18px;
     `,
+    captionBold: css`
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 18px;
+    `,
   },
 
   colors: {
