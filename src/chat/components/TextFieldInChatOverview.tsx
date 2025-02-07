@@ -29,6 +29,13 @@ export default function TextFieldInChatOverview() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && e.shiftKey) return;
+    if (e.key === "Enter" && !isComposing) {
+      e.preventDefault();
+      submit();
+    }
+  };
   const submit = () => {
     setMessage("");
     setIsMessageSent(true);
@@ -66,13 +73,7 @@ export default function TextFieldInChatOverview() {
       <TextareaAutoSize
         value={message}
         onChange={handleChange}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && e.shiftKey) return;
-          if (e.key === "Enter" && !isComposing) {
-            e.preventDefault();
-            submit();
-          }
-        }}
+        onKeyDown={handleKeyDown}
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
         disabled={disabled}

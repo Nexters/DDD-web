@@ -40,6 +40,14 @@ export default function TextFieldInChat() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && e.shiftKey) return;
+    if (e.key === "Enter" && !isComposing) {
+      e.preventDefault();
+      submit();
+    }
+  };
+
   const submit = async () => {
     setMessage("");
     disableTextField();
@@ -141,13 +149,7 @@ export default function TextFieldInChat() {
         textareaRef={textareaRef}
         onCompositionStart={handleCompositionStart}
         onCompositionEnd={handleCompositionEnd}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && e.shiftKey) return;
-          if (e.key === "Enter" && !isComposing) {
-            e.preventDefault();
-            submit();
-          }
-        }}
+        onKeyDown={handleKeyDown}
       />
       <button
         type="submit"
