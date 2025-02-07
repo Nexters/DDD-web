@@ -1,14 +1,15 @@
 "use client";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
+import ReloadIcon from "@/shared/assets/icons/reload.svg";
 import { TarotQuestionRecommendListResponse } from "@/tarot/apis/getTarotQuestionRecommends";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
-import { useRouter, usePathname } from "next/navigation";
+import { sendGAEvent } from "@next/third-parties/google";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import QuickQuestionPickerB from "./QuickQuestionPickerB";
-import ReloadIcon from "@/shared/assets/icons/reload.svg";
-import { useQueryClient } from "@tanstack/react-query";
 export default function QuickQuestionPickerBoxB() {
   const { data } = useTarotQuestionRecommends();
   const { mutate: createChatRoom } = useCreateChatRoom();
@@ -33,6 +34,9 @@ export default function QuickQuestionPickerBoxB() {
         createChatRoom(undefined, {
           onSuccess: (data) => {
             setIsQuestionPicked(true);
+            sendGAEvent("event", "tarot_question_picked", {
+              pathname: pathname,
+            });
             const messageRequest: SendChatMessageRequest = {
               roomId: data.roomId,
               message: question.question,

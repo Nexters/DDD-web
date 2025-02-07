@@ -1,7 +1,8 @@
 "use client";
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import ArrowUpIcon from "@/shared/assets/icons/arrow-up-default.svg";
-import { useRouter } from "next/navigation";
+import { sendGAEvent } from "@next/third-parties/google";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
@@ -12,6 +13,7 @@ export default function TextFieldInChatOverview() {
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
   const [isMessageSent, setIsMessageSent] = useState(false);
+  const pathname = usePathname();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -32,6 +34,10 @@ export default function TextFieldInChatOverview() {
           message: message,
           intent: "NORMAL",
         };
+
+        sendGAEvent("event", "tarot_question_input", {
+          pathname: pathname,
+        });
 
         router.push(
           `${window.location.pathname}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`

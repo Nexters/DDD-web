@@ -2,13 +2,13 @@
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { TarotQuestionRecommendListResponse } from "@/tarot/apis/getTarotQuestionRecommends";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
-import { useRouter } from "next/navigation";
+import { sendGAEvent } from "@next/third-parties/google";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import QuickQuestionPicker from "./QuickQuestionPicker";
 import RefreshQuickQuestionButton from "./RefreshQuickQuestionButton";
-import { usePathname } from "next/navigation";
 export default function QuickQuestionPickerBox() {
   const { data } = useTarotQuestionRecommends();
   const { mutate: createChatRoom } = useCreateChatRoom();
@@ -30,6 +30,9 @@ export default function QuickQuestionPickerBox() {
         createChatRoom(undefined, {
           onSuccess: (data) => {
             setIsQuestionPicked(true);
+            sendGAEvent("event", "tarot_question_picked", {
+              pathname: pathname,
+            });
             const messageRequest: SendChatMessageRequest = {
               roomId: data.roomId,
               message: question.question,

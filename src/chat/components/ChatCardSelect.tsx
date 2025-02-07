@@ -2,9 +2,10 @@
 import LoadingModal from "@/shared/components/LoadingModal";
 import tarotDeckData from "@/tarot/constants/tarotCardDeck";
 import { useSelectTarotCard } from "@/tarot/hooks/useSelectTarotCard";
+import { sendGAEvent } from "@next/third-parties/google";
 import { easeInOut } from "motion";
 import * as motion from "motion/react-client";
-import { useParams, useRouter, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { CardPickState } from "../types/CardPickState";
@@ -49,6 +50,9 @@ const ChatCardSelect = () => {
         },
         {
           onSuccess: (data) => {
+            sendGAEvent("event", "tarot_card_picked", {
+              pathname: pathname,
+            });
             const { tarotResultId } = data;
             router.push(`${pathname}/tarot-reading/${tarotResultId}`);
           },
