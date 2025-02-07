@@ -33,7 +33,9 @@ export default function QuickQuestionPickerBox() {
               referenceQuestionId: question.recommendQuestionId,
             };
 
-            router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
+            router.push(
+              `${window.location.pathname}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`
+            );
           },
         });
       },

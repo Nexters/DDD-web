@@ -16,9 +16,6 @@ import ChatBubble from "@/chat/components/ChatBubble";
 import ChatBubbleGroup from "@/chat/components/ChatBubbleGroup";
 import React from "react";
 export default function ChatOverview() {
-  // const messages = ["안녕 집사", "따뜻한 하루야", "오늘은 어떤게 궁금해?"];
-  console.log("Rerender");
-
   return (
     <ChatMessagesProvider>
       <TextFieldInChatDisplayProvider>

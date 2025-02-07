@@ -45,7 +45,7 @@ const TarotResult = () => {
   const router = useRouter();
   const { data, isError } = useTarotReadingResult(Number(resultId));
   const queryClient = useQueryClient();
-
+  const path = window.location.pathname.split("/")[1];
   if (isError) {
     return null;
   }
@@ -59,9 +59,8 @@ const TarotResult = () => {
 
   const handleContinueConversation = () => {
     queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
-    router.push(`/chats/${chatId}`);
+    router.push(`/${path}/chats/${chatId}`);
   };
-  console.log(recommendQuestions);
 
   const handleContinueRecommendConversation = (recommendQuestionId: number, message: string) => {
     const object: SendChatMessageRequest = {
@@ -72,7 +71,7 @@ const TarotResult = () => {
     };
 
     queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
-    router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
+    router.push(`/${path}/chats/${chatId}?message=${JSON.stringify(object)}`);
   };
 
   if (data?.tarot) {
@@ -84,7 +83,12 @@ const TarotResult = () => {
     return (
       <TarotResultWrapper>
         <TarotCard>
-          <CardImg src={TarotData?.imgSrc || ""} alt={TarotData?.alt || "타로카드 이미지"} width={180} height={100} />
+          <CardImg
+            src={TarotData?.imgSrc || ""}
+            alt={TarotData?.alt || "타로카드 이미지"}
+            width={180}
+            height={100}
+          />
           <Title>
             {TarotData?.nameKR} <br />
             {TarotData?.name}
@@ -163,7 +167,9 @@ const TarotResult = () => {
             {recommendQuestions?.questions.map((item, idx) => (
               <RecommendQuestionBtn
                 key={idx}
-                onClick={() => handleContinueRecommendConversation(item.recommendQuestionId, item.question)}
+                onClick={() =>
+                  handleContinueRecommendConversation(item.recommendQuestionId, item.question)
+                }
               >
                 <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
                 <QuestionTitle>{item.question} </QuestionTitle>
@@ -192,6 +198,7 @@ const Dot = styled.span<{ $delay: number; $color: string }>`
 `;
 
 const QuestionTitle = styled.div`
+  text-align: left;
   ${({ theme }) => theme.fonts.subHead2};
   color: ${({ theme }) => theme.colors.grey80};
 `;
