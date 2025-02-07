@@ -50,7 +50,8 @@ export default function QuickQuestionPickerBoxB() {
       css={css`
         display: flex;
         flex-direction: column;
-        padding: 24px 20px;
+        width: calc(100% + 20 * 2);
+        margin: 24px -20px 24px 0;
       `}
     >
       <button

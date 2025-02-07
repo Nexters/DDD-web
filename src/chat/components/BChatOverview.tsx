@@ -88,31 +88,43 @@ const BChatOverview = () => {
 
   return (
     <MainContent>
-      <ChatHeader />
       <div
-        ref={contentRef}
         css={css`
+          padding: 0px 20px 16px;
           flex: 1;
           display: flex;
           flex-direction: column;
-          gap: 16px;
-          margin-top: 16px;
+          overflow-y: auto;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         `}
       >
-        {messages[0] && messages[0].sender === "SYSTEM" && (
-          <ChatBubbleGroup key={messages[0].messageId} message={messages[0]} />
-        )}
-      </div>
-
-      <QuickQuestionPickerBoxB />
-      <div>
-        <FullscreenOverflowDivider />
+        <ChatHeader />
         <div
+          ref={contentRef}
           css={css`
-            padding: 16px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 16px;
           `}
         >
-          <TextFieldInChatOverview />
+          {messages[0] && messages[0].sender === "SYSTEM" && (
+            <ChatBubbleGroup key={messages[0].messageId} message={messages[0]} />
+          )}
+        </div>
+
+        <QuickQuestionPickerBoxB />
+        <div>
+          <FullscreenOverflowDivider />
+          <div
+            css={css`
+              padding: 16px 20px;
+            `}
+          >
+            <TextFieldInChatOverview />
+          </div>
         </div>
       </div>
     </MainContent>
