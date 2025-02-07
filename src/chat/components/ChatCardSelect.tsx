@@ -4,7 +4,7 @@ import tarotDeckData from "@/tarot/constants/tarotCardDeck";
 import { useSelectTarotCard } from "@/tarot/hooks/useSelectTarotCard";
 import { easeInOut } from "motion";
 import * as motion from "motion/react-client";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { CardPickState } from "../types/CardPickState";
@@ -27,6 +27,7 @@ const ChatCardSelect = () => {
   const router = useRouter();
   const [isCardPicked, setIsCardPicked] = useState(false);
 
+  const pathname = usePathname();
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -49,7 +50,7 @@ const ChatCardSelect = () => {
         {
           onSuccess: (data) => {
             const { tarotResultId } = data;
-            router.push(`${window.location.pathname}/tarot-reading/${tarotResultId}`);
+            router.push(`${pathname}/tarot-reading/${tarotResultId}`);
           },
         }
       );

@@ -2,7 +2,7 @@
 import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 import { TarotQuestionRecommendListResponse } from "@/tarot/apis/getTarotQuestionRecommends";
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
@@ -16,6 +16,7 @@ export default function QuickQuestionPickerBoxB() {
   const [isQuestionPicked, setIsQuestionPicked] = useState(false);
   const queryClient = useQueryClient();
 
+  const pathname = usePathname();
   const handleClick = () => {
     queryClient.invalidateQueries({ queryKey: ["tarotQuestionRecommends"] });
   };
@@ -40,7 +41,7 @@ export default function QuickQuestionPickerBoxB() {
             };
 
             router.push(
-              `${window.location.pathname}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`
+              `${pathname}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`
             );
           },
         });

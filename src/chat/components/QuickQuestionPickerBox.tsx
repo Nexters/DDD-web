@@ -8,21 +8,17 @@ import { css } from "styled-components";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
 import QuickQuestionPicker from "./QuickQuestionPicker";
 import RefreshQuickQuestionButton from "./RefreshQuickQuestionButton";
-
+import { usePathname } from "next/navigation";
 export default function QuickQuestionPickerBox() {
   const { data } = useTarotQuestionRecommends();
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
   const [isQuestionPicked, setIsQuestionPicked] = useState(false);
 
-  let path = "";
+  const pathname = usePathname();
+  console.log(pathname);
   if (!data) return null;
 
-  if (typeof window !== "undefined") {
-    // 브라우저 환경에서만 실행
-    path = window.location.pathname.split("/")[1];
-  }
-  console.log(path);
   const adaptQuestionRecommends = (data: TarotQuestionRecommendListResponse) => {
     const colors = ["primary03", "grey10", "primary01", "grey60"] as const;
 
@@ -42,7 +38,7 @@ export default function QuickQuestionPickerBox() {
             };
 
             router.push(
-              `${path || ""}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`
+              `${pathname === "/" ? "" : pathname}/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`
             );
           },
         });

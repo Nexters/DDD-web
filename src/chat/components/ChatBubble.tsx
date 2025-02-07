@@ -1,4 +1,3 @@
-"use client";
 import { MessageSenderType } from "@/chat/types/messageSender";
 import { TarotCardIdType } from "@/tarot/types/tarotCardId";
 import findCardById from "@/tarot/utils/findCardById";
@@ -6,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import styled, { css, keyframes, useTheme } from "styled-components";
+import { usePathname } from "next/navigation";
 
 const fadeInOut = keyframes`
   0% {
@@ -30,7 +30,7 @@ type Props = {
 export default function ChatBubble({ sender, message, cardId, resultId, loading }: Props) {
   const theme = useTheme();
   const { chatId } = useParams<{ chatId: string }>();
-
+  const pathname = usePathname();
   // if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   if (sender === "USER") {
@@ -79,7 +79,7 @@ export default function ChatBubble({ sender, message, cardId, resultId, loading 
 
     return (
       <Link
-        href={`${window.location.pathname}/tarot-reading/${resultId}`}
+        href={`${pathname}/tarot-reading/${resultId}`}
         css={css`
           width: fit-content;
         `}

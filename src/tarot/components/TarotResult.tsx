@@ -17,7 +17,7 @@ import Toast from "@/shared/components/Toast";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
 import shareLink from "@/shared/utils/shareLink";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 
 const fadeInOut = keyframes`
@@ -45,7 +45,9 @@ const TarotResult = () => {
   const router = useRouter();
   const { data, isError } = useTarotReadingResult(Number(resultId));
   const queryClient = useQueryClient();
-  const path = window.location.pathname.split("/")[1];
+  const pathname = usePathname();
+  const path = pathname.split("/")[1] === "chats" ? "" : `/${pathname.split("/")[1]}`;
+  console.log(path);
   if (isError) {
     return null;
   }
@@ -59,7 +61,7 @@ const TarotResult = () => {
 
   const handleContinueConversation = () => {
     queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
-    router.push(`/${path}/chats/${chatId}`);
+    router.push(`${path}/chats/${chatId}`);
   };
 
   const handleContinueRecommendConversation = (recommendQuestionId: number, message: string) => {
@@ -71,7 +73,7 @@ const TarotResult = () => {
     };
 
     queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
-    router.push(`/${path}/chats/${chatId}?message=${JSON.stringify(object)}`);
+    router.push(`${path}/chats/${chatId}?message=${JSON.stringify(object)}`);
   };
 
   if (data?.tarot) {
