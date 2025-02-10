@@ -10,15 +10,15 @@ import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useParams } from "next/navigation";
 export default function TarotReadingResultPage() {
   const { resultId } = useParams();
-  const [tarotInteractation, setTarotInteractation] = useState(true);
+  const [tarotInteraction, setTarotInteraction] = useState(true);
   const { data, isLoading } = useTarotReadingResult(Number(resultId));
 
   return (
     <>
-      {!tarotInteractation && <ChatHeader />}
+      {!tarotInteraction && <ChatHeader />}
       <MainContent>
-        {tarotInteractation || isLoading ? (
-          <TarotInteraction setTarotInteractation={setTarotInteractation} tarotId={data?.tarot} />
+        {tarotInteraction || isLoading ? (
+          <TarotInteraction setTarotInteraction={setTarotInteraction} tarotId={data?.tarot} />
         ) : (
           <TarotResult />
         )}
