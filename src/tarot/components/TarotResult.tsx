@@ -84,7 +84,12 @@ const TarotResult = () => {
     return (
       <TarotResultWrapper>
         <TarotCard>
-          <CardImg src={TarotData?.imgSrc || ""} alt={TarotData?.alt || "타로카드 이미지"} width={180} height={100} />
+          <CardImg
+            src={TarotData?.imgSrc || ""}
+            alt={TarotData?.alt || "타로카드 이미지"}
+            width={180}
+            height={100}
+          />
           <Title>
             {TarotData?.nameKR} <br />
             {TarotData?.name}
@@ -112,9 +117,9 @@ const TarotResult = () => {
                 <div>
                   <p>타로냥</p>
                   <SystemMessgeDelay>
-                    <Dot $delay={0} $color={theme.colors.primary01} />
-                    <Dot $delay={0.3} $color={theme.colors.primary02} />
-                    <Dot $delay={0.6} $color={theme.colors.primary03} />
+                    <Dot $color={theme.colors.primary01} />
+                    <Dot $color={theme.colors.primary02} />
+                    <Dot $color={theme.colors.primary03} />
                   </SystemMessgeDelay>
                 </div>
               </SystemMassegeBubble>
@@ -163,7 +168,9 @@ const TarotResult = () => {
             {recommendQuestions?.questions.map((item, idx) => (
               <RecommendQuestionBtn
                 key={idx}
-                onClick={() => handleContinueRecommendConversation(item.recommendQuestionId, item.question)}
+                onClick={() =>
+                  handleContinueRecommendConversation(item.recommendQuestionId, item.question)
+                }
               >
                 <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
                 <QuestionTitle>{item.question} </QuestionTitle>
@@ -187,8 +194,6 @@ const Dot = styled.span<{ $delay: number; $color: string }>`
   height: 6px;
   background-color: ${({ $color }) => $color};
   border-radius: 50%;
-  animation: ${fadeInOut} 1.5s infinite ease-in-out;
-  animation-delay: ${({ $delay }) => $delay}s;
 `;
 
 const QuestionTitle = styled.div`
@@ -250,10 +255,6 @@ const RecommendBox = styled.div`
 
 const Divider = styled.div`
   height: 11px;
-
-  /* box-shadow: 0 0 0 100vmax ${(props) => props.theme.colors.grey10};
-  clip-path: inset(0px -100vmax); */
-
   width: calc(100% + 44px * 2);
 
   margin: 44px 0 44px 0;
