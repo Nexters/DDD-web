@@ -19,7 +19,7 @@ const ChatCardSelect = () => {
   const [deckState, setDeckState] = useState<DeckState>("Stack");
   const { chatId } = useParams<{ chatId: string }>();
   const { mutate: selectTarotCard } = useSelectTarotCard();
-  const ITEMS_PER_LOAD = 15;
+  const ITEMS_PER_LOAD = 74;
   const [items, setItems] = useState<CardPickState[]>(
     Array.from({ length: ITEMS_PER_LOAD }, () => "Default")
   );
@@ -28,7 +28,7 @@ const ChatCardSelect = () => {
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
-  const observerRef = useRef<HTMLDivElement | null>(null);
+  // const observerRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickCard = (index: number) => {
     if (isCardPicked) return;
@@ -55,30 +55,30 @@ const ChatCardSelect = () => {
     }
   };
 
-  /** Trigger observe 무한스크롤 */
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setItems((prev) => [
-              ...prev,
-              ...Array.from({ length: ITEMS_PER_LOAD }, () => "Default" as CardPickState),
-            ]);
-          }
-        });
-      },
-      { root: null, threshold: 0.0 }
-    );
+  // /** Trigger observe 무한스크롤 */
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting) {
+  //           setItems((prev) => [
+  //             ...prev,
+  //             ...Array.from({ length: ITEMS_PER_LOAD }, () => "Default" as CardPickState),
+  //           ]);
+  //         }
+  //       });
+  //     },
+  //     { root: null, threshold: 0.0 }
+  //   );
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
+  //   if (observerRef.current) {
+  //     observer.observe(observerRef.current);
+  //   }
 
-    return () => {
-      if (observerRef.current) observer.unobserve(observerRef.current);
-    };
-  }, []);
+  //   return () => {
+  //     if (observerRef.current) observer.unobserve(observerRef.current);
+  //   };
+  // }, []);
 
   return (
     <>
@@ -87,7 +87,7 @@ const ChatCardSelect = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={riseUpCardDeck}
       >
-        {items.map((_, idx) => (
+        {items.map((item, idx) => (
           <Card
             key={idx}
             idx={idx}
@@ -98,7 +98,7 @@ const ChatCardSelect = () => {
           />
         ))}
 
-        <InfinteScrollTrigger ref={observerRef} pos={items.length} />
+        {/* <InfinteScrollTrigger ref={observerRef} pos={items.length} /> */}
       </CardDeckWrapper>
       <LoadingModal isOpen={isCardPicked} />
     </>
