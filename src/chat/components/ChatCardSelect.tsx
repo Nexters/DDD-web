@@ -4,7 +4,7 @@ import { useSelectTarotCard } from "@/tarot/hooks/useSelectTarotCard";
 import { easeInOut } from "motion";
 import * as motion from "motion/react-client";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { CardPickState } from "../types/CardPickState";
 import { DeckState } from "../types/DeckState";
@@ -27,8 +27,6 @@ const ChatCardSelect = () => {
   const [isCardPicked, setIsCardPicked] = useState(false);
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
-
-  // const observerRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickCard = (index: number) => {
     if (isCardPicked) return;
@@ -55,31 +53,6 @@ const ChatCardSelect = () => {
     }
   };
 
-  // /** Trigger observe 무한스크롤 */
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     (entries) => {
-  //       entries.forEach((entry) => {
-  //         if (entry.isIntersecting) {
-  //           setItems((prev) => [
-  //             ...prev,
-  //             ...Array.from({ length: ITEMS_PER_LOAD }, () => "Default" as CardPickState),
-  //           ]);
-  //         }
-  //       });
-  //     },
-  //     { root: null, threshold: 0.0 }
-  //   );
-
-  //   if (observerRef.current) {
-  //     observer.observe(observerRef.current);
-  //   }
-
-  //   return () => {
-  //     if (observerRef.current) observer.unobserve(observerRef.current);
-  //   };
-  // }, []);
-
   return (
     <>
       <CardDeckWrapper
@@ -97,8 +70,6 @@ const ChatCardSelect = () => {
             cardPickState={items}
           />
         ))}
-
-        {/* <InfinteScrollTrigger ref={observerRef} pos={items.length} /> */}
       </CardDeckWrapper>
       <LoadingModal isOpen={isCardPicked} />
     </>
@@ -107,15 +78,6 @@ const ChatCardSelect = () => {
 
 export default ChatCardSelect;
 
-const InfinteScrollTrigger = styled.div<{ pos: number }>`
-  width: 100px;
-  height: 160px;
-
-  background-color: transparent;
-
-  position: absolute;
-  left: ${({ pos }) => pos * 50}px;
-`;
 const CardDeckWrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
