@@ -102,7 +102,6 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
         >
           <Tooltip.Trigger asChild>
             <CardWrapper
-              // ref={(el) => (cardScrollRef[idx] = el)}
               src={CardBack}
               alt="카드 뒷면 이미지"
               isCardShadow={isCardShadow}

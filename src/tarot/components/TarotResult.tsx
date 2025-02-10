@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import styled, { keyframes, useTheme } from "styled-components";
+import styled, { useTheme } from "styled-components";
 
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
@@ -19,18 +19,6 @@ import shareLink from "@/shared/utils/shareLink";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-const fadeInOut = keyframes`
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-`;
 
 const TarotResult = () => {
   const { resultId, chatId } = useParams<{
@@ -189,7 +177,7 @@ const TarotResult = () => {
 
 export default TarotResult;
 
-const Dot = styled.span<{ $delay: number; $color: string }>`
+const Dot = styled.span<{ $color: string }>`
   width: 6px;
   height: 6px;
   background-color: ${({ $color }) => $color};
@@ -323,18 +311,19 @@ const UserMessageBubble = styled.div`
   display: flex;
   justify-content: end;
   width: 100%;
+  height: fit-content;
 
   & > div {
     width: 219px;
-    height: 53px;
+    height: fit-content;
     display: flex;
-    justify-content: center;
+
     align-items: center;
 
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: ${({ theme }) => theme.colors.primary01};
 
-    padding: 6px 9px;
+    padding: 8px 12px;
   }
 
   ${({ theme }) => theme.fonts.body1};
@@ -351,7 +340,7 @@ const ChatImageFrame = styled.div`
 
   max-width: 303px;
   width: 100%;
-  height: 177px;
+  height: fit-content;
 
   gap: 13px;
 `;
