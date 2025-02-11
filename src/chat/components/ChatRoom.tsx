@@ -50,8 +50,7 @@ export default function ChatRoom() {
   const { mutate: sendChatMessage } = useSendChatMessage();
   const pathname = usePathname();
   const router = useRouter();
-  const { isVisible: isAcceptRejectButtonsVisible, show: showAcceptRejectButtons } =
-    useAcceptRejectButtonDisplayContext();
+  const { show: showAcceptRejectButtons } = useAcceptRejectButtonDisplayContext();
 
   useEffect(() => {
     if (!data) return;
@@ -183,7 +182,7 @@ export default function ChatRoom() {
               />
             );
           })}
-          <AcceptRejectButtons show={isAcceptRejectButtonsVisible} />
+          <AcceptRejectButtons />
         </div>
       </div>
       {isTarotCardDeckVisible && <ChatCardSelect />}

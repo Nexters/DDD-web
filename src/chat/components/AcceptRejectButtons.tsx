@@ -10,10 +10,7 @@ import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplay
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChipButton from "./ChipButton";
 
-interface Props {
-  show: boolean;
-}
-export default function AcceptRejectButtons({ show }: Props) {
+export default function AcceptRejectButtons() {
   const { addMessage, deleteMessage, editMessage } = useChatMessagesContext();
   const { mutate: sendChatMessage } = useSendChatMessage();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -24,7 +21,8 @@ export default function AcceptRejectButtons({ show }: Props) {
     focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
   const { show: showTarotCardDeck } = useTarotCardDeckDisplayContext();
-  const { hide: hideAcceptRejectButtons } = useAcceptRejectButtonDisplayContext();
+  const { isVisible: isAcceptRejectButtonsVisible, hide: hideAcceptRejectButtons } =
+    useAcceptRejectButtonDisplayContext();
   const { chatId } = useParams<{ chatId: string }>();
 
   const rejectMessage = "아니, 얘기 더 들어봐";
@@ -155,7 +153,7 @@ export default function AcceptRejectButtons({ show }: Props) {
     setIsButtonDisabled(false);
   };
 
-  if (!show) return null;
+  if (!isAcceptRejectButtonsVisible) return null;
 
   return (
     <motion.div
