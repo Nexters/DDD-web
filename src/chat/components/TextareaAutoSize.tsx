@@ -10,6 +10,7 @@ type Props = {
   maxLength: number;
   value: string;
   textareaRef?: RefObject<HTMLTextAreaElement>;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 } & TextareaAutosizeProps;
 
 export default function TextareaAutoSize({
@@ -20,6 +21,7 @@ export default function TextareaAutoSize({
   maxLength,
   autoFocus,
   textareaRef,
+  onKeyDown,
 }: Props) {
   const textareaMinHeight = 52;
   const [isSingleLineTextarea, setIsSingleLineTextarea] = useState(true);
@@ -37,6 +39,7 @@ export default function TextareaAutoSize({
             maxRows={8}
             autoFocus={autoFocus}
             ref={textareaRef}
+            onKeyDown={onKeyDown}
             onHeightChange={(height) => {
               const isSingleLine = height <= textareaMinHeight;
               setIsSingleLineTextarea(isSingleLine);

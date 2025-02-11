@@ -6,6 +6,7 @@ import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectButtonDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import TextareaAutoSize from "./TextareaAutoSize";
 
@@ -21,6 +22,16 @@ export default function TextFieldInChat() {
     textareaRef,
     focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
+  const { show: showAcceptRejectButtons } = useAcceptRejectButtonDisplayContext();
+  const [isComposing, setIsComposing] = useState(false);
+
+  const handleCompositionStart = () => {
+    setIsComposing(true);
+  };
+
+  const handleCompositionEnd = () => {
+    setIsComposing(false);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -29,8 +40,15 @@ export default function TextFieldInChat() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && e.shiftKey) return;
+    if (e.key === "Enter" && !isComposing) {
+      e.preventDefault();
+      submit();
+    }
+  };
+
+  const submit = async () => {
     setMessage("");
     disableTextField();
 
@@ -82,6 +100,7 @@ export default function TextFieldInChat() {
 
           if (data.type === "SYSTEM_TAROT_QUESTION_REPLY") {
             disableTextField();
+            showAcceptRejectButtons();
             return;
           }
         },
@@ -102,7 +121,14 @@ export default function TextFieldInChat() {
       }
     );
   };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    submit();
+  };
   const maxMessageLength = 300;
+
+  const isOnlyWhiteSpace = message.trim().length === 0;
 
   return (
     <form
@@ -121,10 +147,13 @@ export default function TextFieldInChat() {
         maxRows={8}
         maxLength={maxMessageLength}
         textareaRef={textareaRef}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
+        onKeyDown={handleKeyDown}
       />
       <button
         type="submit"
-        disabled={isTextFieldDisabled}
+        disabled={isTextFieldDisabled || isOnlyWhiteSpace}
         css={css`
           position: absolute;
           right: 12px;

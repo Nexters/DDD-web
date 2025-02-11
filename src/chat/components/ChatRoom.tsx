@@ -14,17 +14,23 @@ import { useEffect } from "react";
 import { css } from "styled-components";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { SendChatMessageRequest } from "../apis/sendChatMessage";
+import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectButtonDisplayStore";
 import { useSendChatMessage } from "../hooks/useSendChatMessage";
 import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChatCardSelect from "./ChatCardSelect";
 import ChatHeader from "./ChatHeader";
+
 export default function ChatRoom() {
   const { chatId } = useParams<{ chatId: string }>();
   const searchParams = useSearchParams();
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
-  const { scrollRef, contentRef } = useStickToBottom();
+  const { scrollRef, contentRef } = useStickToBottom({
+    initial: "instant",
+    resize: "instant",
+  });
+
   const {
     copyServerState,
     state: messages,
@@ -32,22 +38,25 @@ export default function ChatRoom() {
     editMessage,
     deleteMessage,
   } = useChatMessagesContext();
-  const { isVisible: isTarotCardDeckVisible } = useTarotCardDeckDisplayContext();
+  const { isVisible: isTarotCardDeckVisible, show: showTarotCardDeck } =
+    useTarotCardDeckDisplayContext();
   const {
     isVisible: isTextFieldVisible,
     enable: enableTextField,
     disable: disableTextField,
     focus: focusTextField,
+    hide: hideTextField,
   } = useTextFieldInChatDisplayContext();
   const { mutate: sendChatMessage } = useSendChatMessage();
   const pathname = usePathname();
   const router = useRouter();
+  const { show: showAcceptRejectButtons } = useAcceptRejectButtonDisplayContext();
 
   useEffect(() => {
     if (!data) return;
     copyServerState(data.messages);
     if (!initialMessage) return;
-    console.log(initialMessage);
+
     router.replace(pathname);
     const message = JSON.parse(initialMessage) as SendChatMessageRequest;
 
@@ -72,7 +81,6 @@ export default function ChatRoom() {
 
     sendChatMessage(JSON.parse(initialMessage), {
       onSuccess: async (data) => {
-        console.log(data);
         deleteMessage(loadingMessageId);
 
         addMessage({
@@ -113,6 +121,20 @@ export default function ChatRoom() {
       },
     });
   }, [data]);
+
+  if (
+    !isTarotCardDeckVisible &&
+    messages.length > 0 &&
+    messages[messages.length - 1].type === "SYSTEM_TAROT_QUESTION_ACCEPTANCE_REPLY"
+  ) {
+    hideTextField();
+    showTarotCardDeck();
+  }
+
+  if (messages.length > 0 && messages[messages.length - 1].type === "SYSTEM_TAROT_QUESTION_REPLY") {
+    disableTextField();
+    showAcceptRejectButtons();
+  }
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
   if (!data) return null;
@@ -160,9 +182,8 @@ export default function ChatRoom() {
               />
             );
           })}
+          <AcceptRejectButtons />
         </div>
-
-        <AcceptRejectButtons />
       </div>
       {isTarotCardDeckVisible && <ChatCardSelect />}
       {isTextFieldVisible && (

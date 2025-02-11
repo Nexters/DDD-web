@@ -12,6 +12,15 @@ export default function TextFieldInChatOverview() {
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
   const [isMessageSent, setIsMessageSent] = useState(false);
+  const [isComposing, setIsComposing] = useState(false);
+
+  const handleCompositionStart = () => {
+    setIsComposing(true);
+  };
+
+  const handleCompositionEnd = () => {
+    setIsComposing(false);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -20,8 +29,14 @@ export default function TextFieldInChatOverview() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && e.shiftKey) return;
+    if (e.key === "Enter" && !isComposing) {
+      e.preventDefault();
+      submit();
+    }
+  };
+  const submit = () => {
     setMessage("");
     setIsMessageSent(true);
 
@@ -37,8 +52,15 @@ export default function TextFieldInChatOverview() {
       },
     });
   };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    submit();
+  };
   const maxMessageLength = 300;
   const disabled = isMessageSent;
+
+  const isOnlyWhiteSpace = message.trim().length === 0;
 
   return (
     <form
@@ -51,6 +73,9 @@ export default function TextFieldInChatOverview() {
       <TextareaAutoSize
         value={message}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
         disabled={disabled}
         placeholder="오늘의 운세는 어떨까?"
         minRows={1}
@@ -60,7 +85,7 @@ export default function TextFieldInChatOverview() {
       />
       <button
         type="submit"
-        disabled={disabled}
+        disabled={disabled || isOnlyWhiteSpace}
         css={css`
           position: absolute;
           right: 12px;

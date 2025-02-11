@@ -1,14 +1,17 @@
 import { useChatMessagesContext } from "@/chat/hooks/useChatMessagesStore";
 import { useSendChatMessage } from "@/chat/hooks/useSendChatMessage";
 import { delay } from "@/shared/utils/delay";
+import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectButtonDisplayStore";
 import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChipButton from "./ChipButton";
+
 export default function AcceptRejectButtons() {
-  const { addMessage, deleteMessage, editMessage, state: messages } = useChatMessagesContext();
+  const { addMessage, deleteMessage, editMessage } = useChatMessagesContext();
   const { mutate: sendChatMessage } = useSendChatMessage();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const {
@@ -18,19 +21,19 @@ export default function AcceptRejectButtons() {
     focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
   const { show: showTarotCardDeck } = useTarotCardDeckDisplayContext();
+  const { isVisible: isAcceptRejectButtonsVisible, hide: hideAcceptRejectButtons } =
+    useAcceptRejectButtonDisplayContext();
   const { chatId } = useParams<{ chatId: string }>();
 
   const rejectMessage = "아니, 얘기 더 들어봐";
   const acceptMessage = "좋아! 타로 볼래";
-
-  const isSystemRepliedQuestion =
-    messages[messages.length - 1]?.type === "SYSTEM_TAROT_QUESTION_REPLY";
 
   if (!chatId) throw new Error("chatId가 Dynamic Route에서 전달 되어야 합니다.");
 
   const handleAcceptClick = async () => {
     setIsButtonDisabled(true);
     hideTextField();
+    hideAcceptRejectButtons();
     addMessage({
       messageId: Math.random(),
       type: "USER_NORMAL",
@@ -93,6 +96,7 @@ export default function AcceptRejectButtons() {
   };
 
   const handleRejectClick = async () => {
+    hideAcceptRejectButtons();
     setIsButtonDisabled(true);
     disableTextField();
     addMessage({
@@ -149,10 +153,13 @@ export default function AcceptRejectButtons() {
     setIsButtonDisabled(false);
   };
 
-  if (!isSystemRepliedQuestion) return null;
+  if (!isAcceptRejectButtonsVisible) return null;
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
       css={css`
         display: flex;
         gap: 8px;
@@ -175,6 +182,6 @@ export default function AcceptRejectButtons() {
       >
         {rejectMessage}
       </ChipButton>
-    </div>
+    </motion.div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { ChatMessagesProvider } from "@/chat/hooks/useChatMessagesStore";
 import { TextFieldInChatDisplayProvider } from "@/chat/hooks/useTextFieldInChatDisplayStore";
+import { AcceptRejectButtonDisplayProvider } from "../hooks/useAcceptRejectButtonDisplayStore";
 import { TarotCardDeckDisplayDisplayProvider } from "../hooks/useTarotCardDeckDisplayStore";
 import ChatRoom from "./ChatRoom";
 
@@ -11,7 +12,9 @@ export default function Chat() {
     <ChatMessagesProvider>
       <TextFieldInChatDisplayProvider>
         <TarotCardDeckDisplayDisplayProvider>
-          <ChatRoom />
+          <AcceptRejectButtonDisplayProvider>
+            <ChatRoom />
+          </AcceptRejectButtonDisplayProvider>
         </TarotCardDeckDisplayDisplayProvider>
       </TextFieldInChatDisplayProvider>
     </ChatMessagesProvider>
