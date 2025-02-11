@@ -11,7 +11,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
 
 type PropTypes = {
-  setTarotInteractation: Dispatch<SetStateAction<boolean>>;
+  setTarotInteraction: Dispatch<SetStateAction<boolean>>;
   tarotId: TarotCardIdType | undefined;
 };
 
@@ -31,12 +31,12 @@ const cardRotateTransition = {
   duration: 0.6,
 };
 
-const TarotInteraction = ({ setTarotInteractation, tarotId }: PropTypes) => {
+const TarotInteraction = ({ setTarotInteraction, tarotId }: PropTypes) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const routingTarotResult = () => {
     setTimeout(() => {
-      setTarotInteractation(false);
+      setTarotInteraction(false);
     }, 1000);
   };
 

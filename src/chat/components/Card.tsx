@@ -23,7 +23,6 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
   const [isCardShadow, setIsCardShadow] = useState(false);
   const [moveDistance, setMoveDistance] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
-
   const cardVariants = {
     initial: { x: 0, y: 0, rotate: 0 },
     spread: {
@@ -71,6 +70,8 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
 
   const handleClickCard = () => {
     onClick(idx);
+    if (cardRef && cardRef.current)
+      cardRef.current.scrollIntoView({ behavior: "smooth", inline: "center" });
   };
 
   const getCardAnimation = () => {

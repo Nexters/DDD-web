@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import styled, { keyframes, useTheme } from "styled-components";
+import styled, { useTheme } from "styled-components";
 
 import { useTarotQuestionRecommends } from "@/tarot/hooks/useTarotQuestionRecommends";
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
@@ -19,18 +19,6 @@ import shareLink from "@/shared/utils/shareLink";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-const fadeInOut = keyframes`
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-`;
 
 const TarotResult = () => {
   const { resultId, chatId } = useParams<{
@@ -84,7 +72,12 @@ const TarotResult = () => {
     return (
       <TarotResultWrapper>
         <TarotCard>
-          <CardImg src={TarotData?.imgSrc || ""} alt={TarotData?.alt || "타로카드 이미지"} width={180} height={100} />
+          <CardImg
+            src={TarotData?.imgSrc || ""}
+            alt={TarotData?.alt || "타로카드 이미지"}
+            width={180}
+            height={100}
+          />
           <Title>
             {TarotData?.nameKR} <br />
             {TarotData?.name}
@@ -112,9 +105,9 @@ const TarotResult = () => {
                 <div>
                   <p>타로냥</p>
                   <SystemMessgeDelay>
-                    <Dot $delay={0} $color={theme.colors.primary01} />
-                    <Dot $delay={0.3} $color={theme.colors.primary02} />
-                    <Dot $delay={0.6} $color={theme.colors.primary03} />
+                    <Dot $color={theme.colors.primary01} />
+                    <Dot $color={theme.colors.primary02} />
+                    <Dot $color={theme.colors.primary03} />
                   </SystemMessgeDelay>
                 </div>
               </SystemMassegeBubble>
@@ -163,7 +156,9 @@ const TarotResult = () => {
             {recommendQuestions?.questions.map((item, idx) => (
               <RecommendQuestionBtn
                 key={idx}
-                onClick={() => handleContinueRecommendConversation(item.recommendQuestionId, item.question)}
+                onClick={() =>
+                  handleContinueRecommendConversation(item.recommendQuestionId, item.question)
+                }
               >
                 <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
                 <QuestionTitle>{item.question} </QuestionTitle>
@@ -182,13 +177,11 @@ const TarotResult = () => {
 
 export default TarotResult;
 
-const Dot = styled.span<{ $delay: number; $color: string }>`
+const Dot = styled.span<{ $color: string }>`
   width: 6px;
   height: 6px;
   background-color: ${({ $color }) => $color};
   border-radius: 50%;
-  animation: ${fadeInOut} 1.5s infinite ease-in-out;
-  animation-delay: ${({ $delay }) => $delay}s;
 `;
 
 const QuestionTitle = styled.div`
@@ -250,10 +243,6 @@ const RecommendBox = styled.div`
 
 const Divider = styled.div`
   height: 11px;
-
-  /* box-shadow: 0 0 0 100vmax ${(props) => props.theme.colors.grey10};
-  clip-path: inset(0px -100vmax); */
-
   width: calc(100% + 44px * 2);
 
   margin: 44px 0 44px 0;
@@ -322,18 +311,19 @@ const UserMessageBubble = styled.div`
   display: flex;
   justify-content: end;
   width: 100%;
+  height: fit-content;
 
   & > div {
     width: 219px;
-    height: 53px;
+    height: fit-content;
     display: flex;
-    justify-content: center;
+
     align-items: center;
 
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: ${({ theme }) => theme.colors.primary01};
 
-    padding: 6px 9px;
+    padding: 8px 12px;
   }
 
   ${({ theme }) => theme.fonts.body1};
@@ -350,7 +340,7 @@ const ChatImageFrame = styled.div`
 
   max-width: 303px;
   width: 100%;
-  height: 177px;
+  height: fit-content;
 
   gap: 13px;
 `;
