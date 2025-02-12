@@ -416,6 +416,10 @@ const TarotResultWrapper = styled.div`
   gap: 32px;
   padding: 0 44px;
 
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto;
+
   @media screen and (max-width: 600px) {
     padding: 0 26px;
   }

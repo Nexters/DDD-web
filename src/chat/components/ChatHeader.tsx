@@ -3,14 +3,14 @@
 import KebobMenuIcon from "@/shared/assets/icons/kebab-menu.svg";
 import BottomSheet from "@/shared/components/BottomSheet";
 import HeaderContent from "@/shared/components/HeaderContent";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useRouter } from "next/navigation";
-import { css } from "styled-components";
-import { useCreateChatRoom } from "../hooks/useCreateChatRoom";
+import Toast from "@/shared/components/Toast";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
 import shareLink from "@/shared/utils/shareLink";
-import Toast from "@/shared/components/Toast";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { css } from "styled-components";
+import { useCreateChatRoom } from "../hooks/useCreateChatRoom";
 
 export default function ChatHeader() {
   const { mutate: createChatRoom } = useCreateChatRoom();
@@ -42,11 +42,8 @@ export default function ChatHeader() {
 
   return (
     <HeaderContent
-      /**
-       * FIXME: 구분선이 추가되어야 하나 쌓임 맥락에 의해 전체 화면 오버플로우 되지 않는 문제
-       * 레이아웃 구조 개선 후 divider prop 적용 필요
-       *  */
       sticky
+      divider
       endAction={
         <BottomSheet.Root>
           <BottomSheet.Trigger asChild>

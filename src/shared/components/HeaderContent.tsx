@@ -33,7 +33,12 @@ export default function HeaderContent({
   divider,
 }: HeaderContentProps) {
   return (
-    <>
+    <div
+      css={css`
+        width: 100%;
+        ${sticky && `position: sticky; top: 0; z-index: ${zIndex.header}; background-color: white;`}
+      `}
+    >
       <header
         css={css`
           position: relative;
@@ -41,8 +46,10 @@ export default function HeaderContent({
           display: flex;
           align-items: center;
           justify-content: space-between;
-          ${sticky &&
-          `position: sticky; top: 0; z-index: ${zIndex.header}; background-color: white;`}
+
+          max-width: 600px;
+          width: 100%;
+          margin-inline: auto;
         `}
       >
         {startAction ? (
@@ -68,6 +75,6 @@ export default function HeaderContent({
         )}
       </header>
       {divider && <FullscreenOverflowDivider />}
-    </>
+    </div>
   );
 }

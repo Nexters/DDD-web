@@ -167,6 +167,10 @@ export default function ChatRoom() {
             display: flex;
             flex-direction: column;
             margin-top: 16px;
+
+            width: 100%;
+            max-width: 600px;
+            margin-inline: auto;
           `}
         >
           <div
@@ -200,6 +204,9 @@ export default function ChatRoom() {
           <div
             css={css`
               padding: 16px 20px;
+              width: 100%;
+              max-width: 600px;
+              margin-inline: auto;
             `}
           >
             <TextFieldInChat />
