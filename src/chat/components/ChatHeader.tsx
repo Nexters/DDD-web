@@ -11,10 +11,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
 import { useCreateChatRoom } from "../hooks/useCreateChatRoom";
+import CreateChatRoomModal from "./CreateChatRoomModal";
 
 export default function ChatHeader() {
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
+  const [isCreateChatRoomModalOpen, setIsCreateChatRoomModalOpen] = useState(false);
 
   const tarotNyangUrl = window.location.hostname;
 
@@ -27,6 +29,10 @@ export default function ChatHeader() {
         router.push(`/chats/${data.roomId}`);
       },
     });
+  };
+
+  const handleCreateChatRoomClick = () => {
+    setIsCreateChatRoomModalOpen(true);
   };
 
   const handleShare = async () => {
@@ -80,14 +86,12 @@ export default function ChatHeader() {
                 `}
               >
                 <li>
-                  {/* TODO: 메뉴 버튼 액션 추가 */}
-
                   <button type="button" onClick={handleShare}>
                     친구에게 타로냥 알리기
                   </button>
                 </li>
                 <li>
-                  <button type="button" onClick={handleResetChatClick}>
+                  <button type="button" onClick={handleCreateChatRoomClick}>
                     새 대화 시작하기
                   </button>
                 </li>
@@ -130,6 +134,11 @@ export default function ChatHeader() {
           </span>
         </Toast.Provider>
       </h1>
+      <CreateChatRoomModal
+        isOpen={isCreateChatRoomModalOpen}
+        onOpenChange={setIsCreateChatRoomModalOpen}
+        onCreateChatRoomClick={handleResetChatClick}
+      />
     </HeaderContent>
   );
 }

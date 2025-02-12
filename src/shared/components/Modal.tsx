@@ -74,6 +74,7 @@ const Modal = {
   Title,
   Description,
   Portal,
+  Close: Dialog.Close,
 };
 
 export default Modal;
