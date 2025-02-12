@@ -39,6 +39,7 @@ export default function CreateChatRoomModal({
                 color="grey10"
                 css={css`
                   flex-shrink: initial;
+                  height: 54px;
                 `}
               >
                 머무르기
@@ -51,6 +52,7 @@ export default function CreateChatRoomModal({
               onClick={onCreateChatRoomClick}
               css={css`
                 flex-shrink: initial;
+                height: 54px;
               `}
             >
               시작하기
