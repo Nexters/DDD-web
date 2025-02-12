@@ -163,7 +163,11 @@ export default function AcceptRejectButtons() {
       css={css`
         display: flex;
         gap: 8px;
-        margin-top: 76px;
+
+        padding: 12px 20px;
+        max-width: 600px;
+        margin-inline: auto;
+        width: 100%;
       `}
     >
       <ChipButton

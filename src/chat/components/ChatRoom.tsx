@@ -1,6 +1,5 @@
 "use client";
 
-import AcceptRejectButtons from "@/chat/components/AcceptRejectButtons";
 import ChatBubble from "@/chat/components/ChatBubble";
 import ChatBubbleGroup from "@/chat/components/ChatBubbleGroup";
 import TextFieldInChat from "@/chat/components/TextFieldInChat";
@@ -18,6 +17,7 @@ import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectBut
 import { useSendChatMessage } from "../hooks/useSendChatMessage";
 import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
+import AcceptRejectButtons from "./AcceptRejectButtons";
 import ChatCardSelect from "./ChatCardSelect";
 import ChatHeader from "./ChatHeader";
 
@@ -170,6 +170,7 @@ export default function ChatRoom() {
 
             width: 100%;
             max-width: 600px;
+            padding-inline: 20px;
             margin-inline: auto;
           `}
         >
@@ -194,25 +195,31 @@ export default function ChatRoom() {
               );
             })}
           </div>
-          <AcceptRejectButtons />
         </div>
       </div>
       {isTarotCardDeckVisible && <ChatCardSelect />}
-      {isTextFieldVisible && (
-        <div>
-          <FullscreenOverflowDivider />
-          <div
-            css={css`
-              padding: 16px 20px;
-              width: 100%;
-              max-width: 600px;
-              margin-inline: auto;
-            `}
-          >
-            <TextFieldInChat />
+      <div
+        css={css`
+          position: "relative";
+        `}
+      >
+        <AcceptRejectButtons />
+        {isTextFieldVisible && (
+          <div>
+            <FullscreenOverflowDivider />
+            <div
+              css={css`
+                padding: 16px 20px;
+                width: 100%;
+                max-width: 600px;
+                margin-inline: auto;
+              `}
+            >
+              <TextFieldInChat />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </MainContent>
   );
 }
