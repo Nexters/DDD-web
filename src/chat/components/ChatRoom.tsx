@@ -166,22 +166,30 @@ export default function ChatRoom() {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 16px;
             margin-top: 16px;
           `}
         >
-          {messages.map((message) => {
-            if (message.sender === "SYSTEM") {
-              return <ChatBubbleGroup key={message.messageId} message={message} />;
-            }
-            return (
-              <ChatBubble
-                key={message.messageId}
-                sender={message.sender}
-                message={message.answers[0]}
-              />
-            );
-          })}
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              gap: 16px;
+              flex: 1;
+            `}
+          >
+            {messages.map((message) => {
+              if (message.sender === "SYSTEM") {
+                return <ChatBubbleGroup key={message.messageId} message={message} />;
+              }
+              return (
+                <ChatBubble
+                  key={message.messageId}
+                  sender={message.sender}
+                  message={message.answers[0]}
+                />
+              );
+            })}
+          </div>
           <AcceptRejectButtons />
         </div>
       </div>
