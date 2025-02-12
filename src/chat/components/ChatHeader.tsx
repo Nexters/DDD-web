@@ -3,18 +3,20 @@
 import KebobMenuIcon from "@/shared/assets/icons/kebab-menu.svg";
 import BottomSheet from "@/shared/components/BottomSheet";
 import HeaderContent from "@/shared/components/HeaderContent";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useRouter } from "next/navigation";
-import { css } from "styled-components";
-import { useCreateChatRoom } from "../hooks/useCreateChatRoom";
+import Toast from "@/shared/components/Toast";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
 import shareLink from "@/shared/utils/shareLink";
-import Toast from "@/shared/components/Toast";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { css } from "styled-components";
+import { useCreateChatRoom } from "../hooks/useCreateChatRoom";
+import CreateChatRoomModal from "./CreateChatRoomModal";
 
 export default function ChatHeader() {
   const { mutate: createChatRoom } = useCreateChatRoom();
   const router = useRouter();
+  const [isCreateChatRoomModalOpen, setIsCreateChatRoomModalOpen] = useState(false);
 
   const tarotNyangUrl = window.location.hostname;
 
@@ -27,6 +29,10 @@ export default function ChatHeader() {
         router.push(`/chats/${data.roomId}`);
       },
     });
+  };
+
+  const handleCreateChatRoomClick = () => {
+    setIsCreateChatRoomModalOpen(true);
   };
 
   const handleShare = async () => {
@@ -42,11 +48,8 @@ export default function ChatHeader() {
 
   return (
     <HeaderContent
-      /**
-       * FIXME: 구분선이 추가되어야 하나 쌓임 맥락에 의해 전체 화면 오버플로우 되지 않는 문제
-       * 레이아웃 구조 개선 후 divider prop 적용 필요
-       *  */
       sticky
+      divider
       endAction={
         <BottomSheet.Root>
           <BottomSheet.Trigger asChild>
@@ -83,14 +86,12 @@ export default function ChatHeader() {
                 `}
               >
                 <li>
-                  {/* TODO: 메뉴 버튼 액션 추가 */}
-
                   <button type="button" onClick={handleShare}>
                     친구에게 타로냥 알리기
                   </button>
                 </li>
                 <li>
-                  <button type="button" onClick={handleResetChatClick}>
+                  <button type="button" onClick={handleCreateChatRoomClick}>
                     새 대화 시작하기
                   </button>
                 </li>
@@ -109,9 +110,7 @@ export default function ChatHeader() {
       >
         <Toast.Provider>
           <Toast.Root open={toastOpen} onOpenChange={setToastOpen} duration={3000}>
-            <Toast.Title>
-              링크 복사 완료! 타로냥을 알리고 싶은 친구에게 링크를 전송해 주세요.
-            </Toast.Title>
+            <Toast.Title>링크 복사 완료! 친구에게 링크를 전송해 주세요.</Toast.Title>
           </Toast.Root>
           <Toast.Viewport />
           <span
@@ -135,6 +134,11 @@ export default function ChatHeader() {
           </span>
         </Toast.Provider>
       </h1>
+      <CreateChatRoomModal
+        isOpen={isCreateChatRoomModalOpen}
+        onOpenChange={setIsCreateChatRoomModalOpen}
+        onCreateChatRoomClick={handleResetChatClick}
+      />
     </HeaderContent>
   );
 }

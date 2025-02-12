@@ -22,7 +22,8 @@ export default function TextFieldInChat() {
     textareaRef,
     focus: focusTextField,
   } = useTextFieldInChatDisplayContext();
-  const { show: showAcceptRejectButtons } = useAcceptRejectButtonDisplayContext();
+  const { show: showAcceptRejectButtons, isVisible: isAcceptRejectButtonsVisible } =
+    useAcceptRejectButtonDisplayContext();
   const [isComposing, setIsComposing] = useState(false);
 
   const handleCompositionStart = () => {
@@ -142,7 +143,7 @@ export default function TextFieldInChat() {
         value={message}
         onChange={handleChange}
         disabled={isTextFieldDisabled}
-        placeholder="오늘의 운세는 어떨까?"
+        placeholder={isAcceptRejectButtonsVisible ? "답변을 선택해줘" : "오늘의 운세는 어떨까?"}
         minRows={1}
         maxRows={8}
         maxLength={maxMessageLength}

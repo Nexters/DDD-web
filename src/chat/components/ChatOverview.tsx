@@ -27,7 +27,13 @@ export default function ChatOverview() {
             gap: 90px;
           `}
         >
-          <div>
+          <div
+            css={css`
+              width: 100%;
+              max-width: 600px;
+              margin-inline: auto;
+            `}
+          >
             <div
               css={css`
                 display: flex;
@@ -68,6 +74,9 @@ export default function ChatOverview() {
             <div
               css={css`
                 padding: 16px 20px;
+                width: 100%;
+                max-width: 600px;
+                margin-inline: auto;
               `}
             >
               <TextFieldInChatOverview />

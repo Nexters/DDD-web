@@ -1,6 +1,5 @@
 "use client";
 
-import AcceptRejectButtons from "@/chat/components/AcceptRejectButtons";
 import ChatBubble from "@/chat/components/ChatBubble";
 import ChatBubbleGroup from "@/chat/components/ChatBubbleGroup";
 import TextFieldInChat from "@/chat/components/TextFieldInChat";
@@ -18,6 +17,7 @@ import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectBut
 import { useSendChatMessage } from "../hooks/useSendChatMessage";
 import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
+import AcceptRejectButtons from "./AcceptRejectButtons";
 import ChatCardSelect from "./ChatCardSelect";
 import ChatHeader from "./ChatHeader";
 
@@ -145,7 +145,7 @@ export default function ChatRoom() {
         ref={scrollRef}
         css={css`
           flex: 1;
-          padding: 0px 20px 16px;
+          padding: 0px 0px 16px;
           display: flex;
           flex-direction: column;
           overflow-y: auto;
@@ -166,38 +166,60 @@ export default function ChatRoom() {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 16px;
             margin-top: 16px;
+
+            width: 100%;
+            max-width: 600px;
+            padding-inline: 20px;
+            margin-inline: auto;
           `}
         >
-          {messages.map((message) => {
-            if (message.sender === "SYSTEM") {
-              return <ChatBubbleGroup key={message.messageId} message={message} />;
-            }
-            return (
-              <ChatBubble
-                key={message.messageId}
-                sender={message.sender}
-                message={message.answers[0]}
-              />
-            );
-          })}
-          <AcceptRejectButtons />
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              gap: 16px;
+              flex: 1;
+            `}
+          >
+            {messages.map((message) => {
+              if (message.sender === "SYSTEM") {
+                return <ChatBubbleGroup key={message.messageId} message={message} />;
+              }
+              return (
+                <ChatBubble
+                  key={message.messageId}
+                  sender={message.sender}
+                  message={message.answers[0]}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
       {isTarotCardDeckVisible && <ChatCardSelect />}
-      {isTextFieldVisible && (
-        <div>
-          <FullscreenOverflowDivider />
-          <div
-            css={css`
-              padding: 16px 20px;
-            `}
-          >
-            <TextFieldInChat />
+      <div
+        css={css`
+          position: "relative";
+        `}
+      >
+        <AcceptRejectButtons />
+        {isTextFieldVisible && (
+          <div>
+            <FullscreenOverflowDivider />
+            <div
+              css={css`
+                padding: 16px 20px;
+                width: 100%;
+                max-width: 600px;
+                margin-inline: auto;
+              `}
+            >
+              <TextFieldInChat />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </MainContent>
   );
 }

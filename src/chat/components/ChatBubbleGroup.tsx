@@ -45,7 +45,7 @@ export default function ChatBubbleGroup({ message }: Props) {
           css={css`
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 8px;
           `}
         >
           {message.tarotName && (

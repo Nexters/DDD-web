@@ -33,23 +33,48 @@ export default function HeaderContent({
   divider,
 }: HeaderContentProps) {
   return (
-    <>
+    <div
+      css={css`
+        width: 100%;
+        ${sticky && `position: sticky; top: 0; z-index: ${zIndex.header}; background-color: white;`}
+      `}
+    >
       <header
         css={css`
           position: relative;
-          padding: 14px 20px;
+          padding: 14px 10px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          ${sticky &&
-          `position: sticky; top: 0; z-index: ${zIndex.header}; background-color: white;`}
+
+          max-width: 600px;
+          width: 100%;
+          margin-inline: auto;
         `}
       >
-        {startAction ? startAction : <span role="presentation" />}
+        {startAction ? (
+          startAction
+        ) : (
+          <span
+            role="presentation"
+            css={css`
+              width: 24px;
+            `}
+          />
+        )}
         {children}
-        {endAction ? endAction : <span role="presentation" />}
+        {endAction ? (
+          endAction
+        ) : (
+          <span
+            role="presentation"
+            css={css`
+              width: 24px;
+            `}
+          />
+        )}
       </header>
       {divider && <FullscreenOverflowDivider />}
-    </>
+    </div>
   );
 }

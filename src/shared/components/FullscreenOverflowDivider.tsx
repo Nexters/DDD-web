@@ -13,6 +13,7 @@ export default function FullscreenOverflowDivider() {
         background-color: ${(props) => props.theme.colors.grey10};
         box-shadow: 0 0 0 100vmax ${(props) => props.theme.colors.grey10};
         clip-path: inset(0px -100vmax);
+        flex-shrink: 0;
       `}
     />
   );

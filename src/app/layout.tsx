@@ -1,5 +1,5 @@
 import SUIT from "@/shared/assets/font/font";
-import ResponsiveRootLayout from "@/shared/components/ResponsiveRootLayout";
+import RootLayoutComponent from "@/shared/components/RootLayout";
 import Hotjar from "@/shared/lib/hotjar/Hotjar";
 import ReactQueryClientProvider from "@/shared/lib/reactQuery/ReactQueryClientProvider";
 import GlobalStyle from "@/shared/lib/styledComponents/GlobalStyle";
@@ -35,7 +35,7 @@ export default function RootLayout({
             <StyledReset />
             <GlobalStyle />
             <StyledComponentsTheme>
-              <ResponsiveRootLayout>{children}</ResponsiveRootLayout>
+              <RootLayoutComponent>{children}</RootLayoutComponent>
             </StyledComponentsTheme>
           </StyledComponentsRegistry>
           <ReactQueryDevtools initialIsOpen={false} />
