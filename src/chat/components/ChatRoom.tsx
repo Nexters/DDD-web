@@ -145,7 +145,7 @@ export default function ChatRoom() {
         ref={scrollRef}
         css={css`
           flex: 1;
-          padding: 0px 20px 16px;
+          padding: 0px 0px 16px;
           display: flex;
           flex-direction: column;
           overflow-y: auto;
