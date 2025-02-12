@@ -8,6 +8,9 @@ const StyledToastRoot = styled(RadixToast.Root)`
   padding: 8px 16px;
   border-radius: 40px;
   opacity: 0.9;
+  box-sizing: content-box;
+  max-width: 280px;
+  margin-inline: auto;
 `;
 
 const ToastTitle = RadixToast.Title;
@@ -15,13 +18,14 @@ const ToastDescription = RadixToast.Description;
 const ToastAction = RadixToast.Action;
 const ToastViewport = styled(RadixToast.Viewport)`
   position: fixed;
-  top: 3px;
+  top: 26px;
   left: 50%;
   transform: translate(-50%, 0);
   display: flex;
   text-align: center;
   flex-direction: column;
-  max-width: 268px;
+  width: 100%;
+  padding-inline: 20px;
   z-index: ${zIndex.toast};
   color: ${({ theme }) => theme.colors.white};
   word-break: keep-all;
