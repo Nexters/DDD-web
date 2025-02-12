@@ -37,7 +37,7 @@ export default function HeaderContent({
       <header
         css={css`
           position: relative;
-          padding: 14px 20px;
+          padding: 14px 10px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -45,9 +45,27 @@ export default function HeaderContent({
           `position: sticky; top: 0; z-index: ${zIndex.header}; background-color: white;`}
         `}
       >
-        {startAction ? startAction : <span role="presentation" />}
+        {startAction ? (
+          startAction
+        ) : (
+          <span
+            role="presentation"
+            css={css`
+              width: 24px;
+            `}
+          />
+        )}
         {children}
-        {endAction ? endAction : <span role="presentation" />}
+        {endAction ? (
+          endAction
+        ) : (
+          <span
+            role="presentation"
+            css={css`
+              width: 24px;
+            `}
+          />
+        )}
       </header>
       {divider && <FullscreenOverflowDivider />}
     </>
