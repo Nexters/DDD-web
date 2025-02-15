@@ -109,31 +109,62 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
             />
           </Tooltip.Trigger>
 
-          <Tooltip.Content
-            css={css`
-              background-color: ${({ theme }) => theme.colors.grey90};
-              color: ${({ theme }) => theme.colors.white};
-              padding: 6px 8px;
-              border-radius: 8px;
-              ${({ theme }) => theme.fonts.body1}
-              text-align: center;
-              cursor: pointer;
-              transform: rotate(-16deg);
-              border: 1px solid #24292f;
-              & > span {
-                left: 107.5px !important;
-              }
-            `}
-          >
-            <Tooltip.Arrow
-              width={16}
-              height={10}
+          {idx < 2 ? (
+            // <Tooltip.Content
+            //   idx={idx}
+            //   css={css`
+            //     background-color: ${({ theme }) => theme.colors.grey90};
+            //     color: ${({ theme }) => theme.colors.white};
+            //     padding: 6px 8px;
+            //     border-radius: 8px;
+            //     ${({ theme }) => theme.fonts.body1}
+            //     text-align: center;
+            //     cursor: pointer;
+            //     transform: rotate(-16deg);
+            //     border: 1px solid #24292f;
+            //     position: relative;
+            //     bottom: 20px;
+            //     /* left: 65px; */
+            //     left: ${({ idx }) => idx};
+            //     position: relative;
+
+            //     & > span {
+            //       left: 107.5px !important;
+            //     }
+            //   `}
+            // >
+            <StyledTooltipContent idx={idx}>
+              <StyledTooltipArrow idx={idx} width={16} height={10} />이 카드를 뽑으려면 한 번 더
+              터치해줘냥
+            </StyledTooltipContent>
+          ) : (
+            <Tooltip.Content
               css={css`
-                fill: ${({ theme }) => theme.colors.grey90};
+                background-color: ${({ theme }) => theme.colors.grey90};
+                color: ${({ theme }) => theme.colors.white};
+                padding: 6px 8px;
+                border-radius: 8px;
+                ${({ theme }) => theme.fonts.body1}
+                text-align: center;
+                cursor: pointer;
+                transform: rotate(-16deg);
+                border: 1px solid #24292f;
+
+                & > span {
+                  left: 107.5px !important;
+                }
               `}
-            />
-            이 카드를 뽑으려면 한 번 더 터치해줘냥
-          </Tooltip.Content>
+            >
+              <Tooltip.Arrow
+                width={16}
+                height={10}
+                css={css`
+                  fill: ${({ theme }) => theme.colors.grey90};
+                `}
+              />
+              이 카드를 뽑으려면 한 번 더 터치해줘냥
+            </Tooltip.Content>
+          )}
         </CardAnimationWrapper>
       </Tooltip.Root>
     </Tooltip.Provider>
@@ -178,4 +209,29 @@ const CardWrapper = styled(Image)<{ isCardShadow: boolean; cardPickState: CardPi
 
   width: 100px;
   height: 160px;
+`;
+
+const StyledTooltipContent = styled(Tooltip.Content)<{ idx: number }>`
+  background-color: ${({ theme }) => theme.colors.grey90};
+  color: ${({ theme }) => theme.colors.white};
+  padding: 6px 8px;
+  border-radius: 8px;
+  ${({ theme }) => theme.fonts.body1}
+  text-align: center;
+  cursor: pointer;
+  transform: rotate(-16deg);
+  border: 1px solid #24292f;
+  position: relative;
+  bottom: ${({ idx }) => `${15 / (idx + 1)}px`};
+  left: ${({ idx }) => `${(2 - idx) * 35}px`};
+
+  & > span {
+    left: 107.5px !important;
+  }
+`;
+
+const StyledTooltipArrow = styled(Tooltip.Arrow)<{ idx: number }>`
+  fill: ${({ theme }) => theme.colors.grey90};
+  right: ${({ idx }) => `${60 / (idx + 1)}px`};
+  position: relative;
 `;
