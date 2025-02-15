@@ -255,8 +255,8 @@ const swordObjects: Record<string, TarotCardType> = {
     name: "SwordPage",
     id: "S_P",
     imgSrc: images.minorArcanaImages.SwordPage,
-    alt: "검의 기사 카드: 새로운 아이디어와 시작을 나타내며, 지적인 탐구와 분석을 상징하는 카드입니다.",
-    nameKR: "검의 기사 카드",
+    alt: "검의 시종 카드: 새로운 아이디어와 시작을 나타내며, 지적인 탐구와 분석을 상징하는 카드입니다.",
+    nameKR: "검의 시종 카드",
   },
 } as const;
 const cupObjects: Record<string, TarotCardType> = {
@@ -355,8 +355,8 @@ const cupObjects: Record<string, TarotCardType> = {
     name: "CupPage",
     id: "C_P",
     imgSrc: images.minorArcanaImages.CupPage,
-    alt: "컵의 기사 카드: 새로운 감정과 아이디어를 나타내며, 새로운 감정적 여정의 시작을 상징하는 카드입니다.",
-    nameKR: "컵의 기사 카드",
+    alt: "컵의 시종 카드: 새로운 감정과 아이디어를 나타내며, 새로운 감정적 여정의 시작을 상징하는 카드입니다.",
+    nameKR: "컵의 시종 카드",
   },
 } as const;
 
@@ -456,8 +456,8 @@ const pentacleObjects: Record<string, TarotCardType> = {
     name: "PentaclePage",
     id: "P_P",
     imgSrc: images.minorArcanaImages.PentaclePage,
-    alt: "펜타클의 기사 카드: 새로운 기회와 학습을 나타내며, 물질적 성장을 위한 실용적인 접근을 상징하는 카드입니다.",
-    nameKR: "펜타클의 기사 카드",
+    alt: "펜타클의 시종 카드: 새로운 기회와 학습을 나타내며, 물질적 성장을 위한 실용적인 접근을 상징하는 카드입니다.",
+    nameKR: "펜타클의 시종 카드",
   },
 };
 
