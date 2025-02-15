@@ -26,7 +26,7 @@ export default function ChatRoom() {
   const searchParams = useSearchParams();
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
-  const { scrollRef, contentRef } = useStickToBottom({
+  const { scrollRef, contentRef, scrollToBottom } = useStickToBottom({
     initial: "instant",
     resize: "instant",
   });
@@ -215,7 +215,7 @@ export default function ChatRoom() {
                 margin-inline: auto;
               `}
             >
-              <TextFieldInChat />
+              <TextFieldInChat scrollToBottom={scrollToBottom} />
             </div>
           </div>
         )}
