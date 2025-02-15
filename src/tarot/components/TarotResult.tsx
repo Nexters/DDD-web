@@ -19,12 +19,16 @@ import shareLink from "@/shared/utils/shareLink";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toPng } from "html-to-image";
+import ResultDownloadBackground from "@/shared/assets/images/ReslutDownloadBg.png";
+import DownloadTarotResult from "./DownloadTarotResult";
 
 const TarotResult = () => {
   const { resultId, chatId } = useParams<{
     resultId: string;
     chatId: string;
   }>();
+
   const [toastOpen, setToastOpen] = useState(false);
   const { data: recommendQuestions } = useTarotQuestionRecommends();
   const shareURL = window.location.href;
@@ -63,6 +67,22 @@ const TarotResult = () => {
     router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
   };
 
+  const handleDownload = async () => {
+    const element = document.getElementById(`downloadableContent`);
+
+    if (element) {
+      try {
+        const dataUrl = await toPng(element);
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `나의 타로 결과`;
+        link.click();
+      } catch {
+        alert();
+      }
+    }
+  };
+
   if (data?.tarot) {
     const TarotData = findCardById(data?.tarot);
 
@@ -83,6 +103,21 @@ const TarotResult = () => {
             {TarotData?.name}
           </Title>
         </TarotCard>
+
+        <ResultCardWrapper imageSrc={ResultDownloadBackground.src} id="downloadableContent">
+          <ResultInfo>
+            <DownloadCardImg src={TarotData?.imgSrc} alt={"타로카드 이미지"} />
+            <DownLoadImgTitle>
+              {TarotData?.nameKR} <br />
+              {TarotData?.name}
+            </DownLoadImgTitle>
+            <DescriptionWrapper>
+              <Summary> {data?.cardValue.summary}</Summary>
+              <Description> {data?.cardValue.description}</Description>
+            </DescriptionWrapper>
+            <InstaChip>타로냥 @ insta_tarot_nyang</InstaChip>
+          </ResultInfo>
+        </ResultCardWrapper>
 
         <TarotCardResult>
           <ResultType>{data?.type}</ResultType>
@@ -122,7 +157,7 @@ const TarotResult = () => {
 
         <IconBtnWrapper>
           {/* To Do 기능 추가 */}
-          <IconBtn>
+          <IconBtn onClick={handleDownload}>
             결과 저장하기 <DownLoadIcon />
           </IconBtn>
           <Toast.Provider>
@@ -176,6 +211,70 @@ const TarotResult = () => {
 };
 
 export default TarotResult;
+
+const InstaChip = styled.div`
+  background-color: ${({ theme }) => theme.colors.grey10};
+  border-radius: 100px;
+  padding: 4px 12px;
+  ${({ theme }) => theme.colors.grey50};
+
+  ${({ theme }) => theme.fonts.body1};
+
+  margin-top: 87px;
+  margin-bottom: 34px;
+`;
+
+const Summary = styled.p`
+  ${({ theme }) => theme.fonts.subHead3};
+  color: ${({ theme }) => theme.colors.black};
+`;
+
+const Description = styled.p`
+  ${({ theme }) => theme.fonts.body2};
+  color: ${({ theme }) => theme.colors.grey80};
+`;
+
+const DescriptionWrapper = styled.section`
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  width: 279px;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+const DownLoadImgTitle = styled.h1`
+  text-align: center;
+  ${({ theme }) => theme.fonts.subHead4};
+  color: ${({ theme }) => theme.colors.black};
+  margin-bottom: 35px;
+  margin-top: 18px;
+`;
+
+const DownloadCardImg = styled(Image)`
+  width: 223px;
+  height: 334px;
+  border-radius: 16px;
+  margin-top: 119px;
+`;
+
+const ResultCardWrapper = styled.div<{ imageSrc: string }>`
+  width: 375px;
+  height: fit-content;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  background-image: url(${(props) => (props ? props.imageSrc : "")});
+`;
+
+const ResultInfo = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Dot = styled.span<{ $color: string }>`
   width: 6px;
@@ -406,13 +505,15 @@ const TarotCard = styled.div`
 const CardImg = styled(Image)`
   width: 169px;
   height: 254px;
+  border-radius: 16px;
+  margin-top: 32px;
 `;
 
 const TarotResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 32px;
+
   gap: 32px;
   padding: 0 44px;
 
