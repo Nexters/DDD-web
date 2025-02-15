@@ -31,121 +31,123 @@ export default function TarotReadingReviewModal({ isOpen, onOpenChange }: Props)
     <Modal.Root isOpen={isOpen} onOpenChange={onOpenChange}>
       <Modal.Portal>
         <Modal.Overlay />
-        <Modal.Content>
-          <Modal.Title
+        <Modal.Content
+          css={css`
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+          `}
+        >
+          <div css={css``}>
+            <Modal.Title
+              css={css`
+                margin-bottom: 4px;
+              `}
+            >
+              답변이 어땠는지 알려주세요
+            </Modal.Title>
+            <Modal.Description
+              css={css`
+                color: ${({ theme }) => theme.colors.grey60};
+                ${({ theme }) => theme.fonts.body1};
+              `}
+            >
+              솔직한 리뷰를 선택해 주세요.
+              <br />
+              보내주신 리뷰는 타로냥 홈에 노출될 예정이에요.
+            </Modal.Description>
+          </div>
+
+          <RadioGroup.Root
+            value={selectedReview}
+            onValueChange={handleReviewScoreChange}
             css={css`
-              margin-bottom: 4px;
+              display: flex;
+              gap: 8px;
+              justify-content: center;
+
+              & > [role="radio"] {
+                display: flex;
+                padding: 0px 10px 8px 10px;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 8px;
+              }
+              & > [role="radio"][data-state="checked"] {
+                outline: 2px solid ${({ theme }) => theme.colors.primary03};
+              }
+              & > [role="radio"][data-state="unchecked"] {
+                background-color: ${({ theme }) => theme.colors.grey10};
+                opacity: 0.4;
+              }
             `}
           >
-            답변이 어땠는지 알려주세요
-          </Modal.Title>
-          <Modal.Description
-            css={css`
-              margin-bottom: 24px;
-            `}
-          >
-            솔직한 리뷰를 선택해 주세요.
-            <br />
-            보내주신 리뷰는 타로냥 홈에 노출될 예정이에요.
-          </Modal.Description>
+            <RadioGroup.Item value={ReviewScore.BAD}>
+              <CatEmoji />
+              <p
+                css={css`
+                  ${({ theme }) => theme.fonts.body1};
+                  color: ${({ theme }) => theme.colors.grey60};
+                `}
+              >
+                별로
+              </p>
+            </RadioGroup.Item>
+            <RadioGroup.Item value={ReviewScore.NOT_BAD}>
+              <CatEmoji />
+              <p
+                css={css`
+                  ${({ theme }) => theme.fonts.body1};
+                  color: ${({ theme }) => theme.colors.grey60};
+                `}
+              >
+                완전 만족
+              </p>
+            </RadioGroup.Item>{" "}
+            <RadioGroup.Item value={ReviewScore.GOOD}>
+              <CatEmoji />
+              <p
+                css={css`
+                  ${({ theme }) => theme.fonts.body1};
+                  color: ${({ theme }) => theme.colors.grey60};
+                `}
+              >
+                완전 만족
+              </p>
+            </RadioGroup.Item>
+          </RadioGroup.Root>
           <div
             css={css`
               display: flex;
               flex-direction: column;
-              gap: 24px;
+              gap: 8px;
             `}
           >
-            <RadioGroup.Root
-              value={selectedReview}
-              onValueChange={handleReviewScoreChange}
-              css={css`
-                display: flex;
-                gap: 8px;
-                justify-content: center;
-
-                & > [role="radio"] {
-                  display: flex;
-                  padding: 0px 10px 8px 10px;
-                  flex-direction: column;
-                  align-items: center;
-                  border-radius: 8px;
-                }
-                & > [role="radio"][data-state="checked"] {
-                  outline: 2px solid ${({ theme }) => theme.colors.primary03};
-                }
-                & > [role="radio"][data-state="unchecked"] {
-                  background-color: ${({ theme }) => theme.colors.grey10};
-                  opacity: 0.4;
-                }
-              `}
-            >
-              <RadioGroup.Item value="0">
-                <CatEmoji />
-                <p
-                  css={css`
-                    ${({ theme }) => theme.fonts.body1};
-                    color: ${({ theme }) => theme.colors.grey60};
-                  `}
-                >
-                  완전 만족
-                </p>
-              </RadioGroup.Item>
-              <RadioGroup.Item value="1">
-                <CatEmoji />
-                <p
-                  css={css`
-                    ${({ theme }) => theme.fonts.body1};
-                    color: ${({ theme }) => theme.colors.grey60};
-                  `}
-                >
-                  완전 만족
-                </p>
-              </RadioGroup.Item>{" "}
-              <RadioGroup.Item value="2">
-                <CatEmoji />
-                <p
-                  css={css`
-                    ${({ theme }) => theme.fonts.body1};
-                    color: ${({ theme }) => theme.colors.grey60};
-                  `}
-                >
-                  완전 만족
-                </p>
-              </RadioGroup.Item>
-            </RadioGroup.Root>
-            <div
-              css={css`
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-              `}
-            >
-              <Modal.Close asChild>
-                <Button
-                  type="button"
-                  color="grey70"
-                  onClick={handleReviewClick}
-                  css={css`
-                    flex-shrink: initial;
-                    height: 54px;
-                  `}
-                >
-                  의견 보내기
-                </Button>
-              </Modal.Close>
-              <Modal.Close asChild>
-                <Button
-                  type="button"
-                  color="grey10"
-                  css={css`
-                    flex-shrink: initial;
-                    height: 54px;
-                  `}
-                >
-                  나중에 하기
-                </Button>
-              </Modal.Close>
-            </div>
+            <Modal.Close asChild>
+              <Button
+                type="button"
+                color="grey70"
+                onClick={handleReviewClick}
+                css={css`
+                  flex-shrink: initial;
+                  height: 54px;
+                `}
+              >
+                의견 보내기
+              </Button>
+            </Modal.Close>
+            <Modal.Close asChild>
+              <Button
+                type="button"
+                color="grey10"
+                css={css`
+                  flex-shrink: initial;
+                  height: 54px;
+                `}
+              >
+                나중에 하기
+              </Button>
+            </Modal.Close>
           </div>
         </Modal.Content>
       </Modal.Portal>
