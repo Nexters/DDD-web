@@ -6,18 +6,19 @@ import { useRouter } from "next/navigation";
 
 const TarotResultHeader = () => {
   const router = useRouter();
-  // const handleBackRouting=()=>{
-
-  // }
 
   return (
-    <HeaderContent startAction={<ArrowLeft onClick={() => router.back()} />}>
+    <HeaderContent startAction={<ArrowLeftSvg onClick={() => router.back()} />}>
       <HeaderHeadText>타로결과</HeaderHeadText>
     </HeaderContent>
   );
 };
 
 export default TarotResultHeader;
+
+const ArrowLeftSvg = styled(ArrowLeft)`
+  cursor: pointer;
+`;
 
 const HeaderHeadText = styled.h1`
   color: ${({ theme }) => theme.colors.grey90};
