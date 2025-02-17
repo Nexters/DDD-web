@@ -64,11 +64,12 @@ export default function TextFieldInChat({ scrollToBottom }: Props) {
       sender: "USER",
       answers: [message],
     });
-
-    await delay(500);
     scrollToBottom({
       animation: "instant",
     });
+
+    await delay(500);
+
     const loadingMessageId = Math.random();
 
     addMessage({
