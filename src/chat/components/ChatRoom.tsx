@@ -28,7 +28,7 @@ export default function ChatRoom() {
   const { data } = useChatMessages(Number(chatId));
   const { scrollRef, contentRef, scrollToBottom } = useStickToBottom({
     initial: "instant",
-    resize: "instant",
+    resize: "smooth",
   });
 
   const {
@@ -203,7 +203,7 @@ export default function ChatRoom() {
           position: "relative";
         `}
       >
-        <AcceptRejectButtons />
+        <AcceptRejectButtons scrollToBottom={scrollToBottom} />
         {isTextFieldVisible && (
           <div>
             <FullscreenOverflowDivider />
