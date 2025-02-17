@@ -1,4 +1,4 @@
-import { createUserKeyCookie } from "@/auth/utils/createUserKeyCookie";
+import { getCookie } from "@/auth/utils/getCookie";
 import axios from "axios";
 
 const apiClient = axios.create({
@@ -10,8 +10,7 @@ apiClient.interceptors.response.use((response) => {
 });
 
 apiClient.interceptors.request.use(async (config) => {
-  // TODO: 쿠키 추가 방식 변경
-  const userKey = await createUserKeyCookie();
+  const userKey = await getCookie("guestId");
 
   config.headers["X-Guest-ID"] = userKey;
 
