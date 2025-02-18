@@ -1,12 +1,11 @@
 "use client";
 import Image from "next/image";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 
 import findCardById from "@/tarot/utils/findCardById";
 import { useParams } from "next/navigation";
-
 import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
 import LinkIcon from "@/shared/assets/icons/link.svg";
@@ -21,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import tarotResultCat from "@/shared/assets/images/tarotResultCat.png";
 import tarotResultSummaryCat from "@/shared/assets/images/tarotResultSummaryCat.png";
-import { TarotReadingResultResponse } from "../apis/getTarotReadingResultById";
+// import { TarotReadingResultResponse } from "../apis/getTarotReadingResultById";
 import NextRecommendQuestion from "./NextRecommendQuestion";
 import PopularQuestions from "./PopularQuestion";
 const TarotResultAfterView = () => {
@@ -51,7 +50,6 @@ const TarotResultAfterView = () => {
   const [toastOpen, setToastOpen] = useState(false);
   const shareURL = window.location.href;
   const { handleWebShare, handleCopyToClipboard } = shareLink(shareURL);
-  const theme = useTheme();
   const router = useRouter();
   const { data, isError } = useTarotReadingResult(Number(resultId));
   const queryClient = useQueryClient();
@@ -80,6 +78,9 @@ const TarotResultAfterView = () => {
     router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
   };
 
+  const handleNewChat = () => {
+    router.push("/");
+  };
   if (isError) {
     return null;
   }
@@ -138,35 +139,40 @@ const TarotResultAfterView = () => {
           </TarotCardResult>
         </TarotCardResultWrapper>
 
-        <BtnWrapper>
-          {/* To Do 기능 추가 */}
-          <IconBtn>
-            결과 저장하기 <DownLoadIcon />
-          </IconBtn>
-          <Toast.Provider>
-            {checkBrowserForWebShare() ? (
-              <IconBtn onClick={handleWebShare}>
+        {data.isOwner ? (
+          <BtnWrapper>
+            <IconBtn>
+              결과 저장하기 <DownLoadIcon />
+            </IconBtn>
+            <Toast.Provider>
+              <IconBtn onClick={checkBrowserForWebShare() ? handleWebShare : handleShareLink}>
                 링크 복사하기 <LinkIcon />
               </IconBtn>
-            ) : (
-              <IconBtn onClick={handleShareLink}>
-                링크 복사하기 <LinkIcon />
-              </IconBtn>
-            )}
 
-            <Toast.Root open={toastOpen} onOpenChange={setToastOpen}>
-              <Toast.Title>링크 복사 완료!</Toast.Title>
-            </Toast.Root>
-            <Toast.Viewport> </Toast.Viewport>
-          </Toast.Provider>
-        </BtnWrapper>
+              <Toast.Root open={toastOpen} onOpenChange={setToastOpen}>
+                <Toast.Title>링크 복사 완료!</Toast.Title>
+              </Toast.Root>
+              <Toast.Viewport />
+            </Toast.Provider>
+          </BtnWrapper>
+        ) : null}
+
         <NextQuestionFlow>
           <AdditionalMessage>
-            집사의 고민이 잘 해결되었으면 좋겠다냥! <br /> 궁금한게 있으면 더 물어봐라냥
+            {data.isOwner
+              ? " 집사의 고민이 잘 해결되었으면 좋겠다냥! <br /> 궁금한게 있으면 더 물어봐라냥"
+              : "다른 집사의 타로 결과를 구경했다냥! 나는 어떤 결과가 나올지, 궁금하지 않냥?"}
           </AdditionalMessage>
-          <Button color="grey70" onClick={handleContinueConversation}>
-            이어서 대화하기
-          </Button>
+
+          {data.isOwner ? (
+            <Button color="grey70" onClick={handleContinueConversation}>
+              이어서 대화하기
+            </Button>
+          ) : (
+            <Button color="grey70" onClick={handleNewChat}>
+              나도 대화하기
+            </Button>
+          )}
         </NextQuestionFlow>
         <Divider />
         <NextRecommendQuestion handleRecommendQuestionChat={handleRecommendQuestionChat} />
