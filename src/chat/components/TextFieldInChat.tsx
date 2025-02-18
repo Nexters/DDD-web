@@ -118,7 +118,7 @@ export default function TextFieldInChat({ scrollToBottom }: Props) {
           addMessage({
             messageId: Math.random(),
             type: "SYSTEM_NORMAL_REPLY",
-            sender: "USER",
+            sender: "SYSTEM",
             answers: ["문제가 생겼다냥! 다시 시도해봐냥."],
           });
         },
