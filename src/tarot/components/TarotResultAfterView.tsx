@@ -21,8 +21,28 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import tarotResultCat from "@/shared/assets/images/tarotResultCat.png";
 import tarotResultSummaryCat from "@/shared/assets/images/tarotResultSummaryCat.png";
-
+import { TarotReadingResultResponse } from "../apis/getTarotReadingResultById";
+import NextRecommendQuestion from "./NextRecommendQuestion";
+import PopularQuestions from "./PopularQuestion";
 const TarotResultAfterView = () => {
+  // const data: TarotReadingResultResponse = {
+  //   tarot: "S_06", // TarotCardIdSchema에 정의된 값 중 하나여야 함
+  //   type: "major_arcana",
+  //   cardValue: {
+  //     summary: "새로운 시작과 가능성을 의미합니다.",
+  //     description: "이 카드는 모험과 자유로운 정신을 상징하며, 미지의 세계로의 도약을 나타냅니다.",
+  //   },
+  //   answer: {
+  //     summary: "현재 상황에서는 열린 마음이 중요합니다.",
+  //     description: "주어진 기회를 받아들이고, 새로운 도전을 두려워하지 마세요.",
+  //     question: "지금 이 순간, 가장 중요한 선택은 무엇인가요?",
+  //   },
+  //   advice: {
+  //     summary: "자신을 믿고 나아가세요.",
+  //     description: "미래를 걱정하기보다는 현재의 흐름에 몸을 맡기는 것이 중요합니다.",
+  //   },
+  // };
+
   const { resultId, chatId } = useParams<{
     resultId: string;
     chatId: string;
@@ -89,9 +109,7 @@ const TarotResultAfterView = () => {
         <TarotCardResultWrapper>
           <TarotCardResultSummary>
             <ColorStar />
-            <PreviewTextWrapper>
-              123이어지는123이어지는123이어지는123이어지는123이어지는
-            </PreviewTextWrapper>
+            <PreviewTextWrapper>{data.summary}</PreviewTextWrapper>
 
             <TarotCatSummaryImage
               src={tarotResultSummaryCat}
@@ -151,6 +169,9 @@ const TarotResultAfterView = () => {
           </Button>
         </NextQuestionFlow>
         <Divider />
+        <NextRecommendQuestion handleRecommendQuestionChat={handleRecommendQuestionChat} />
+        <Divider />
+        <PopularQuestions />
       </TarotResultWrapper>
     );
   }
