@@ -20,6 +20,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import NextRecommendQuestion from "./NextRecommendQuestion";
+
 const TarotResult = () => {
   const { resultId, chatId } = useParams<{
     resultId: string;
@@ -49,9 +51,8 @@ const TarotResult = () => {
     queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
     router.push(`/chats/${chatId}`);
   };
-  console.log(recommendQuestions);
 
-  const handleContinueRecommendConversation = (recommendQuestionId: number, message: string) => {
+  const handleRecommendQuestionChat = (recommendQuestionId: number, message: string) => {
     const object: SendChatMessageRequest = {
       roomId: Number(chatId),
       referenceQuestionId: recommendQuestionId,
@@ -156,9 +157,7 @@ const TarotResult = () => {
             {recommendQuestions?.questions.map((item, idx) => (
               <RecommendQuestionBtn
                 key={idx}
-                onClick={() =>
-                  handleContinueRecommendConversation(item.recommendQuestionId, item.question)
-                }
+                onClick={() => handleRecommendQuestionChat(item.recommendQuestionId, item.question)}
               >
                 <QuestionCount> {item.referenceCount}명이 질문 중</QuestionCount>
                 <QuestionTitle>{item.question} </QuestionTitle>
@@ -170,6 +169,9 @@ const TarotResult = () => {
         <Button color="grey70" css={{ marginBottom: "98px" }} onClick={handleContinueConversation}>
           이어서 대화하기
         </Button>
+
+        <NextRecommendQuestion handleRecommendQuestionChat={handleRecommendQuestionChat} />
+        <Divider />
       </TarotResultWrapper>
     );
   }
