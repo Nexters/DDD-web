@@ -2,12 +2,14 @@
 
 import MainContent from "@/shared/components/MainContent";
 import TarotInteraction from "../../../../../tarot/components/TarotInteraction";
-import TarotResult from "../../../../../tarot/components/TarotResult";
 import { useState } from "react";
-import ChatHeader from "@/chat/components/ChatHeader";
+
+import TarotResultAfterView from "@/tarot/components/TarotResultAfterView";
 
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import { useParams } from "next/navigation";
+import TarotResultHeader from "@/tarot/components/TarotResultHeader";
+
 export default function TarotReadingResultPage() {
   const { resultId } = useParams();
   const [tarotInteraction, setTarotInteraction] = useState(true);
@@ -15,12 +17,12 @@ export default function TarotReadingResultPage() {
 
   return (
     <>
-      {!tarotInteraction && <ChatHeader />}
+      {!tarotInteraction && <TarotResultHeader />}
       <MainContent>
         {tarotInteraction || isLoading ? (
           <TarotInteraction setTarotInteraction={setTarotInteraction} tarotId={data?.tarot} />
         ) : (
-          <TarotResult />
+          <TarotResultAfterView />
         )}
       </MainContent>
     </>

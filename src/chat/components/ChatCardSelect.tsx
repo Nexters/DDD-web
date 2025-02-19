@@ -10,6 +10,8 @@ import { CardPickState } from "../types/CardPickState";
 import { DeckState } from "../types/DeckState";
 import Card from "./Card";
 
+import { TAROT_CARD_COUNT } from "@/shared/constants/tarotCardCount";
+
 const riseUpCardDeck = {
   duration: 0.6,
   ease: easeInOut,
@@ -19,9 +21,9 @@ const ChatCardSelect = () => {
   const [deckState, setDeckState] = useState<DeckState>("Stack");
   const { chatId } = useParams<{ chatId: string }>();
   const { mutate: selectTarotCard } = useSelectTarotCard();
-  const ITEMS_PER_LOAD = 74;
+
   const [items, setItems] = useState<CardPickState[]>(
-    Array.from({ length: ITEMS_PER_LOAD }, () => "Default")
+    Array.from({ length: TAROT_CARD_COUNT }, () => "Default")
   );
   const router = useRouter();
   const [isCardPicked, setIsCardPicked] = useState(false);

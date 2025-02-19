@@ -36,6 +36,8 @@ const schema = z.object({
     summary: z.string(),
     description: z.string(),
   }),
+  isOwner: z.boolean(),
+  summary: z.string(),
 });
 
 export type TarotReadingResultResponse = z.infer<typeof schema>;
@@ -45,7 +47,9 @@ const validate = (data: serverResponse): TarotReadingResultResponse => {
   return validatedData;
 };
 
-export const getTarotReadingResultById = async (resultId: number): Promise<TarotReadingResultResponse> => {
+export const getTarotReadingResultById = async (
+  resultId: number
+): Promise<TarotReadingResultResponse> => {
   return apiClient
     .get<serverResponse>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/tarot/result/${resultId}`)
     .then((res) => validate(res.data))
