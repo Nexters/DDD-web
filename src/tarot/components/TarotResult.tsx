@@ -20,6 +20,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { toPng } from "html-to-image";
 import NextRecommendQuestion from "./NextRecommendQuestion";
 
 const TarotResult = () => {
@@ -71,7 +72,7 @@ const TarotResult = () => {
       return null;
     }
     return (
-      <TarotResultWrapper>
+      <TarotResultWrapper id={`downloadableContent`}>
         <TarotCard>
           <CardImg
             src={TarotData?.imgSrc || ""}

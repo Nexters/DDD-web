@@ -3,9 +3,15 @@ import { useState } from "react";
 import PopularQuestionPrizeIcon from "./PopularQuestionPrizeIcon";
 import ArrowRight from "@/shared/assets/icons/arrow-right.svg";
 import ArrowDown from "@/shared/assets/icons/arrow-down.svg";
+import { useTarotFollowQuestion } from "../hooks/useTarotFollowQuestion";
+import { useParams } from "next/navigation";
+
 const PopularQuestions = () => {
   const [moreQuestionsToggle, setMoreQuestionsToggle] = useState(false);
+  const { chatId } = useParams<{ chatId: string }>();
 
+  const { data } = useTarotFollowQuestion(Number(chatId));
+  console.log(data);
   const recommendQuestions = {
     questions: [
       {
@@ -60,6 +66,7 @@ const PopularQuestions = () => {
       },
     ],
   };
+
   return (
     <PopularQuestionsWrapper>
       <TextWrapper>

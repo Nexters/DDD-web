@@ -12,6 +12,7 @@ export default function MainContent({ children }: { children: ReactNode }) {
         display: flex;
         flex-direction: column;
         height: 100%;
+        background-color: white;
       `}
     >
       {children}

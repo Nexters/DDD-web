@@ -1,48 +1,21 @@
 import styled from "styled-components";
-import { useParams } from "next/navigation";
-import { useTarotFollowQuestion } from "../hooks/useTarotFollowQuestion";
+import { useTarotQuestionRecommends } from "../hooks/useTarotQuestionRecommends";
+
 interface NextRecommendQuestionProps {
   handleRecommendQuestionChat: (id: number, question: string) => void;
 }
 
 const NextRecommendQuestion = ({ handleRecommendQuestionChat }: NextRecommendQuestionProps) => {
-  const { chatId } = useParams();
-  console.log(chatId);
-  const { data: questions } = useTarotFollowQuestion(Number(chatId));
-  console.log(questions);
-  const recommendQuestions = {
-    questions: [
-      {
-        recommendQuestionId: 101,
-        question: "오늘 하루를 잘 보내기 위한 조언은?",
-        referenceCount: 42,
-      },
-      {
-        recommendQuestionId: 102,
-        question: "현재 내 삶에서 가장 중요한 것은 무엇인가요?",
-        referenceCount: 35,
-      },
-      {
-        recommendQuestionId: 103,
-        question: "다가오는 변화에 어떻게 대비해야 할까요?",
-        referenceCount: 27,
-      },
-      {
-        recommendQuestionId: 104,
-        question: "내가 놓치고 있는 중요한 기회는 무엇인가요?",
-        referenceCount: 19,
-      },
-    ],
-  };
+  const { data } = useTarotQuestionRecommends();
 
   return (
     <RecommendBox>
       <div>
-        <SubText>다른 집사들도 타로냥에게 물어봤어요</SubText>
-        <MainText>나도 물어보면 좋을 질문</MainText>
+        <SubText>더 알려줘 타로냥!</SubText>
+        <MainText>이어서 물어보면 좋을 질문</MainText>
       </div>
       <RecommendContainer>
-        {recommendQuestions?.questions.map((item, idx) => (
+        {data?.questions.map((item, idx) => (
           <RecommendQuestionBtn
             key={idx}
             onClick={() => handleRecommendQuestionChat(item.recommendQuestionId, item.question)}
@@ -83,6 +56,9 @@ const RecommendQuestionBtn = styled.button`
   border-radius: 8px;
 
   padding: 8px 12px;
+  @media screen and (max-width: 600px) {
+    height: fit-content;
+  }
 `;
 
 const SubText = styled.h3`
