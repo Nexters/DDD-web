@@ -6,7 +6,6 @@ import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 
 import findCardById from "@/tarot/utils/findCardById";
 import { useParams } from "next/navigation";
-import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
 import LinkIcon from "@/shared/assets/icons/link.svg";
 import Star from "@/shared/assets/icons/tarot-card-result-star.svg";
@@ -21,7 +20,7 @@ import { useState } from "react";
 import tarotResultCat from "@/shared/assets/images/tarotResultCat.png";
 import tarotResultSummaryCat from "@/shared/assets/images/tarotResultSummaryCat.png";
 import { toPng } from "html-to-image";
-import NextRecommendQuestion from "./NextRecommendQuestion";
+// import NextRecommendQuestion from "./NextRecommendQuestion";
 import PopularQuestions from "./PopularQuestion";
 import PurpleTarotNyang from "@/shared/assets/icons/purple-tarot-nyang.svg";
 
@@ -54,17 +53,17 @@ const TarotResultAfterView = () => {
     router.push(`/chats/${chatId}`);
   };
 
-  const handleRecommendQuestionChat = (recommendQuestionId: number, message: string) => {
-    const object: SendChatMessageRequest = {
-      roomId: Number(chatId),
-      referenceQuestionId: recommendQuestionId,
-      intent: "RECOMMEND_QUESTION",
-      message: message,
-    };
+  // const handleRecommendQuestionChat = (recommendQuestionId: number, message: string) => {
+  //   const object: SendChatMessageRequest = {
+  //     roomId: Number(chatId),
+  //     referenceQuestionId: recommendQuestionId,
+  //     intent: "RECOMMEND_QUESTION",
+  //     message: message,
+  //   };
 
-    queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
-    router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
-  };
+  //   queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
+  //   router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
+  // };
 
   const handleNewChat = () => {
     router.push("/");
@@ -225,14 +224,14 @@ const TarotResultAfterView = () => {
         </NextQuestionFlow>
         <Divider />
 
-        {data?.isOwner ? (
+        {/* {data?.isOwner ? (
           <>
             <NextRecommendQuestion handleRecommendQuestionChat={handleRecommendQuestionChat} />
             <Divider />
           </>
-        ) : null}
+        ) : null} */}
 
-        {/* <PopularQuestions /> */}
+        <PopularQuestions />
       </TarotResultWrapper>
     );
   }
