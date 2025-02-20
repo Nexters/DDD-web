@@ -19,6 +19,7 @@
     "@tanstack/react-query": "^5.63.0",
     "@tanstack/react-query-devtools": "^5.63.0",
     "axios": "^1.7.9",
+    "file-saver": "^2.0.5",
     "html-to-image": "^1.11.13",
     "ismobilejs": "^1.1.1",
     "lottie-react": "^2.4.1",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
+    "@types/file-saver": "^2.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
