@@ -3,7 +3,7 @@ import Image from "next/image";
 import styled, { css } from "styled-components";
 
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
-
+import isIOS from "../utils/isIOS";
 import findCardById from "@/tarot/utils/findCardById";
 import { useParams } from "next/navigation";
 import DownLoadIcon from "@/shared/assets/icons/download.svg";
@@ -20,6 +20,9 @@ import { useState } from "react";
 import tarotResultCat from "@/shared/assets/images/tarotResultCat.png";
 import tarotResultSummaryCat from "@/shared/assets/images/tarotResultSummaryCat.png";
 import { toPng } from "html-to-image";
+import { toBlob } from "html-to-image";
+
+import FileSaver from "file-saver";
 // import NextRecommendQuestion from "./NextRecommendQuestion";
 import PopularQuestions from "./PopularQuestion";
 import PurpleTarotNyang from "@/shared/assets/icons/purple-tarot-nyang.svg";
@@ -71,20 +74,29 @@ const TarotResultAfterView = () => {
 
   const handleDownload = async () => {
     const element = document.getElementById(`downloadableContent`);
-
-    if (element) {
-      try {
-        await toPng(element);
-        await toPng(element);
-        await toPng(element);
-        await toPng(element);
-        const dataUrl = await toPng(element);
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = `나의 타로 결과`;
-        link.click();
-      } catch {
-        alert();
+    if (isIOS() && element) {
+      toBlob(element).then(function (blob: Blob | null) {
+        if (blob) {
+          if (window.saveAs) {
+            window.saveAs(blob, "나의 타로 결과 이미지.png");
+          } else {
+            FileSaver.saveAs(blob, "나의 타로 결과 이미지.png");
+          }
+        } else {
+          alert("이미지 저장 실패");
+        }
+      });
+    } else {
+      if (element) {
+        try {
+          const dataUrl = await toPng(element);
+          const link = document.createElement("a");
+          link.href = dataUrl;
+          link.download = `나의 타로 결과`;
+          link.click();
+        } catch {
+          alert();
+        }
       }
     }
   };
