@@ -74,6 +74,10 @@ const TarotResultAfterView = () => {
 
     if (element) {
       try {
+        await toPng(element);
+        await toPng(element);
+        await toPng(element);
+        await toPng(element);
         const dataUrl = await toPng(element);
         const link = document.createElement("a");
         link.href = dataUrl;
