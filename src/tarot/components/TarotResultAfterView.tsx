@@ -232,7 +232,7 @@ const TarotResultAfterView = () => {
           </>
         ) : null}
 
-        <PopularQuestions />
+        {/* <PopularQuestions /> */}
       </TarotResultWrapper>
     );
   }

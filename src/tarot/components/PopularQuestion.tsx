@@ -1,14 +1,28 @@
+"use client";
 import styled from "styled-components";
 import { useState } from "react";
 import PopularQuestionPrizeIcon from "./PopularQuestionPrizeIcon";
 import ArrowRight from "@/shared/assets/icons/arrow-right.svg";
 import ArrowDown from "@/shared/assets/icons/arrow-down.svg";
 import { useTarotQuestionRecommends } from "../hooks/useTarotQuestionRecommends";
-
+import { useParams } from "next/navigation";
+import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
+import { useRouter } from "next/navigation";
 const PopularQuestions = () => {
   const [moreQuestionsToggle, setMoreQuestionsToggle] = useState(false);
-
+  const { chatId } = useParams<{ chatId: string }>();
+  const router = useRouter();
   const { data } = useTarotQuestionRecommends();
+
+  const handleRecommendQuestionChat = (question: string, questionId: number) => {
+    const messageRequest: SendChatMessageRequest = {
+      roomId: Number(chatId),
+      message: question,
+      intent: "RECOMMEND_QUESTION",
+      referenceQuestionId: questionId,
+    };
+    router.push(`/chats/${messageRequest.roomId}?message=${JSON.stringify(messageRequest)}`);
+  };
 
   return (
     <PopularQuestionsWrapper>
@@ -20,7 +34,12 @@ const PopularQuestions = () => {
       <QuestionWrapper>
         {data?.questions.map((item, idx) =>
           idx < 5 ? (
-            <QuestionBtn key={idx}>
+            <QuestionBtn
+              key={idx}
+              onClick={() => {
+                handleRecommendQuestionChat(item.question, item.recommendQuestionId);
+              }}
+            >
               <PopularQuestionPrizeIcon prize={idx + 1} />
               <BtnText>{item.question}</BtnText>
               <ArrowRight />
