@@ -20,7 +20,7 @@ import { useState } from "react";
 import tarotResultCat from "@/shared/assets/images/tarotResultCat.png";
 import tarotResultSummaryCat from "@/shared/assets/images/tarotResultSummaryCat.png";
 import { toPng } from "html-to-image";
-import htmlToImage from "html-to-image";
+import { toBlob } from "html-to-image";
 
 import FileSaver from "file-saver";
 // import NextRecommendQuestion from "./NextRecommendQuestion";
@@ -75,7 +75,7 @@ const TarotResultAfterView = () => {
   const handleDownload = async () => {
     const element = document.getElementById(`downloadableContent`);
     if (isIOS() && element) {
-      htmlToImage.toBlob(element).then(function (blob: Blob | null) {
+      toBlob(element).then(function (blob: Blob | null) {
         if (blob) {
           if (window.saveAs) {
             window.saveAs(blob, "나의 타로 결과 이미지.png");
