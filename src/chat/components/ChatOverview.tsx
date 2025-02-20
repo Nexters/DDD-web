@@ -1,13 +1,12 @@
 "use client";
 
 import QuickQuestionPickerBox from "@/chat/components/QuickQuestionPickerBox";
-import TarotCatImage from "@/shared/assets/images/tarot-cat.png";
+import tarotCatAnimation from "@/shared/assets/lotties/home-cat-cardpicker.json";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
 import MainContent from "@/shared/components/MainContent";
-import Image from "next/image";
+import Lottie from "lottie-react";
 import { css } from "styled-components";
 import TextFieldInChatOverview from "./TextFieldInChatOverview";
-
 export default function ChatOverview() {
   return (
     <MainContent>
@@ -41,15 +40,7 @@ export default function ChatOverview() {
                 margin-top: 28px;
               `}
             >
-              <Image
-                src={TarotCatImage}
-                alt=""
-                css={css`
-                  display: block;
-                `}
-                height={213}
-                priority
-              />
+              <Lottie animationData={tarotCatAnimation} loop={true} style={{ height: 300 }} />
             </div>
             <h1
               css={css`
