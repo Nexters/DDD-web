@@ -1,4 +1,4 @@
-import CatImage from "@/shared/assets/images/catInResultsPage.png";
+import TarotResultsCatImage from "@/shared/assets/images/tarotResultsCat.png";
 import Button from "@/shared/components/Button";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -14,7 +14,7 @@ export default function TarotResultsEmptyView() {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 180px;
+        margin-top: 78px;
         gap: 12px;
       `}
     >
@@ -22,17 +22,25 @@ export default function TarotResultsEmptyView() {
         css={css`
           display: flex;
           flex-direction: column;
-          gap: 36px;
         `}
       >
-        <Image src={CatImage} alt="" width={206} height={169} />
+        <Image
+          src={TarotResultsCatImage}
+          alt=""
+          height={329}
+          css={css`
+            width: 100%;
+            object-fit: cover;
+          `}
+        />
         <p
           css={css`
             ${({ theme }) => theme.fonts.headline1};
             color: ${({ theme }) => theme.colors.grey70};
+            text-align: center;
           `}
         >
-          아직 본 타로 결과가 없다냥
+          아직 본 결과가 없어요
         </p>
       </div>
       <Button
