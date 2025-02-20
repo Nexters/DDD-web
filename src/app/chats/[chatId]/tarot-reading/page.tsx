@@ -6,7 +6,7 @@ import MainContent from "@/shared/components/MainContent";
 
 import TarotResults from "@/tarot/components/TarotResults";
 import { css } from "styled-components";
-export default async function TarotReadingResultsPage() {
+export default function TarotReadingResultsPage() {
   return (
     <>
       <HeaderContent sticky divider startAction={<HistoryBackButton />}>
