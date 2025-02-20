@@ -3,7 +3,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-
+  experimental: {
+    metadataBase: new URL("https://tarotmeow.vercel.app/"),
+  },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.(".svg"));
