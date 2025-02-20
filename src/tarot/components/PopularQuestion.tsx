@@ -3,69 +3,12 @@ import { useState } from "react";
 import PopularQuestionPrizeIcon from "./PopularQuestionPrizeIcon";
 import ArrowRight from "@/shared/assets/icons/arrow-right.svg";
 import ArrowDown from "@/shared/assets/icons/arrow-down.svg";
-import { useTarotFollowQuestion } from "../hooks/useTarotFollowQuestion";
-import { useParams } from "next/navigation";
+import { useTarotQuestionRecommends } from "../hooks/useTarotQuestionRecommends";
 
 const PopularQuestions = () => {
   const [moreQuestionsToggle, setMoreQuestionsToggle] = useState(false);
-  const { chatId } = useParams<{ chatId: string }>();
 
-  const { data } = useTarotFollowQuestion(Number(chatId));
-  console.log(data);
-  const recommendQuestions = {
-    questions: [
-      {
-        recommendQuestionId: 101,
-        question: "오늘 하루를 잘 보내기 위한 조언은?",
-        referenceCount: 42,
-      },
-      {
-        recommendQuestionId: 102,
-        question: "현재 내 삶에서 가장 중요한 것은 무엇인가요?",
-        referenceCount: 35,
-      },
-      {
-        recommendQuestionId: 103,
-        question: "다가오는 변화에 어떻게 대비해야 할까요?",
-        referenceCount: 27,
-      },
-      {
-        recommendQuestionId: 104,
-        question: "내가 놓치고 있는 중요한 기회는 무엇인가요?",
-        referenceCount: 19,
-      },
-      {
-        recommendQuestionId: 101,
-        question: "오늘 하루를 잘 보내기 위한 조언은?",
-        referenceCount: 42,
-      },
-      {
-        recommendQuestionId: 102,
-        question: "현재 내 삶에서 가장 중요한 것은 무엇인가요?",
-        referenceCount: 35,
-      },
-      {
-        recommendQuestionId: 103,
-        question: "다가오는 변화에 어떻게 대비해야 할까요?",
-        referenceCount: 27,
-      },
-      {
-        recommendQuestionId: 104,
-        question: "내가 놓치고 있는 중요한 기회는 무엇인가요?",
-        referenceCount: 19,
-      },
-      {
-        recommendQuestionId: 103,
-        question: "다가오는 변화에 어떻게 대비해야 할까요?",
-        referenceCount: 27,
-      },
-      {
-        recommendQuestionId: 104,
-        question: "내가 놓치고 있는 중요한 기회는 무엇인가요?",
-        referenceCount: 19,
-      },
-    ],
-  };
+  const { data } = useTarotQuestionRecommends();
 
   return (
     <PopularQuestionsWrapper>
@@ -75,7 +18,7 @@ const PopularQuestions = () => {
       </TextWrapper>
 
       <QuestionWrapper>
-        {recommendQuestions?.questions.map((item, idx) =>
+        {data?.questions.map((item, idx) =>
           idx < 5 ? (
             <QuestionBtn key={idx}>
               <PopularQuestionPrizeIcon prize={idx + 1} />
@@ -92,7 +35,7 @@ const PopularQuestions = () => {
           </AddQuestionBtn>
         )}
         {moreQuestionsToggle &&
-          recommendQuestions?.questions.slice(5, 10).map((item, idx) => (
+          data?.questions.slice(5, 10).map((item, idx) => (
             <QuestionBtn key={idx}>
               <PopularQuestionPrizeIcon prize={idx + 6} />
               <BtnText>{item.question}</BtnText>
