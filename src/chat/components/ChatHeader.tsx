@@ -1,13 +1,16 @@
 "use client";
 
+import FolderIcon from "@/shared/assets/icons/folder.svg";
 import KebobMenuIcon from "@/shared/assets/icons/kebab-menu.svg";
+import MessageSquarePlusIcon from "@/shared/assets/icons/message-square-plus.svg";
+import ShareIcon from "@/shared/assets/icons/share.svg";
 import BottomSheet from "@/shared/components/BottomSheet";
 import HeaderContent from "@/shared/components/HeaderContent";
 import Toast from "@/shared/components/Toast";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
 import shareLink from "@/shared/utils/shareLink";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
 import { useCreateChatRoom } from "../hooks/useCreateChatRoom";
@@ -22,6 +25,7 @@ export default function ChatHeader() {
 
   const { handleWebShare, handleCopyToClipboard } = shareLink(tarotNyangUrl);
   const [toastOpen, setToastOpen] = useState(false);
+  const { chatId } = useParams();
 
   const handleResetChatClick = () => {
     createChatRoom(undefined, {
@@ -33,6 +37,10 @@ export default function ChatHeader() {
 
   const handleCreateChatRoomClick = () => {
     setIsCreateChatRoomModalOpen(true);
+  };
+
+  const handleTarotResultsClick = () => {
+    router.push(`/chats/${chatId}/tarot-reading`);
   };
 
   const handleShare = async () => {
@@ -86,13 +94,44 @@ export default function ChatHeader() {
                 `}
               >
                 <li>
-                  <button type="button" onClick={handleShare}>
+                  <button
+                    css={css`
+                      display: flex;
+                      align-items: center;
+                      gap: 12px;
+                    `}
+                    type="button"
+                    onClick={handleShare}
+                  >
+                    <ShareIcon />
                     친구에게 타로냥 알리기
                   </button>
                 </li>
                 <li>
-                  <button type="button" onClick={handleCreateChatRoomClick}>
-                    새 대화 시작하기
+                  <button
+                    css={css`
+                      display: flex;
+                      align-items: center;
+                      gap: 12px;
+                    `}
+                    type="button"
+                    onClick={handleTarotResultsClick}
+                  >
+                    <FolderIcon />
+                    지난 결과 모아보기
+                  </button>
+                </li>
+                <li>
+                  <button
+                    css={css`
+                      display: flex;
+                      align-items: center;
+                      gap: 12px;
+                    `}
+                    type="button"
+                    onClick={handleCreateChatRoomClick}
+                  >
+                    <MessageSquarePlusIcon />새 대화 시작하기
                   </button>
                 </li>
               </ul>

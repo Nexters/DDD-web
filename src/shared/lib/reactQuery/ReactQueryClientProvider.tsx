@@ -11,7 +11,8 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        // TODO: 쿼리 키 개선 이후 캐싱 전략 검토
+        staleTime: 0,
       },
       mutations: {
         retry: 3,

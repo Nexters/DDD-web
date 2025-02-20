@@ -5,12 +5,17 @@ import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { useStickToBottom } from "use-stick-to-bottom";
 import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectButtonDisplayStore";
 import { useTarotCardDeckDisplayContext } from "../hooks/useTarotCardDeckDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import ChipButton from "./ChipButton";
 
-export default function AcceptRejectButtons() {
+interface AcceptRejectButtonsProps {
+  scrollToBottom: ReturnType<typeof useStickToBottom>["scrollToBottom"];
+}
+
+export default function AcceptRejectButtons({ scrollToBottom }: AcceptRejectButtonsProps) {
   const { addMessage, deleteMessage, editMessage } = useChatMessagesContext();
   const { mutate: sendChatMessage } = useSendChatMessage();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -104,6 +109,9 @@ export default function AcceptRejectButtons() {
       type: "USER_NORMAL",
       sender: "USER",
       answers: [rejectMessage],
+    });
+    scrollToBottom({
+      animation: "instant",
     });
 
     await delay(500);

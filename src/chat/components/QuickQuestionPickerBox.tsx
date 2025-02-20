@@ -18,7 +18,8 @@ export default function QuickQuestionPickerBox() {
 
   const adaptQuestionRecommends = (data: TarotQuestionRecommendListResponse) => {
     const colors = ["primary03", "grey10", "primary01", "grey60"] as const;
-    return data.questions.map((question, i) => ({
+
+    return data.questions.slice(0, 4).map((question, i) => ({
       ...question,
       color: colors[i],
       onClick: async () => {

@@ -56,7 +56,7 @@ const Overlay = styled(Dialog.Overlay)`
 
 const Title = styled(Dialog.Title)`
   text-align: center;
-  ${({ theme }) => theme.fonts.body3};
+  ${({ theme }) => theme.fonts.subHead4};
   ${({ theme }) => theme.colors.grey90};
 `;
 

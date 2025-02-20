@@ -6,11 +6,16 @@ import { delay } from "@/shared/utils/delay";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
+import { useStickToBottom } from "use-stick-to-bottom";
 import { useAcceptRejectButtonDisplayContext } from "../hooks/useAcceptRejectButtonDisplayStore";
 import { useTextFieldInChatDisplayContext } from "../hooks/useTextFieldInChatDisplayStore";
 import TextareaAutoSize from "./TextareaAutoSize";
 
-export default function TextFieldInChat() {
+interface Props {
+  scrollToBottom: ReturnType<typeof useStickToBottom>["scrollToBottom"];
+}
+
+export default function TextFieldInChat({ scrollToBottom }: Props) {
   const [message, setMessage] = useState("");
   const { mutate: sendChatMessage } = useSendChatMessage();
   const { chatId } = useParams<{ chatId: string }>();
@@ -58,6 +63,9 @@ export default function TextFieldInChat() {
       type: "USER_NORMAL",
       sender: "USER",
       answers: [message],
+    });
+    scrollToBottom({
+      animation: "instant",
     });
 
     await delay(500);
@@ -110,7 +118,7 @@ export default function TextFieldInChat() {
           addMessage({
             messageId: Math.random(),
             type: "SYSTEM_NORMAL_REPLY",
-            sender: "USER",
+            sender: "SYSTEM",
             answers: ["문제가 생겼다냥! 다시 시도해봐냥."],
           });
         },

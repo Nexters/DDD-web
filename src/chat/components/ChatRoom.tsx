@@ -26,9 +26,9 @@ export default function ChatRoom() {
   const searchParams = useSearchParams();
   const initialMessage = searchParams.get("message");
   const { data } = useChatMessages(Number(chatId));
-  const { scrollRef, contentRef } = useStickToBottom({
+  const { scrollRef, contentRef, scrollToBottom } = useStickToBottom({
     initial: "instant",
-    resize: "instant",
+    resize: "smooth",
   });
 
   const {
@@ -110,7 +110,7 @@ export default function ChatRoom() {
         addMessage({
           messageId: Math.random(),
           type: "SYSTEM_NORMAL_REPLY",
-          sender: "USER",
+          sender: "SYSTEM",
           answers: ["문제가 생겼다냥! 다시 시도해봐냥."],
         });
       },
@@ -203,7 +203,7 @@ export default function ChatRoom() {
           position: "relative";
         `}
       >
-        <AcceptRejectButtons />
+        <AcceptRejectButtons scrollToBottom={scrollToBottom} />
         {isTextFieldVisible && (
           <div>
             <FullscreenOverflowDivider />
@@ -215,7 +215,7 @@ export default function ChatRoom() {
                 margin-inline: auto;
               `}
             >
-              <TextFieldInChat />
+              <TextFieldInChat scrollToBottom={scrollToBottom} />
             </div>
           </div>
         )}
