@@ -5,8 +5,8 @@ import PopularQuestions from "./PopularQuestion";
 import LinkIcon from "@/shared/assets/icons/link.svg";
 import ColorStar from "@/shared/assets/icons/tarot-card-result-color-star.svg";
 import Star from "@/shared/assets/icons/tarot-card-result-star.svg";
-import tarotResultCat from "@/shared/assets/images/tarotResultCat.png";
-import tarotResultSummaryCat from "@/shared/assets/images/tarotResultSummaryCat.png";
+import CatWithCard from "@/shared/assets/images/cardWithCat.png";
+
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
@@ -78,7 +78,7 @@ const TarotResultAfterView = () => {
       <TarotResultWrapper>
         <TarotCard>
           <TarotCardImageWrapper>
-            <TarotCatImage src={tarotResultCat} alt="타로카드 이미지 고양이" />
+            <TarotCatImage src={CatWithCard} alt="타로카드 이미지 고양이" />
             <CardImg src={TarotData?.imgSrc || ""} alt={TarotData?.alt || "타로카드 이미지"} fill />
           </TarotCardImageWrapper>
 
@@ -94,29 +94,22 @@ const TarotResultAfterView = () => {
           <TarotCardResultSummary>
             <ColorStar />
             <PreviewTextWrapper>{data.summary}</PreviewTextWrapper>
-
-            <TarotCatSummaryImage
-              src={tarotResultSummaryCat}
-              width={68}
-              height={60}
-              alt="결과 요약 고양이 이미지"
-            />
           </TarotCardResultSummary>
           <TarotCardResult>
             <ResultBox>
-              <h2> {data?.cardValue.summary}</h2>
+              <h2> 카드의 의미</h2>
               <p> {data?.cardValue.description}</p>
             </ResultBox>
 
             <Star />
             <ResultBox>
-              <h2> {data?.answer.summary}</h2>
+              <h2> 카드의 답변</h2>
               <p> {data?.answer.description}</p>
             </ResultBox>
             <Star />
 
             <ResultBox>
-              <h2> {data?.advice.summary}</h2>
+              <h2> 타로냥의 조언</h2>
               <p> {data?.advice.description}</p>
             </ResultBox>
           </TarotCardResult>
@@ -360,13 +353,12 @@ const TarotCardTitleWrapper = styled.div`
 
 const TarotCatImage = styled(Image)`
   z-index: 1;
-  position: absolute;
+  position: relative;
 
-  width: 150px;
-  height: 223px;
-
-  right: 116px;
-  top: 65px;
+  width: 375px;
+  height: 305px;
+  bottom: 20px;
+  right: 103px;
 `;
 
 const TarotCardImageWrapper = styled.div`
