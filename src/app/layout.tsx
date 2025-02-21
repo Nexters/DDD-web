@@ -9,6 +9,8 @@ import StyledReset from "@/shared/lib/styledComponents/StyledReset";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Metadata } from "next";
+import MixpanelSDKInitializer from "@/shared/lib/mixpanel";
+
 export const metadata: Metadata = {
   title: "타로냥 - 고양이 타로술사",
   description: "고양이 타로술사 타로냥이 당신의 질문에 답해주는 AI 타로 서비스입니다.",
@@ -44,6 +46,7 @@ export default function RootLayout({
       <Hotjar />
       <GoogleAnalytics gaId="G-P0MWP9K8K8" />
       <GoogleTagManager gtmId="GTM-5VR9NG96" />
+      <MixpanelSDKInitializer />
     </html>
   );
 }
