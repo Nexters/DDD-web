@@ -12,6 +12,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         height: 100%;
         display: flex;
         flex-direction: column;
+        overflow-x: hidden;
       `}
     >
       {children}

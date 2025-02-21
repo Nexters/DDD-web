@@ -15,10 +15,13 @@ import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import findCardById from "@/tarot/utils/findCardById";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import { usePathname } from "next/navigation";
+import { useTarotReviewExist } from "../hooks/useTarotReviewExist";
 
+import TarotReadingReviewModal from "./TarotReadingReviewModal";
+import { useRef } from "react";
 const TarotResultAfterView = () => {
   const { resultId, chatId } = useParams<{
     resultId: string;
@@ -26,13 +29,15 @@ const TarotResultAfterView = () => {
   }>();
 
   const [toastOpen, setToastOpen] = useState(false);
+  const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false);
   const pathname = usePathname();
-  console.log(pathname);
   const shareURL = process.env.NEXT_PUBLIC_BASE_URL + pathname || "https://tarotnyang.me";
   const { handleWebShare, handleCopyToClipboard } = shareLink(shareURL);
   const router = useRouter();
   const { data, isError } = useTarotReadingResult(Number(resultId));
   const queryClient = useQueryClient();
+
+  const { data: reviewExist } = useTarotReviewExist(Number(resultId));
 
   const handleShareLink = async () => {
     const shareSuccess = await handleCopyToClipboard();
@@ -60,7 +65,27 @@ const TarotResultAfterView = () => {
   const handleNewChat = () => {
     router.push("/");
   };
+  const elementRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (!elementRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          if (reviewExist !== undefined) {
+            setReviewModalOpen(!reviewExist.hasReviewed);
+          }
+          observer.disconnect(); // 한 번 실행 후 감지 중지
+        }
+      },
+      { threshold: 1 }
+    );
+
+    observer.observe(elementRef.current);
+
+    return () => observer.disconnect(); // 컴포넌트 언마운트 시 옵저버 해제
+  }, [reviewExist]);
   if (isError) {
     return null;
   }
@@ -112,6 +137,7 @@ const TarotResultAfterView = () => {
           </TarotCardResult>
         </TarotCardResultWrapper>
 
+        <TarotReadingReviewModal isOpen={reviewModalOpen} onOpenChange={setReviewModalOpen} />
         {/* <DownloadImageWrapper id="downloadableContent" imgSrc={DownloadBgImg.src}>
           <DownLoadImageContainer>
             <Image src={TarotData.imgSrc} alt="뽑힌 카드 이미지" width={187} height={279} />
@@ -167,7 +193,7 @@ const TarotResultAfterView = () => {
           </BtnWrapper>
         ) : null}
 
-        <NextQuestionFlow>
+        <NextQuestionFlow ref={elementRef}>
           <AdditionalMessage>
             {data.isOwner ? (
               <>
