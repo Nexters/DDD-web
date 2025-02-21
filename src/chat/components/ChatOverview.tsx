@@ -4,9 +4,15 @@ import QuickQuestionPickerBox from "@/chat/components/QuickQuestionPickerBox";
 import tarotCatAnimation from "@/shared/assets/lotties/home-cat-cardpicker.json";
 import FullscreenOverflowDivider from "@/shared/components/FullscreenOverflowDivider";
 import MainContent from "@/shared/components/MainContent";
-import Lottie from "lottie-react";
+import dynamic from "next/dynamic";
 import { css } from "styled-components";
 import TextFieldInChatOverview from "./TextFieldInChatOverview";
+
+const Lottie = dynamic(() => import("lottie-react"), {
+  ssr: false,
+  loading: () => <div style={{ width: 300, height: 300 }} />,
+});
+
 export default function ChatOverview() {
   return (
     <MainContent>
