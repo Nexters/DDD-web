@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import { usePathname } from "next/navigation";
 import { useTarotReviewExist } from "../hooks/useTarotReviewExist";
-import useRefFocusEffect from "../hooks/useRefFocusEffect";
+
 import TarotReadingReviewModal from "./TarotReadingReviewModal";
 import { useRef } from "react";
 const TarotResultAfterView = () => {
@@ -65,11 +65,6 @@ const TarotResultAfterView = () => {
   const handleNewChat = () => {
     router.push("/");
   };
-
-  if (isError) {
-    return null;
-  }
-
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -91,6 +86,9 @@ const TarotResultAfterView = () => {
 
     return () => observer.disconnect(); // 컴포넌트 언마운트 시 옵저버 해제
   }, [reviewExist]);
+  if (isError) {
+    return null;
+  }
 
   if (data?.tarot) {
     const TarotData = findCardById(data?.tarot);
@@ -139,10 +137,7 @@ const TarotResultAfterView = () => {
           </TarotCardResult>
         </TarotCardResultWrapper>
 
-        <TarotReadingReviewModal
-          isOpen={reviewModalOpen}
-          onOpenChange={setReviewModalOpen}
-        ></TarotReadingReviewModal>
+        <TarotReadingReviewModal isOpen={reviewModalOpen} onOpenChange={setReviewModalOpen} />
         {/* <DownloadImageWrapper id="downloadableContent" imgSrc={DownloadBgImg.src}>
           <DownLoadImageContainer>
             <Image src={TarotData.imgSrc} alt="뽑힌 카드 이미지" width={187} height={279} />

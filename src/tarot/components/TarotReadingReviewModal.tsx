@@ -37,6 +37,10 @@ export default function TarotReadingReviewModal({ isOpen, onOpenChange }: Props)
   const { mutate } = useMutation({
     mutationFn: ({ grade, resultId }: CreateReviewRequestType) =>
       createTarotReview(grade, resultId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["tarotReviewExist"],
+      }),
   });
 
   const handleReviewClick = () => {
