@@ -1,4 +1,9 @@
 import majorArcanaImages from "./major-arcana";
 import minorArcanaImages from "./minor-arcana";
 
-export default { majorArcanaImages, minorArcanaImages };
+const images = {
+  majorArcanaImages,
+  minorArcanaImages,
+};
+
+export default images;
