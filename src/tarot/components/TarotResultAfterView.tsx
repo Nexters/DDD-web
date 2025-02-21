@@ -115,7 +115,7 @@ const TarotResultAfterView = () => {
           </TarotCardResult>
         </TarotCardResultWrapper>
 
-        <DownloadImageWrapper id="downloadableContent" imgSrc={DownloadBgImg.src}>
+        {/* <DownloadImageWrapper id="downloadableContent" imgSrc={DownloadBgImg.src}>
           <DownLoadImageContainer>
             <Image src={TarotData.imgSrc} alt="뽑힌 카드 이미지" width={187} height={279} />
             <div
@@ -153,7 +153,7 @@ const TarotResultAfterView = () => {
 
             <DownloadImgInstaChip> www.tarotmeow.vercel.app/</DownloadImgInstaChip>
           </DownloadInfoWrapper>
-        </DownloadImageWrapper>
+        </DownloadImageWrapper> */}
 
         {data.isOwner ? (
           <BtnWrapper>
