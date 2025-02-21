@@ -21,9 +21,9 @@ export default function ChatHeader() {
   const router = useRouter();
   const [isCreateChatRoomModalOpen, setIsCreateChatRoomModalOpen] = useState(false);
 
-  const tarotNyangUrl = window.location.hostname;
-
-  const { handleWebShare, handleCopyToClipboard } = shareLink(tarotNyangUrl);
+  const { handleWebShare, handleCopyToClipboard } = shareLink(
+    process.env.NEXT_PUBLIC_BASE_URL || "https://tarotnyang.me"
+  );
   const [toastOpen, setToastOpen] = useState(false);
   const { chatId } = useParams();
 
