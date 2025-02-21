@@ -28,8 +28,10 @@ export const metadata: Metadata = {
     description: "고양이 타로술사 타로냥이 당신의 질문에 답해주는 AI 타로 서비스입니다.",
     siteName: "타로냥",
   },
+  verification: {
+    google: "ikYIUp-mFFpIihQWL7s56SIKk5-8Xei2oG31qV7TwsQ",
+  },
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
