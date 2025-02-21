@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { useTarotFollowQuestion } from "../hooks/useTarotFollowQuestion";
 import { useParams } from "next/navigation";
 interface NextRecommendQuestionProps {
-  handleRecommendQuestionChat: (id: number, question: string) => void;
+  handleRecommendQuestionChat: (question: string) => void;
 }
 
-const NextRecommendQuestion = ({}: NextRecommendQuestionProps) => {
-  const { chatId } = useParams<{ chatId: string }>();
+const NextRecommendQuestion = ({ handleRecommendQuestionChat }: NextRecommendQuestionProps) => {
+  const { chatId, resultId } = useParams<{ chatId: string; resultId: string }>();
 
-  const { data: NextQuestion } = useTarotFollowQuestion(Number(chatId));
+  const { data: NextQuestion } = useTarotFollowQuestion(Number(chatId), Number(resultId));
 
   console.log(NextQuestion);
   return (
@@ -20,10 +20,7 @@ const NextRecommendQuestion = ({}: NextRecommendQuestionProps) => {
       </div>
       <RecommendContainer>
         {NextQuestion?.questions.map((item, idx) => (
-          <RecommendQuestionBtn
-            key={idx}
-            // onClick={() => handleRecommendQuestionChat(item.recommendQuestionId, item.question)}
-          >
+          <RecommendQuestionBtn key={idx} onClick={() => handleRecommendQuestionChat(item)}>
             <QuestionTitle>{item} </QuestionTitle>
 
             <NextQuestionAffordance>이 질문하기 &gt;</NextQuestionAffordance>
