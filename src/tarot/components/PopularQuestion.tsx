@@ -8,7 +8,8 @@ import { useTarotQuestionRecommends } from "../hooks/useTarotQuestionRecommends"
 import { useParams } from "next/navigation";
 import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import { useRouter } from "next/navigation";
-const PopularQuestions = () => {
+
+const PopularQuestions = ({ isOwner }: { isOwner: boolean }) => {
   const [moreQuestionsToggle, setMoreQuestionsToggle] = useState(false);
   const { chatId } = useParams<{ chatId: string }>();
   const router = useRouter();
@@ -21,7 +22,16 @@ const PopularQuestions = () => {
       intent: "RECOMMEND_QUESTION",
       referenceQuestionId: questionId,
     };
-    router.push(`/chats/${messageRequest.roomId}?message=${JSON.stringify(messageRequest)}`);
+
+    if (isOwner)
+      router.push(`/chats/${messageRequest.roomId}?message=${JSON.stringify(messageRequest)}`);
+    // else {
+    //   createChatRoom(undefined, {
+    //     onSuccess: (data) => {
+    //       router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
+    //     },
+    //   });
+    // }
   };
   return (
     <PopularQuestionsWrapper>
