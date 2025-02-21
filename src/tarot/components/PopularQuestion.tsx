@@ -29,7 +29,7 @@ const PopularQuestions = () => {
         <SubText>이런 질문은 어때요?</SubText>
         <MainText> 많이 물어보는 질문</MainText>
       </TextWrapper>
-
+      {/* git test */}
       <QuestionWrapper>
         {data?.questions.map((item, idx) =>
           idx < 5 ? (
