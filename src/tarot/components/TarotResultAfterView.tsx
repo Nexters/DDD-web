@@ -73,7 +73,7 @@ const TarotResultAfterView = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          if (reviewExist !== undefined) {
+          if (reviewExist !== undefined && data?.isOwner) {
             setReviewModalOpen(!reviewExist.hasReviewed);
           }
           observer.disconnect(); // 한 번 실행 후 감지 중지
@@ -223,7 +223,7 @@ const TarotResultAfterView = () => {
           </>
         ) : null}
 
-        <PopularQuestions />
+        <PopularQuestions isOwner={!!data?.isOwner} />
       </TarotResultWrapper>
     );
   }
