@@ -1,7 +1,4 @@
 const shareLink = (shareUrl: string) => {
-  // const inviteURL = window.location.href;
-
-  // console.log(inviteURL);
   const handleWebShare = async () => {
     const shareData = {
       meet: {
@@ -21,7 +18,6 @@ const shareLink = (shareUrl: string) => {
 
   const handleCopyToClipboard = async () => {
     try {
-      console.log("복사성공");
       await navigator.clipboard.writeText(shareUrl);
       return true;
     } catch {

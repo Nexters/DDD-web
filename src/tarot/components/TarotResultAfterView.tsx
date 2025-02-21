@@ -25,7 +25,7 @@ const TarotResultAfterView = () => {
   }>();
 
   const [toastOpen, setToastOpen] = useState(false);
-  const shareURL = window.location.href;
+  const shareURL = process.env.NEXT_PUBLIC_BASE_URL || "https://tarotnyang.me";
   const { handleWebShare, handleCopyToClipboard } = shareLink(shareURL);
   const router = useRouter();
   const { data, isError } = useTarotReadingResult(Number(resultId));
