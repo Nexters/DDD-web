@@ -1,12 +1,9 @@
 "use client";
-import Image from "next/image";
-import styled from "styled-components";
-import PopularQuestions from "./PopularQuestion";
+import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import LinkIcon from "@/shared/assets/icons/link.svg";
 import ColorStar from "@/shared/assets/icons/tarot-card-result-color-star.svg";
 import Star from "@/shared/assets/icons/tarot-card-result-star.svg";
 import CatWithCard from "@/shared/assets/images/cardWithCat.png";
-import NextRecommendQuestion from "./NextRecommendQuestion";
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
@@ -14,14 +11,16 @@ import shareLink from "@/shared/utils/shareLink";
 import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
 import findCardById from "@/tarot/utils/findCardById";
 import { useQueryClient } from "@tanstack/react-query";
-import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
-import { usePathname } from "next/navigation";
+import styled from "styled-components";
 import { useTarotReviewExist } from "../hooks/useTarotReviewExist";
+import NextRecommendQuestion from "./NextRecommendQuestion";
+import PopularQuestions from "./PopularQuestion";
 
-import TarotReadingReviewModal from "./TarotReadingReviewModal";
 import { useRef } from "react";
+import TarotReadingReviewModal from "./TarotReadingReviewModal";
 const TarotResultAfterView = () => {
   const { resultId, chatId } = useParams<{
     resultId: string;
