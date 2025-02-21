@@ -17,6 +17,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
+import { usePathname } from "next/navigation";
 
 const TarotResultAfterView = () => {
   const { resultId, chatId } = useParams<{
@@ -25,7 +26,9 @@ const TarotResultAfterView = () => {
   }>();
 
   const [toastOpen, setToastOpen] = useState(false);
-  const shareURL = process.env.NEXT_PUBLIC_BASE_URL || "https://tarotnyang.me";
+  const pathname = usePathname();
+  console.log(pathname);
+  const shareURL = process.env.NEXT_PUBLIC_BASE_URL + pathname || "https://tarotnyang.me";
   const { handleWebShare, handleCopyToClipboard } = shareLink(shareURL);
   const router = useRouter();
   const { data, isError } = useTarotReadingResult(Number(resultId));
