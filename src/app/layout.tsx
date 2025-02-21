@@ -13,7 +13,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "타로냥 - 고양이 타로술사",
+  title: "타로냥 - AI 타로로 보는 오늘의 운세, 무료 타로 상담",
   metadataBase: new URL("https://tarotnyang.me"),
   alternates: {
     canonical: "/",
@@ -24,8 +24,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://tarotnyang.me",
-    title: "타로냥 - 고양이 타로술사",
+    title: "타로냥 - AI 타로로 보는 오늘의 운세, 무료 타로 상담",
     description: "고양이 타로술사 타로냥이 당신의 질문에 답해주는 AI 타로 서비스입니다.",
+    siteName: "타로냥",
   },
 };
 
