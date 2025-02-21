@@ -6,7 +6,7 @@ import LinkIcon from "@/shared/assets/icons/link.svg";
 import ColorStar from "@/shared/assets/icons/tarot-card-result-color-star.svg";
 import Star from "@/shared/assets/icons/tarot-card-result-star.svg";
 import CatWithCard from "@/shared/assets/images/cardWithCat.png";
-
+import NextRecommendQuestion from "./NextRecommendQuestion";
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
@@ -16,7 +16,8 @@ import findCardById from "@/tarot/utils/findCardById";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-// import NextRecommendQuestion from "./NextRecommendQuestion";
+import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
+import { usePathname } from "next/navigation";
 
 const TarotResultAfterView = () => {
   const { resultId, chatId } = useParams<{
@@ -25,7 +26,9 @@ const TarotResultAfterView = () => {
   }>();
 
   const [toastOpen, setToastOpen] = useState(false);
-  const shareURL = process.env.NEXT_PUBLIC_BASE_URL || "https://tarotnyang.me";
+  const pathname = usePathname();
+  console.log(pathname);
+  const shareURL = process.env.NEXT_PUBLIC_BASE_URL + pathname || "https://tarotnyang.me";
   const { handleWebShare, handleCopyToClipboard } = shareLink(shareURL);
   const router = useRouter();
   const { data, isError } = useTarotReadingResult(Number(resultId));
@@ -43,17 +46,16 @@ const TarotResultAfterView = () => {
     router.push(`/chats/${chatId}`);
   };
 
-  // const handleRecommendQuestionChat = (recommendQuestionId: number, message: string) => {
-  //   const object: SendChatMessageRequest = {
-  //     roomId: Number(chatId),
-  //     referenceQuestionId: recommendQuestionId,
-  //     intent: "RECOMMEND_QUESTION",
-  //     message: message,
-  //   };
+  const handleRecommendQuestionChat = (message: string) => {
+    const object: SendChatMessageRequest = {
+      roomId: Number(chatId),
+      intent: "NORMAL",
+      message: message,
+    };
 
-  //   queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
-  //   router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
-  // };
+    queryClient.invalidateQueries({ queryKey: ["chatMessages"] });
+    router.push(`/chats/${chatId}?message=${JSON.stringify(object)}`);
+  };
 
   const handleNewChat = () => {
     router.push("/");
@@ -186,14 +188,14 @@ const TarotResultAfterView = () => {
             </Button>
           )}
         </NextQuestionFlow>
-        {/* {/<Divider /> */}
+        <Divider />
 
-        {/* {data?.isOwner ? (
+        {data?.isOwner ? (
           <>
             <NextRecommendQuestion handleRecommendQuestionChat={handleRecommendQuestionChat} />
             <Divider />
           </>
-        ) : null} */}
+        ) : null}
 
         <PopularQuestions />
       </TarotResultWrapper>
@@ -366,6 +368,16 @@ const TarotResultWrapper = styled.div`
   max-width: 600px;
   margin-inline: auto;
   background-color: white;
+`;
+
+const Divider = styled.div`
+  height: 11px;
+  width: calc(100% + 44px * 2);
+
+  margin: 44px 0 44px 0;
+  background-color: ${({ theme }) => theme.colors.grey10};
+
+  overflow: hidden;
 `;
 // const DownloadInfoWrapper = styled.div`
 //   display: flex;
