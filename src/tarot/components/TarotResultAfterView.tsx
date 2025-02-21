@@ -202,6 +202,171 @@ const TarotResultAfterView = () => {
 };
 export default TarotResultAfterView;
 
+const PreviewTextWrapper = styled.div`
+  width: 90%;
+  display: flex;
+  text-align: center;
+  height: fit-content;
+
+  color: ${({ theme }) => theme.colors.primary03};
+  ${({ theme }) => theme.fonts.subHead3};
+`;
+
+const TarotCardResultSummary = styled.div`
+  position: relative;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  border: 1px solid ${({ theme }) => theme.colors.primary02};
+  border-radius: 12px;
+
+  background-color: ${({ theme }) => theme.colors.primary00};
+`;
+const TarotCardResultWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+`;
+
+const NextQuestionFlow = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  width: 100%;
+`;
+
+const TarotCardTitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+`;
+
+const TarotCatImage = styled(Image)`
+  z-index: 1;
+  position: absolute;
+
+  width: 375px;
+  height: 305px;
+
+  left: -105px;
+
+  top: -15px;
+`;
+
+const TarotCardImageWrapper = styled.div`
+  position: relative;
+  width: 169px;
+  height: 253px;
+`;
+
+const AdditionalMessage = styled.p`
+  ${({ theme }) => theme.fonts.body1};
+  color: ${({ theme }) => theme.colors.grey50};
+  text-align: center;
+`;
+const BtnWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 12px;
+`;
+const IconBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  background-color: ${({ theme }) => theme.colors.grey10};
+  color: ${({ theme }) => theme.colors.grey70};
+  ${({ theme }) => theme.fonts.subHead1};
+  border-radius: 12px;
+  padding: 12px;
+`;
+
+const ResultBox = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 4px;
+
+  width: 100%;
+
+  & > h2 {
+    ${({ theme }) => theme.fonts.subHead3};
+    color: ${({ theme }) => theme.colors.grey90};
+    text-align: center;
+  }
+
+  & p {
+    ${({ theme }) => theme.fonts.body1};
+    color: ${({ theme }) => theme.colors.grey60};
+    text-align: center;
+  }
+`;
+
+const ResultType = styled.div`
+  padding: 4px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  background-color: ${({ theme }) => theme.colors.primary03};
+  color: ${({ theme }) => theme.colors.white};
+  ${({ theme }) => theme.fonts.subHead2};
+`;
+
+const TarotCardResult = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  gap: 20px;
+  border-radius: 12px;
+  border: 1px solid ${({ theme }) => theme.colors.grey20};
+  background-color: ${({ theme }) => theme.colors.white};
+
+  padding: 20px 24px;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  ${({ theme }) => theme.fonts.headline2};
+  color: ${({ theme }) => theme.colors.grey90};
+`;
+
+const TarotCard = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+`;
+
+const CardImg = styled(Image)``;
+
+const TarotResultWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 32px 20px;
+
+  width: 100%;
+  max-width: 600px;
+  margin-inline: auto;
+  background-color: white;
+`;
 // const DownloadInfoWrapper = styled.div`
 //   display: flex;
 //   flex-direction: column;
@@ -298,168 +463,3 @@ export default TarotResultAfterView;
 //   right: -12.5px;
 //   bottom: 5px;
 // `;
-
-const PreviewTextWrapper = styled.div`
-  width: 90%;
-  display: flex;
-  text-align: center;
-  height: fit-content;
-
-  color: ${({ theme }) => theme.colors.primary03};
-  ${({ theme }) => theme.fonts.subHead3};
-`;
-
-const TarotCardResultSummary = styled.div`
-  position: relative;
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-
-  border: 1px solid ${({ theme }) => theme.colors.primary02};
-  border-radius: 12px;
-
-  background-color: ${({ theme }) => theme.colors.primary00};
-`;
-const TarotCardResultWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 12px;
-`;
-
-const NextQuestionFlow = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  gap: 16px;
-
-  width: 100%;
-`;
-
-const TarotCardTitleWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-`;
-
-const TarotCatImage = styled(Image)`
-  z-index: 1;
-  position: relative;
-
-  width: 375px;
-  height: 305px;
-  bottom: 20px;
-  right: 103px;
-`;
-
-const TarotCardImageWrapper = styled.div`
-  position: relative;
-  width: 169px;
-  height: 253px;
-`;
-
-const AdditionalMessage = styled.p`
-  ${({ theme }) => theme.fonts.body1};
-  color: ${({ theme }) => theme.colors.grey50};
-  text-align: center;
-`;
-const BtnWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  gap: 12px;
-`;
-const IconBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-
-  background-color: ${({ theme }) => theme.colors.grey10};
-  color: ${({ theme }) => theme.colors.grey70};
-  ${({ theme }) => theme.fonts.subHead1};
-  border-radius: 12px;
-  padding: 12px;
-`;
-
-const ResultBox = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  gap: 4px;
-
-  width: 100%;
-
-  & > h2 {
-    ${({ theme }) => theme.fonts.subHead3};
-    color: ${({ theme }) => theme.colors.grey90};
-    text-align: center;
-  }
-
-  & p {
-    ${({ theme }) => theme.fonts.body1};
-    color: ${({ theme }) => theme.colors.grey60};
-    text-align: center;
-  }
-`;
-
-const ResultType = styled.div`
-  padding: 4px 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 40px;
-  background-color: ${({ theme }) => theme.colors.primary03};
-  color: ${({ theme }) => theme.colors.white};
-  ${({ theme }) => theme.fonts.subHead2};
-`;
-
-const TarotCardResult = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  gap: 20px;
-  border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.colors.grey20};
-  background-color: ${({ theme }) => theme.colors.white};
-
-  padding: 20px 24px;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-  ${({ theme }) => theme.fonts.headline2};
-  color: ${({ theme }) => theme.colors.grey90};
-`;
-
-const TarotCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-`;
-
-const CardImg = styled(Image)`
-  position: relative;
-`;
-
-const TarotResultWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  gap: 32px;
-  padding: 32px 20px;
-
-  width: 100%;
-  max-width: 600px;
-  margin-inline: auto;
-  background-color: white;
-`;
