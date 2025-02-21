@@ -1,4 +1,4 @@
-import { getCookie } from "@/auth/utils/getCookie";
+import { getGuestIdCookie } from "@/shared/apis/getGuestIdCookie";
 import axios from "axios";
 
 const apiClient = axios.create({
@@ -10,7 +10,7 @@ apiClient.interceptors.response.use((response) => {
 });
 
 apiClient.interceptors.request.use(async (config) => {
-  const userKey = await getCookie("guestId");
+  const userKey = await getGuestIdCookie();
 
   config.headers["X-Guest-ID"] = userKey;
 
