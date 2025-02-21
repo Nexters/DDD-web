@@ -1,6 +1,5 @@
 "use client";
 
-import MainContent from "@/shared/components/MainContent";
 import TarotInteraction from "../../../../../tarot/components/TarotInteraction";
 import { useState } from "react";
 
