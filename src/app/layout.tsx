@@ -10,6 +10,7 @@ import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Metadata } from "next";
 import MixpanelSDKInitializer from "@/shared/lib/mixpanel";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "타로냥 - 고양이 타로술사",
@@ -42,6 +43,7 @@ export default function RootLayout({
           </StyledComponentsRegistry>
           <ReactQueryDevtools initialIsOpen={false} />
         </ReactQueryClientProvider>
+        <Analytics />
       </body>
       <Hotjar />
       <GoogleAnalytics gaId="G-P0MWP9K8K8" />
