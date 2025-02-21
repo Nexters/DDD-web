@@ -24,7 +24,6 @@ import { toBlob } from "html-to-image";
 
 import FileSaver from "file-saver";
 // import NextRecommendQuestion from "./NextRecommendQuestion";
-import PopularQuestions from "./PopularQuestion";
 import PurpleTarotNyang from "@/shared/assets/icons/purple-tarot-nyang.svg";
 
 import LeftAsset from "@/shared/assets/images/downloadImgAsset1.png";
@@ -238,7 +237,7 @@ const TarotResultAfterView = () => {
             </Button>
           )}
         </NextQuestionFlow>
-        <Divider />
+        {/* {/<Divider /> */}
 
         {/* {data?.isOwner ? (
           <>
@@ -247,7 +246,7 @@ const TarotResultAfterView = () => {
           </>
         ) : null} */}
 
-        <PopularQuestions />
+        {/* <PopularQuestions /> */}
       </TarotResultWrapper>
     );
   }
@@ -413,15 +412,6 @@ const TarotCardImageWrapper = styled.div`
   position: relative;
   width: 169px;
   height: 253px;
-`;
-
-const Divider = styled.div`
-  height: 11px;
-  width: calc(100% + 20px * 2);
-
-  background-color: ${({ theme }) => theme.colors.grey10};
-
-  overflow: hidden;
 `;
 
 const AdditionalMessage = styled.p`
