@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import styled, { css } from "styled-components";
-
+import PopularQuestions from "./PopularQuestion";
 import LinkIcon from "@/shared/assets/icons/link.svg";
 import ColorStar from "@/shared/assets/icons/tarot-card-result-color-star.svg";
 import Star from "@/shared/assets/icons/tarot-card-result-star.svg";
@@ -207,7 +207,7 @@ const TarotResultAfterView = () => {
           </>
         ) : null} */}
 
-        {/* <PopularQuestions /> */}
+        <PopularQuestions />
       </TarotResultWrapper>
     );
   }
