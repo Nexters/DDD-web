@@ -18,13 +18,12 @@ export default function TarotReadingResultPage() {
   return (
     <>
       {!tarotInteraction && <TarotResultHeader />}
-      <MainContent>
-        {tarotInteraction || isLoading ? (
-          <TarotInteraction setTarotInteraction={setTarotInteraction} tarotId={data?.tarot} />
-        ) : (
-          <TarotResultAfterView />
-        )}
-      </MainContent>
+
+      {tarotInteraction || isLoading ? (
+        <TarotInteraction setTarotInteraction={setTarotInteraction} tarotId={data?.tarot} />
+      ) : (
+        <TarotResultAfterView />
+      )}
     </>
   );
 }
