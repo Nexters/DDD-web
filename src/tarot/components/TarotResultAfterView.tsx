@@ -2,27 +2,20 @@
 import Image from "next/image";
 import styled, { css } from "styled-components";
 
-import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
-import isIOS from "../utils/isIOS";
-import findCardById from "@/tarot/utils/findCardById";
-import { useParams } from "next/navigation";
-import DownLoadIcon from "@/shared/assets/icons/download.svg";
 import LinkIcon from "@/shared/assets/icons/link.svg";
-import Star from "@/shared/assets/icons/tarot-card-result-star.svg";
 import ColorStar from "@/shared/assets/icons/tarot-card-result-color-star.svg";
+import Star from "@/shared/assets/icons/tarot-card-result-star.svg";
+import tarotResultCat from "@/shared/assets/images/tarotResultCat.png";
+import tarotResultSummaryCat from "@/shared/assets/images/tarotResultSummaryCat.png";
 import Button from "@/shared/components/Button";
 import Toast from "@/shared/components/Toast";
 import { checkBrowserForWebShare } from "@/shared/utils/checkBrowserForWebShare";
 import shareLink from "@/shared/utils/shareLink";
+import { useTarotReadingResult } from "@/tarot/hooks/useTarotReadingResult";
+import findCardById from "@/tarot/utils/findCardById";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import tarotResultCat from "@/shared/assets/images/tarotResultCat.png";
-import tarotResultSummaryCat from "@/shared/assets/images/tarotResultSummaryCat.png";
-import { toPng } from "html-to-image";
-import { toBlob } from "html-to-image";
-
-import FileSaver from "file-saver";
 // import NextRecommendQuestion from "./NextRecommendQuestion";
 import PurpleTarotNyang from "@/shared/assets/icons/purple-tarot-nyang.svg";
 
@@ -69,35 +62,6 @@ const TarotResultAfterView = () => {
 
   const handleNewChat = () => {
     router.push("/");
-  };
-
-  const handleDownload = async () => {
-    const element = document.getElementById(`downloadableContent`);
-    if (isIOS() && element) {
-      toBlob(element).then(function (blob: Blob | null) {
-        if (blob) {
-          if (window.saveAs) {
-            window.saveAs(blob, "나의 타로 결과 이미지.png");
-          } else {
-            FileSaver.saveAs(blob, "나의 타로 결과 이미지.png");
-          }
-        } else {
-          alert("이미지 저장 실패");
-        }
-      });
-    } else {
-      if (element) {
-        try {
-          const dataUrl = await toPng(element);
-          const link = document.createElement("a");
-          link.href = dataUrl;
-          link.download = `나의 타로 결과`;
-          link.click();
-        } catch {
-          alert();
-        }
-      }
-    }
   };
 
   if (isError) {
@@ -200,9 +164,6 @@ const TarotResultAfterView = () => {
 
         {data.isOwner ? (
           <BtnWrapper>
-            <IconBtn onClick={handleDownload}>
-              결과 저장하기 <DownLoadIcon />
-            </IconBtn>
             <Toast.Provider>
               <IconBtn onClick={checkBrowserForWebShare() ? handleWebShare : handleShareLink}>
                 링크 복사하기 <LinkIcon />
