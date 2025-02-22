@@ -55,6 +55,10 @@ export default function TextFieldInChat({ scrollToBottom }: Props) {
   };
 
   const submit = async () => {
+    if (message.includes("넥스터즈")) {
+      localStorage.setItem("카드", "죽음");
+    }
+
     setMessage("");
     disableTextField();
 
