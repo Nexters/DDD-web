@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { css } from "styled-components";
 import NewChatBotProfileImage from "@/shared/assets/images/new-chat-profile.png";
@@ -10,7 +11,6 @@ export default function ChatAvatar() {
       height={36}
       css={css`
         border-radius: 50%;
-        background-color: ${({ theme }) => theme.colors.grey10};
       `}
     />
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 // import { useTarotQuestionRecommends } from "../hooks/useTarotQuestionRecommends";
-import { useTarotFollowQuestion } from "../hooks/useTarotFollowQuestion";
 import { useParams } from "next/navigation";
+import { useTarotFollowQuestion } from "../hooks/useTarotFollowQuestion";
 interface NextRecommendQuestionProps {
   handleRecommendQuestionChat: (question: string) => void;
 }
@@ -11,7 +11,6 @@ const NextRecommendQuestion = ({ handleRecommendQuestionChat }: NextRecommendQue
 
   const { data: NextQuestion } = useTarotFollowQuestion(Number(chatId), Number(resultId));
 
-  console.log(NextQuestion);
   return (
     <RecommendBox>
       <div>

@@ -42,6 +42,6 @@ const BaseButton = styled.button<{
     background-color: ${theme.colors[color]};
     color: ${color === "grey70" ? theme.colors.white : theme.colors.black};
   `}
-
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
 `;

@@ -73,7 +73,9 @@ const TarotResultAfterView = () => {
       (entries) => {
         if (entries[0].isIntersecting) {
           if (reviewExist !== undefined && data?.isOwner) {
-            setReviewModalOpen(!reviewExist.hasReviewed);
+            setTimeout(() => {
+              setReviewModalOpen(!reviewExist.hasReviewed);
+            }, 10000);
           }
           observer.disconnect(); // 한 번 실행 후 감지 중지
         }
@@ -84,7 +86,7 @@ const TarotResultAfterView = () => {
     observer.observe(elementRef.current);
 
     return () => observer.disconnect(); // 컴포넌트 언마운트 시 옵저버 해제
-  }, [reviewExist]);
+  }, [reviewExist, data?.isOwner]);
   if (isError) {
     return null;
   }
