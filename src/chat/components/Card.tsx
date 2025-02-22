@@ -1,15 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import styled, { css } from "styled-components";
 import CardBack from "@/shared/assets/images/cardBack.webp";
-import { cubicBezier, easeOut } from "motion";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { Dispatch, SetStateAction, useRef, useEffect } from "react";
+import { cubicBezier, easeOut } from "motion";
+import Image from "next/image";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import styled, { css } from "styled-components";
 import { CardPickState } from "../types/CardPickState";
 import { DeckState } from "../types/DeckState";
-import * as Tooltip from "@radix-ui/react-tooltip";
 
 interface PropTypes {
   idx: number;
@@ -104,8 +103,8 @@ const Card = ({ idx, deckState, setDeckState, onClick, cardPickState }: PropType
             <CardWrapper
               src={CardBack}
               alt="카드 뒷면 이미지"
-              isCardShadow={isCardShadow}
-              cardPickState={cardPickState[idx]}
+              $isCardShadow={isCardShadow}
+              $cardPickState={cardPickState[idx]}
             />
           </Tooltip.Trigger>
 
@@ -166,13 +165,13 @@ const CardAnimationWrapper = styled(motion.div)`
   }
 `;
 
-const CardWrapper = styled(Image)<{ isCardShadow: boolean; cardPickState: CardPickState }>`
+const CardWrapper = styled(Image)<{ $isCardShadow: boolean; $cardPickState: CardPickState }>`
   border-radius: 8px;
 
-  box-shadow: ${({ isCardShadow, cardPickState }) =>
-    !isCardShadow
+  box-shadow: ${({ $isCardShadow, $cardPickState }) =>
+    !$isCardShadow
       ? ""
-      : cardPickState === "Pick"
+      : $cardPickState === "Pick"
         ? "0px 4px 20px 0px rgba(255, 247, 171, 0.40)"
         : "-8px 0px 12px 0px rgba(0, 0, 0, 0.15)"};
 
