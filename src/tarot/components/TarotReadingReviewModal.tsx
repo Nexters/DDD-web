@@ -14,9 +14,9 @@ interface Props {
 }
 
 enum ReviewScore {
-  BAD = "0",
+  BAD = "2",
   NOT_BAD = "1",
-  GOOD = "2",
+  GOOD = "0",
 }
 
 type CreateReviewRequestType = {
@@ -109,7 +109,7 @@ export default function TarotReadingReviewModal({ isOpen, onOpenChange }: Props)
                   color: ${({ theme }) => theme.colors.grey60};
                 `}
               >
-                별로
+                별로..
               </p>
             </RadioGroup.Item>
             <RadioGroup.Item value={ReviewScore.NOT_BAD}>
@@ -120,7 +120,7 @@ export default function TarotReadingReviewModal({ isOpen, onOpenChange }: Props)
                   color: ${({ theme }) => theme.colors.grey60};
                 `}
               >
-                완전 만족
+                적당해
               </p>
             </RadioGroup.Item>{" "}
             <RadioGroup.Item value={ReviewScore.GOOD}>

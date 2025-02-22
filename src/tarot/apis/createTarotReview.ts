@@ -1,9 +1,9 @@
 import apiClient from "@/shared/lib/axios/apiClient";
 
 enum ReviewScore {
-  BAD = "0",
+  BAD = "2",
   NOT_BAD = "1",
-  GOOD = "2",
+  GOOD = "0",
 }
 export const createTarotReview = async (grade: ReviewScore, resultId: number) => {
   return apiClient
