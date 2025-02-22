@@ -32,6 +32,7 @@ const ChatCardSelect = () => {
 
   const handleClickCard = (index: number) => {
     if (isCardPicked) return;
+
     /** 첫번째 선택시 Card Pick animation을 위한 상태변경 */
     if (deckState === "Spread") {
       setItems((prevItems) => prevItems.map((_, i) => (i === index ? "Pick" : "Down")));
@@ -40,40 +41,6 @@ const ChatCardSelect = () => {
     if (items[index] === "Pick") {
       setIsCardPicked(true);
 
-      if (localStorage.getItem("카드") === "소드10번") {
-        localStorage.removeItem("카드");
-        selectTarotCard(
-          {
-            tarotName: tarotDeckData[31].id,
-            roomId: Number(chatId),
-          },
-          {
-            onSuccess: (data) => {
-              const { tarotResultId } = data;
-              router.push(`/chats/${chatId}/tarot-reading/${tarotResultId}`);
-            },
-          }
-        );
-        return;
-      }
-
-      if (localStorage.getItem("카드") === "죽음") {
-        localStorage.removeItem("카드");
-        localStorage.setItem("카드", "소드10번");
-        selectTarotCard(
-          {
-            tarotName: tarotDeckData[13].id,
-            roomId: Number(chatId),
-          },
-          {
-            onSuccess: (data) => {
-              const { tarotResultId } = data;
-              router.push(`/chats/${chatId}/tarot-reading/${tarotResultId}`);
-            },
-          }
-        );
-        return;
-      }
       selectTarotCard(
         {
           tarotName: tarotDeckData[Math.floor(Math.random() * tarotDeckData.length)].id,

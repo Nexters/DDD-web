@@ -37,10 +37,6 @@ export default function TextFieldInChatOverview() {
     }
   };
   const submit = () => {
-    if (message.includes("넥스터즈")) {
-      localStorage.setItem("카드", "죽음");
-    }
-
     setMessage("");
     setIsMessageSent(true);
 
