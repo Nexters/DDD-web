@@ -92,6 +92,7 @@ const CardFront = styled(Image)`
   position: absolute;
 
   transform: rotateY(180deg);
+  border-radius: 12px;
 `;
 
 const CardBack = styled(Image)`
@@ -100,6 +101,7 @@ const CardBack = styled(Image)`
   position: absolute;
 
   backface-visibility: hidden;
+  border-radius: 12px;
 `;
 const CardInner = styled(motion.div)`
   position: absolute;
