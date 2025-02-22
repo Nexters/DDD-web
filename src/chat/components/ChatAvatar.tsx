@@ -1,4 +1,3 @@
-import ChatBotProfileImage from "@/shared/assets/images/chatbot-profile.png";
 import Image from "next/image";
 import { css } from "styled-components";
 import NewChatBotProfileImage from "@/shared/assets/images/new-chatbot-profile.png";
