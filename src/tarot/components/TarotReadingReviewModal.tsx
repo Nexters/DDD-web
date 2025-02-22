@@ -3,12 +3,11 @@
 import Button from "@/shared/components/Button";
 import Modal from "@/shared/components/Modal";
 import * as RadioGroup from "@radix-ui/react-radio-group";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { css } from "styled-components";
-import { useMutation } from "@tanstack/react-query";
 import { createTarotReview } from "../apis/createTarotReview";
-import { useQueryClient } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
 interface Props {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
@@ -148,6 +147,7 @@ export default function TarotReadingReviewModal({ isOpen, onOpenChange }: Props)
                 type="button"
                 color="grey70"
                 onClick={handleReviewClick}
+                disabled={!selectedReview}
                 css={css`
                   flex-shrink: initial;
                   height: 54px;
