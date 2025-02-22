@@ -382,7 +382,9 @@ const TarotCard = styled.div`
   gap: 20px;
 `;
 
-const CardImg = styled(Image)``;
+const CardImg = styled(Image)`
+  border-radius: 16px;
+`;
 
 const TarotResultWrapper = styled.div`
   display: flex;
