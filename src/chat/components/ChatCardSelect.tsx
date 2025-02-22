@@ -40,9 +40,26 @@ const ChatCardSelect = () => {
     if (items[index] === "Pick") {
       setIsCardPicked(true);
 
-      if (localStorage.getItem("카드")) {
+      if (localStorage.getItem("카드") === "소드10번") {
         localStorage.removeItem("카드");
-        2;
+        selectTarotCard(
+          {
+            tarotName: tarotDeckData[31].id,
+            roomId: Number(chatId),
+          },
+          {
+            onSuccess: (data) => {
+              const { tarotResultId } = data;
+              router.push(`/chats/${chatId}/tarot-reading/${tarotResultId}`);
+            },
+          }
+        );
+        return;
+      }
+
+      if (localStorage.getItem("카드") === "죽음") {
+        localStorage.removeItem("카드");
+        localStorage.setItem("카드", "소드10번");
         selectTarotCard(
           {
             tarotName: tarotDeckData[13].id,
