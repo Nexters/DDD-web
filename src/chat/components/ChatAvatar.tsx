@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { css } from "styled-components";
-import NewChatBotProfileImage from "@/shared/assets/images/new-chatbot-profile.png";
+import NewChatBotProfileImage from "@/shared/assets/images/new-chat-profile.png";
 export default function ChatAvatar() {
   return (
     <Image
