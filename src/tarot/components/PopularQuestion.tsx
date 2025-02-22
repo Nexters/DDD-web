@@ -16,18 +16,24 @@ const PopularQuestions = ({ isOwner }: { isOwner: boolean }) => {
   const { data } = useTarotQuestionRecommends();
   const { mutate: createChatRoom } = useCreateChatRoom();
   const handleRecommendQuestionChat = (question: string, questionId: number) => {
-    const messageRequest: SendChatMessageRequest = {
-      roomId: Number(chatId),
-      message: question,
-      intent: "RECOMMEND_QUESTION",
-      referenceQuestionId: questionId,
-    };
+    if (isOwner) {
+      const messageRequest: SendChatMessageRequest = {
+        roomId: Number(chatId),
+        message: question,
+        intent: "RECOMMEND_QUESTION",
+        referenceQuestionId: questionId,
+      };
 
-    if (isOwner)
       router.push(`/chats/${messageRequest.roomId}?message=${JSON.stringify(messageRequest)}`);
-    else {
+    } else {
       createChatRoom(undefined, {
         onSuccess: (data) => {
+          const messageRequest: SendChatMessageRequest = {
+            roomId: Number(data.roomId),
+            message: question,
+            intent: "NORMAL",
+            referenceQuestionId: questionId,
+          };
           router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
         },
       });
