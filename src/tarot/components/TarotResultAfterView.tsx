@@ -36,7 +36,7 @@ const TarotResultAfterView = () => {
   const { data, isError } = useTarotReadingResult(Number(resultId));
   const queryClient = useQueryClient();
 
-  const { data: reviewExist } = useTarotReviewExist(Number(resultId));
+  const { data: reviewExist } = useTarotReviewExist(Number(resultId), data?.isOwner);
 
   const handleShareLink = async () => {
     const shareSuccess = await handleCopyToClipboard();
@@ -222,7 +222,7 @@ const TarotResultAfterView = () => {
           </>
         ) : null}
 
-        <PopularQuestions />
+        <PopularQuestions isOwner={!!data?.isOwner} />
       </TarotResultWrapper>
     );
   }
