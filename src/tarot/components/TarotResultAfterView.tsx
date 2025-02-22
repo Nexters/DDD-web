@@ -75,7 +75,7 @@ const TarotResultAfterView = () => {
           if (reviewExist !== undefined && data?.isOwner) {
             setTimeout(() => {
               setReviewModalOpen(!reviewExist.hasReviewed);
-            }, 3000);
+            }, 10000);
           }
           observer.disconnect(); // 한 번 실행 후 감지 중지
         }
