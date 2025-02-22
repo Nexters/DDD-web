@@ -59,6 +59,7 @@ const RecommendQuestionBtn = styled.button`
   padding: 8px 12px;
   @media screen and (max-width: 600px) {
     height: fit-content;
+    align-items: flex-start;
   }
 `;
 

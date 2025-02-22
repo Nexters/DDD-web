@@ -8,30 +8,36 @@ import { useTarotQuestionRecommends } from "../hooks/useTarotQuestionRecommends"
 import { useParams } from "next/navigation";
 import { SendChatMessageRequest } from "@/chat/apis/sendChatMessage";
 import { useRouter } from "next/navigation";
-
+import { useCreateChatRoom } from "@/chat/hooks/useCreateChatRoom";
 const PopularQuestions = ({ isOwner }: { isOwner: boolean }) => {
   const [moreQuestionsToggle, setMoreQuestionsToggle] = useState(false);
   const { chatId } = useParams<{ chatId: string }>();
   const router = useRouter();
   const { data } = useTarotQuestionRecommends();
-
+  const { mutate: createChatRoom } = useCreateChatRoom();
   const handleRecommendQuestionChat = (question: string, questionId: number) => {
-    const messageRequest: SendChatMessageRequest = {
-      roomId: Number(chatId),
-      message: question,
-      intent: "RECOMMEND_QUESTION",
-      referenceQuestionId: questionId,
-    };
+    if (isOwner) {
+      const messageRequest: SendChatMessageRequest = {
+        roomId: Number(chatId),
+        message: question,
+        intent: "RECOMMEND_QUESTION",
+        referenceQuestionId: questionId,
+      };
 
-    if (isOwner)
       router.push(`/chats/${messageRequest.roomId}?message=${JSON.stringify(messageRequest)}`);
-    // else {
-    //   createChatRoom(undefined, {
-    //     onSuccess: (data) => {
-    //       router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
-    //     },
-    //   });
-    // }
+    } else {
+      createChatRoom(undefined, {
+        onSuccess: (data) => {
+          const messageRequest: SendChatMessageRequest = {
+            roomId: Number(data.roomId),
+            message: question,
+            intent: "NORMAL",
+            referenceQuestionId: questionId,
+          };
+          router.push(`/chats/${data.roomId}?message=${JSON.stringify(messageRequest)}`);
+        },
+      });
+    }
   };
   return (
     <PopularQuestionsWrapper>
