@@ -28,7 +28,6 @@ import DownloadImgBackground from "@/shared/assets/images/download-image-bg.png"
 
 import { useRef } from "react";
 import TarotReadingReviewModal from "./TarotReadingReviewModal";
-import { i } from "motion/react-client";
 const TarotResultAfterView = () => {
   const { resultId, chatId } = useParams<{
     resultId: string;
