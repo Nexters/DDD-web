@@ -14,13 +14,21 @@ import { useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useTarotReviewExist } from "../hooks/useTarotReviewExist";
 import NextRecommendQuestion from "./NextRecommendQuestion";
 import PopularQuestions from "./PopularQuestion";
+import { domToPng } from "modern-screenshot";
+
+import LeftAsset from "@/shared/assets/images/downloadImgAsset1.png";
+import RightAsset from "@/shared/assets/images/downloadImgAsset2.png";
+import PurpleTarotNyang from "@/shared/assets/icons/purple-tarot-nyang.svg";
+import DownloadIcon from "@/shared/assets/icons/download.svg";
+import DownloadImgBackground from "@/shared/assets/images/download-image-bg.png";
 
 import { useRef } from "react";
 import TarotReadingReviewModal from "./TarotReadingReviewModal";
+import { i } from "motion/react-client";
 const TarotResultAfterView = () => {
   const { resultId, chatId } = useParams<{
     resultId: string;
@@ -65,6 +73,26 @@ const TarotResultAfterView = () => {
     router.push("/");
   };
   const elementRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = () => {
+    const node = document.querySelector("#downloadableContent");
+
+    if (!node) {
+      alert("이미지 다운로드를 실패하였습니다. 다시 시도해주세요!");
+      return;
+    }
+    domToPng(node, {
+      features: {
+        // 제어 문자 제거 기능 비활성화
+        removeControlCharacter: false,
+      },
+    }).then((dataUrl) => {
+      const link = document.createElement("a");
+      link.download = "screenshot.png";
+      link.href = dataUrl;
+      link.click();
+    });
+  };
 
   useEffect(() => {
     if (!elementRef.current) return;
@@ -139,48 +167,74 @@ const TarotResultAfterView = () => {
         </TarotCardResultWrapper>
 
         <TarotReadingReviewModal isOpen={reviewModalOpen} onOpenChange={setReviewModalOpen} />
-        {/* <DownloadImageWrapper id="downloadableContent" imgSrc={DownloadBgImg.src}>
-          <DownLoadImageContainer>
-            <Image src={TarotData.imgSrc} alt="뽑힌 카드 이미지" width={187} height={279} />
-            <div
-              css={css`
-                display: flex;
-                width: 100%;
-                justify-content: space-between;
-              `}
-            >
-              <LeftAssetWrapper
-                src={LeftAsset}
-                width={95}
-                height={95}
-                alt="다운로드 카드 이미지 왼쪽 에셋"
-              />
-              <RightAssetWrapper
-                src={RightAsset}
-                width={61}
-                height={100}
-                alt="다운로드 카드 이미지 오른쪽 에셋"
-              />
-            </div>
-          </DownLoadImageContainer>
-          <DownloadInfoWrapper>
-            <DownloadImageChip>{data?.type}</DownloadImageChip>
-            <DownloadImageTitle>
-              {TarotData?.nameKR} <br />
-              {TarotData?.name}
-            </DownloadImageTitle>
-            <DownloadTarotCardDescWrapper>
-              <PurpleTarotNyang />
-              <ResultSummaryDesc> {data.summary}</ResultSummaryDesc>
-              <ResultCardDesc> {data?.cardValue.description}</ResultCardDesc>
-            </DownloadTarotCardDescWrapper>
 
-            <DownloadImgInstaChip> www.tarotmeow.vercel.app/</DownloadImgInstaChip>
-          </DownloadInfoWrapper>
-        </DownloadImageWrapper> */}
+        <DownloadImageWrapper id="downloadableContent">
+          <DownloadBackgroundImg src={DownloadImgBackground} alt="다운로드 이미지 배경" />
+          <div
+            css={css`
+              display: flex;
+              flex-direction: column;
+              display: -webkit-flex;
+              justify-content: center;
+              -webkit-justify-content: center;
+              align-items: center;
+              -webkit-align-items: center;
+            `}
+          >
+            <DownLoadImageContainer>
+              <Image
+                src={TarotData?.imgSrc}
+                alt="뽑힌 카드 이미지"
+                width={187}
+                height={279}
+                css={css`
+                  z-index: 0;
+                `}
+              />
+              <div
+                css={css`
+                  display: flex;
+                  width: 100%;
+                  justify-content: space-between;
+                `}
+              >
+                <LeftAssetImage
+                  src={LeftAsset}
+                  width={95}
+                  height={95}
+                  alt="다운로드 카드 이미지 왼쪽 에셋"
+                />
+                <RightAssetImage
+                  src={RightAsset}
+                  width={61}
+                  height={100}
+                  alt="다운로드 카드 이미지 오른쪽 에셋"
+                />
+              </div>
+            </DownLoadImageContainer>
+            <DownloadInfoWrapper>
+              <DownloadImageChip>{data?.type}</DownloadImageChip>
+              <DownloadImageTitle>
+                {TarotData?.nameKR} <br />
+                {TarotData?.name}
+              </DownloadImageTitle>
+              <DownloadTarotCardDescWrapper>
+                <PurpleTarotNyang />
+                <ResultSummaryDesc> {data.summary}</ResultSummaryDesc>
+                <ResultCardDesc> {data?.cardValue.description}</ResultCardDesc>
+              </DownloadTarotCardDescWrapper>
+
+              <DownloadImgInstaChip> www.tarotnyang.me</DownloadImgInstaChip>
+            </DownloadInfoWrapper>
+          </div>
+        </DownloadImageWrapper>
 
         {data.isOwner ? (
           <BtnWrapper>
+            <IconBtn onClick={handleDownload}>
+              결과 저장하기 <DownloadIcon />
+            </IconBtn>
+
             <Toast.Provider>
               <IconBtn onClick={checkBrowserForWebShare() ? handleWebShare : handleShareLink}>
                 링크 복사하기 <LinkIcon />
@@ -408,99 +462,101 @@ const Divider = styled.div`
 
   overflow: hidden;
 `;
-// const DownloadInfoWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   position: relative;
-//   bottom: 44px;
-// `;
-// const DownLoadImageContainer = styled.div`
-//   margin-top: 112px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// `;
+const DownloadInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  bottom: 44px;
+`;
+const DownLoadImageContainer = styled.div`
+  margin-top: 112px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
-// const DownloadImgInstaChip = styled.div`
-//   padding: 4px 12px;
-//   justify-content: center;
-//   align-items: center;
-//   gap: 10px;
-//   background-color: ${({ theme }) => theme.colors.white};
-//   border-radius: 100px;
-//   width: 200px;
-//   ${({ theme }) => theme.fonts.body1};
-//   color: ${({ theme }) => theme.colors.primary03};
+const DownloadBackgroundImg = styled(Image)`
+  position: absolute;
+  width: 375px;
+  height: 812px;
+`;
 
-//   position: relative;
-//   top: 20px;
-// `;
+const DownloadImgInstaChip = styled.div`
+  display: flex;
+  padding: 4px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 100px;
+  width: 200px;
+  ${({ theme }) => theme.fonts.body1};
+  color: ${({ theme }) => theme.colors.primary03};
 
-// const ResultSummaryDesc = styled.p`
-//   ${({ theme }) => theme.fonts.subHead4};
-//   color: ${({ theme }) => theme.colors.primary03};
-// `;
+  position: relative;
+  top: 20px;
+`;
 
-// const ResultCardDesc = styled.p`
-//   ${({ theme }) => theme.fonts.body1};
-//   color: ${({ theme }) => theme.colors.grey60};
-// `;
+const ResultSummaryDesc = styled.p`
+  ${({ theme }) => theme.fonts.subHead4};
+  color: ${({ theme }) => theme.colors.primary03};
+`;
 
-// const DownloadTarotCardDescWrapper = styled.div`
-//   display: flex;
-//   width: 335px;
+const ResultCardDesc = styled.p`
+  ${({ theme }) => theme.fonts.body1};
+  color: ${({ theme }) => theme.colors.grey60};
+`;
 
-//   padding: 20px;
-//   flex-direction: column;
-//   align-items: center;
-//   gap: 16px;
-//   border-radius: 12px;
-//   background-color: ${({ theme }) => theme.colors.white};
-// `;
+const DownloadTarotCardDescWrapper = styled.div`
+  display: flex;
+  width: 335px;
 
-// const DownloadImageTitle = styled.h2`
-//   margin: 16px 0 28px;
-//   text-align: center;
-//   ${({ theme }) => theme.fonts.subHead4};
-//   color: ${({ theme }) => theme.colors.black};
-// `;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
 
-// const DownloadImageChip = styled.div`
-//   display: inline;
-//   border-radius: 40px;
-//   background-color: ${({ theme }) => theme.colors.primary03};
+const DownloadImageTitle = styled.h2`
+  margin: 16px 0 28px;
+  text-align: center;
+  ${({ theme }) => theme.fonts.subHead4};
+  color: ${({ theme }) => theme.colors.black};
+`;
 
-//   padding: 4px 16px;
-//   ${({ theme }) => theme.fonts.subHead2};
-//   color: ${({ theme }) => theme.colors.primary00};
-// `;
+const DownloadImageChip = styled.div`
+  display: inline;
+  border-radius: 40px;
+  background-color: ${({ theme }) => theme.colors.primary03};
 
-// const DownloadImageWrapper = styled.div<{ imgSrc: string }>`
-//   z-index: -1;
-//   width: 375px;
-//   height: fit-content;
-//   position: absolute;
+  padding: 4px 16px;
+  ${({ theme }) => theme.fonts.subHead2};
+  color: ${({ theme }) => theme.colors.primary00};
+`;
 
-//   top: 0;
-//   left: 0;
-//   background-image: url(${(props) => (props ? props.imgSrc : "")});
-// `;
+const DownloadImageWrapper = styled.div`
+  z-index: 2;
+  width: 375px;
+  height: fit-content;
+  position: relative;
 
-// const LeftAssetWrapper = styled(Image)`
-//   position: relative;
-//   bottom: 40px;
-//   left: 40px;
-// `;
+  top: 0;
+  left: 0;
+  background-color: ${({ theme }) => theme.colors.primary00};
+`;
 
-// const RightAssetWrapper = styled(Image)`
-//   position: relative;
-//   bottom: 44px;
-//   right: 66px;
-// `;
+const LeftAssetImage = styled(Image)`
+  position: relative;
+  bottom: 55px;
+  right: 60px;
+`;
 
-// const TarotCatSummaryImage = styled(Image)`
-//   position: absolute;
-//   right: -12.5px;
-//   bottom: 5px;
-// `;
+const RightAssetImage = styled(Image)`
+  position: relative;
+  bottom: 55px;
+  left: 40px;
+`;
